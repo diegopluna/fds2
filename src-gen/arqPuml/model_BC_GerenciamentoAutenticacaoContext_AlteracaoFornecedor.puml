@@ -1,0 +1,21 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'AlteracaoFornecedor' Aggregate" <<Rectangle>> {
+	class AlteracaoDadosFornecedor <<(E,DarkSeaGreen) Entity>> {
+		String[0..1] alteracaoNomeFornecedor
+		String[0..1] alteracaoEmailFornecedor
+		FornecedorAccount contaFornecedor
+	}
+	class AlteracaoDadosEstacao <<(E,DarkSeaGreen) Entity>> {
+		String[0..1] alteracaoNomeEstacao
+		double alteracaoPrecoPKwH
+		Fornecedor fornecedorDono
+		EstacaoRecarga estacaoAlterada
+		HorarioDisponivel alteracaoHorarioFuncionamento
+	}
+}
+
+
+@enduml

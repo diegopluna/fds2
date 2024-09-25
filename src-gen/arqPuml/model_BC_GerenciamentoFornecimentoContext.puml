@@ -1,0 +1,55 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'Fornecedor' Aggregate" <<Rectangle>> {
+	class Fornecedor <<(A,#fffab8) Aggregate Root>> {
+		int idFornecedor
+		String nomeFornecedor
+		String emailFornecedor
+		List<EstacaoRecarga> estacoes
+	}
+}
+package "'EstacaoRecarga' Aggregate" <<Rectangle>> {
+	class EstacaoRecarga <<(A,#fffab8) Aggregate Root>> {
+		int idEstacao
+		String nomeEstacao
+		double energiaUtilizada
+		double valorMinimoReserva
+		double valorCashback
+		double precoPKwH
+		Fornecedor idFornecedor
+		List<HorarioDisponivel> horariosDisponiveis
+		Endereco enderecoEstacao
+		List<Carregadores> tipoPlugCarregador
+		HorarioDisponivel horarioFuncionamento
+		List<Agendamento> agendamentosJaRealizados
+		void getRecargasCliente()
+	}
+	class Carregadores <<(E,DarkSeaGreen) Entity>> {
+		String tipoPlugCarregador
+	}
+	class HorarioDisponivel <<(V,DarkSeaGreen) Value Object>> {
+		DateTime dataInicio
+		DateTime dataFim
+	}
+	class Endereco <<(V,DarkSeaGreen) Value Object>> {
+		String cep
+		String rua
+		String bairro
+		String cidade
+		int numero
+	}
+}
+Fornecedor "1" o--> "*" EstacaoRecarga : estacoes
+EstacaoRecarga "1" *--> "*" Carregadores : tipoPlugCarregador
+EstacaoRecarga --> Fornecedor : idFornecedor
+EstacaoRecarga --> Endereco : enderecoEstacao
+EstacaoRecarga --> HorarioDisponivel : horarioFuncionamento
+EstacaoRecarga "1" *--> "*" HorarioDisponivel : horariosDisponiveis
+legend left
+  This bounded context implements the subdomain 'FornecimentoDomain'.
+end legend
+
+
+@enduml

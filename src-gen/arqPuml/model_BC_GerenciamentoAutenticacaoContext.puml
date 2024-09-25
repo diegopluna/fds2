@@ -1,0 +1,48 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'AlteracaoCliente' Aggregate" <<Rectangle>> {
+	class AlteracaoDadosCliente <<(E,DarkSeaGreen) Entity>> {
+		String[0..1] alteracaoNomeCliente
+		String[0..1] alteracaoEmailCliente
+		ClienteAccount contaCliente
+	}
+	class AlteracaoDadosVeiculos <<(E,DarkSeaGreen) Entity>> {
+		String[0..1] alteracaoNomeVeiculo
+		Cliente clienteDono
+		Veiculo veiculoAlterado
+	}
+}
+package "'AlteracaoFornecedor' Aggregate" <<Rectangle>> {
+	class AlteracaoDadosFornecedor <<(E,DarkSeaGreen) Entity>> {
+		String[0..1] alteracaoNomeFornecedor
+		String[0..1] alteracaoEmailFornecedor
+		FornecedorAccount contaFornecedor
+	}
+	class AlteracaoDadosEstacao <<(E,DarkSeaGreen) Entity>> {
+		String[0..1] alteracaoNomeEstacao
+		double alteracaoPrecoPKwH
+		Fornecedor fornecedorDono
+		EstacaoRecarga estacaoAlterada
+		HorarioDisponivel alteracaoHorarioFuncionamento
+	}
+}
+package "'Accounts' Aggregate" <<Rectangle>> {
+	class ClienteAccount <<(E,DarkSeaGreen) Entity>> {
+		String usernameCliente
+		Cliente dadosCliente
+	}
+	class FornecedorAccount <<(E,DarkSeaGreen) Entity>> {
+		String usernameFornecedor
+		Fornecedor dadosFornecedor
+	}
+}
+AlteracaoDadosFornecedor --> FornecedorAccount : contaFornecedor
+AlteracaoDadosCliente --> ClienteAccount : contaCliente
+legend left
+  This bounded context implements the subdomain 'AutenticacaoDomain'.
+end legend
+
+
+@enduml

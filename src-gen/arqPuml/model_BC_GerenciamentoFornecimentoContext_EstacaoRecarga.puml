@@ -1,0 +1,42 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'EstacaoRecarga' Aggregate" <<Rectangle>> {
+	class EstacaoRecarga <<(A,#fffab8) Aggregate Root>> {
+		int idEstacao
+		String nomeEstacao
+		double energiaUtilizada
+		double valorMinimoReserva
+		double valorCashback
+		double precoPKwH
+		Fornecedor idFornecedor
+		List<HorarioDisponivel> horariosDisponiveis
+		Endereco enderecoEstacao
+		List<Carregadores> tipoPlugCarregador
+		HorarioDisponivel horarioFuncionamento
+		List<Agendamento> agendamentosJaRealizados
+		void getRecargasCliente()
+	}
+	class Carregadores <<(E,DarkSeaGreen) Entity>> {
+		String tipoPlugCarregador
+	}
+	class HorarioDisponivel <<(V,DarkSeaGreen) Value Object>> {
+		DateTime dataInicio
+		DateTime dataFim
+	}
+	class Endereco <<(V,DarkSeaGreen) Value Object>> {
+		String cep
+		String rua
+		String bairro
+		String cidade
+		int numero
+	}
+}
+EstacaoRecarga "1" *--> "*" Carregadores : tipoPlugCarregador
+EstacaoRecarga --> Endereco : enderecoEstacao
+EstacaoRecarga --> HorarioDisponivel : horarioFuncionamento
+EstacaoRecarga "1" *--> "*" HorarioDisponivel : horariosDisponiveis
+
+
+@enduml

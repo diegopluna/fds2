@@ -1,0 +1,15 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'Fornecedor' Aggregate" <<Rectangle>> {
+	class Fornecedor <<(A,#fffab8) Aggregate Root>> {
+		int idFornecedor
+		String nomeFornecedor
+		String emailFornecedor
+		List<EstacaoRecarga> estacoes
+	}
+}
+
+
+@enduml

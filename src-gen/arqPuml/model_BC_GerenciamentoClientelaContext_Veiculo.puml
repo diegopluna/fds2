@@ -1,0 +1,15 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'Veiculo' Aggregate" <<Rectangle>> {
+	class Veiculo <<(A,#fffab8) Aggregate Root>> {
+		int idVeiculo
+		String placaVeiculo
+		String[0..1] nomeVeiculo
+		Cliente idCliente
+	}
+}
+
+
+@enduml

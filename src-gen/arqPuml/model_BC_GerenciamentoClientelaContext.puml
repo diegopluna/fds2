@@ -1,0 +1,32 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'Cliente' Aggregate" <<Rectangle>> {
+	class Cliente <<(A,#fffab8) Aggregate Root>> {
+		int idCliente
+		String nomeCliente
+		String emailCliente
+		List<Veiculo> veiculos
+	}
+	class RecargasCliente <<(E,DarkSeaGreen) Entity>> {
+		List<Agendamento> meusAgendamentos
+		void getMinhasRecargas(List<Agendamento> meusAgendamentos)
+	}
+}
+package "'Veiculo' Aggregate" <<Rectangle>> {
+	class Veiculo <<(A,#fffab8) Aggregate Root>> {
+		int idVeiculo
+		String placaVeiculo
+		String[0..1] nomeVeiculo
+		Cliente idCliente
+	}
+}
+Cliente "1" o--> "*" Veiculo : veiculos
+Veiculo --> Cliente : idCliente
+legend left
+  This bounded context implements the subdomain 'ClientelaDomain'.
+end legend
+
+
+@enduml
