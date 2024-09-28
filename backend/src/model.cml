@@ -1,66 +1,74 @@
 ContextMap RayCharge
 {
-	contains GerenciamentoFornecimentoContext, GerenciamentoClientelaContext, GerenciamentoAgendamentosContext, GerenciamentoAutenticacaoContext
+	contains ConsultaEAgendamentoDeRecargaContext
+    contains CadastroEControleDeFornecedoresContext
+    contains CadastroEControleDeMotoristasContext
+    contains AutenticacaoEAutorizacaoContext
+    contains NotificacoesContext
 
-	GerenciamentoFornecimentoContext [U, S]->[D, C] GerenciamentoAgendamentosContext
+	// all shared kernel
+	CadastroEControleDeFornecedoresContext [S] -> [C] ConsultaEAgendamentoDeRecargaContext
+	CadastroEControleDeMotoristasContext [S] -> [C] ConsultaEAgendamentoDeRecargaContext
 
-	GerenciamentoClientelaContext [U, S]->[D, C] GerenciamentoAgendamentosContext
-
-	GerenciamentoFornecimentoContext [P] <-> [P] GerenciamentoAutenticacaoContext
-
-	GerenciamentoClientelaContext [P] <-> [P] GerenciamentoAutenticacaoContext
+	NotificacoesContext [P] <-> [P] ConsultaEAgendamentoDeRecargaContext
+	NotificacoesContext [P] <-> [P] CadastroEControleDeFornecedoresContext
+    
+	// all open host
+	AutenticacaoEAutorizacaoContext [U,OHS] -> [D, CF] CadastroEControleDeFornecedoresContext
+	AutenticacaoEAutorizacaoContext [U,OHS] -> [D, CF] CadastroEControleDeMotoristasContext
+	AutenticacaoEAutorizacaoContext [U,OHS] -> [D, CF] ConsultaEAgendamentoDeRecargaContext
 }
 
 /* Definição dos Contextos */
-BoundedContext GerenciamentoFornecimentoContext implements FornecimentoDomain
+BoundedContext CadastroEControleDeFornecedoresContext implements CadastroEControleDeFornecedoresDomain
 {
 	type = FEATURE
-	domainVisionStatement = "O contexto de gerenciamento de fornecedores é responsável por armazenar os dados dos fornecedores e suas estações."
+	domainVisionStatement = "O contexto de cadastro e controle de Fornecedores é responsável por armazenar os dados dos Fornecedores e suas Estações."
 	responsibilities = "Fornecedor"
+
 	Aggregate Fornecedor
 	{
 		Entity Fornecedor
 		{
 			aggregateRoot
-			int idFornecedor
-			String nomeFornecedor
-			String emailFornecedor
-			- List<EstacaoRecarga> estacoes
+
+            String nomeFornecedor
+            - List <EstacaoDeRecarga> estacoesDeRecarga
+            - List <Agendamento> historicoDeUso
 		}
-	}
-	Aggregate EstacaoRecarga
-	{
-		Entity EstacaoRecarga
+
+		Entity EstacaoDeRecarga
+        {
+            - HorarioDisponivel horarioFuncionamento
+            - Localizacao localizacaoEstacao
+            boolean statusEstacao // lotada ou com vaga
+
+            int precoReserva
+            int precoPKwH
+
+            - List <Carregador> carregadores
+            - List <HorarioDisponivel> horariosDisponiveis
+
+            - List <Agendamento> historicoDeUso
+        }
+		Entity Carregador
+        {
+            String nomeCarregador
+            int tipoPlug
+        }
+        ValueObject HorarioDisponivel
+        {
+            DateTime inicioAgendamento
+            DateTime fimAgendamento
+        }
+		// ver se iremos utilizar lat/long ou endereco
+        ValueObject Localizacao
+        {
+            double longitude
+            double latitude
+        }
+		ValueObject Endereco
 		{
-			aggregateRoot
-			- Fornecedor idFornecedor
-			- List<HorarioDisponivel> horariosDisponiveis
-			int idEstacao
-			String nomeEstacao
-			- Endereco enderecoEstacao
-
-			double energiaUtilizada
-			double valorMinimoReserva
-			double valorCashback // optar pelo valor da reserva retornar para consumo no carregamento
-
-			double precoPKwH
-			- List <Carregadores> tipoPlugCarregador // vai ter que criar uma função para contar quantos de cara tipo tem na lista (não consegui descobrir como fazer dicionário por aqui)
-			- HorarioDisponivel horarioFuncionamento
-
-			- List <Agendamento> agendamentosJaRealizados // ver todas as recargas que ja foram feitas naquela estação
-
-			def void getRecargasCliente();
-		}
-		Entity Carregadores
-		{
-			String tipoPlugCarregador
-		}
-		ValueObject HorarioDisponivel
-		{
-			DateTime dataInicio
-			DateTime dataFim
-		}
-		ValueObject Endereco{
 			String cep
 			String rua
 			String bairro
@@ -70,71 +78,66 @@ BoundedContext GerenciamentoFornecimentoContext implements FornecimentoDomain
 	}
 }
 
-BoundedContext GerenciamentoClientelaContext implements ClientelaDomain
+BoundedContext CadastroEControleDeMotoristasContext implements CadastroEControleDeMotoristasDomain
 {
 	type = FEATURE
-	domainVisionStatement = "O contexto de gerenciamento de clientes é responsável por armazenar os dados dos clientes e de seus veículos e agendamentos."
-	responsibilities = "Cliente"
+	domainVisionStatement = "O contexto de cadastro e controle de Motoristas é responsável por armazenar os dados dos Motoristas e de seus Veículos."
+	responsibilities = "Motorista"
 	
-	Aggregate Cliente
-	{
-		Entity Cliente
-		{
-			aggregateRoot
-			int idCliente
-			String nomeCliente
-			String emailCliente
-			-List<Veiculo> veiculos
-		}
+	Aggregate Motorista
+    {
+        Entity Motorista
+        {
+            aggregateRoot
 
-		Entity RecargasCliente
-		{
-			- List <Agendamento> meusAgendamentos
-
-			def void getMinhasRecargas(List <Agendamento> meusAgendamentos);
-		}
-	}
-	Aggregate Veiculo
-	{
-		Entity Veiculo
-		{
-			aggregateRoot
-			- Cliente idCliente
-			int idVeiculo
-			String placaVeiculo
-			String nomeVeiculo nullable
-		}
-	}
+            String nomeMotorista
+            - List <Veiculo> veiculos
+            - List <Agendamento> historicoDeUso
+        }
+        Entity Veiculo
+        {
+            String placaVeiculo
+            - List <Agendamento> historicoDeUso
+        }
+    }
 }
 
-BoundedContext GerenciamentoAgendamentosContext implements AgendaDomain
+BoundedContext ConsultaEAgendamentoDeRecargaContext implements ConsultaEAgendamentoDeRecargaDomain
 {
 	type = FEATURE
 	domainVisionStatement = "O contexto de gerenciamento de agendamentos é responsável por gerenciar todos os dados referentes ao processo de agendar as estações, inclusive oferecendo serviços de consulta e validação de datas e horarios."
 	responsibilities = "Agenda"
-	Aggregate Agendamento
-	{
-		Entity Agendamento
-		{
-			aggregateRoot
-			int idAgendamento
-			int codigoLiberacaoCarregador
-			
-			- Cliente idCliente
-			- Veiculo idVeiculo
-			- Fornecedor idFornecedor
-			- EstacaoRecarga idEstacao
-			- Carregadores tipoPlugCarregador
 
-			DateTime horarioAgendamento
-		}
+	Aggregate  Agendamento
+    {
+        Entity Agendamento
+        {
+            aggregateRoot
+
+            - IdAgendamento idAgendamento
+            int codigoLiberacaoCarregador
+            - HorarioDisponivel horarioAgendamento
+
+            boolean statusAgendamento // ativo ou cancelado
+
+            - EstacaoDeRecarga estacaoDeRecarga
+            - Carregador carregador
+            - Motorista motorista
+            - Veiculo veiculo
+        }
+        ValueObject IdAgendamento
+        {
+            int idAgendamento key
+        }
+
+		// revisar
 		Service RealizarAgendamento
 		{
-			int realizarAgendamento(DateTime horarioAgendamento, Veiculo idVeiculo, EstacaoRecarga idEstacao, Carregadores tipoPlugCarregador); // retornar o id do agendamento
+			int realizarAgendamento(DateTime horarioAgendamento, @Veiculo idVeiculo, @EstacaoDeRecarga idEstacao, @Carregador tipoPlug); // retornar o id do agendamento
 		}
 		Service GetCodigoLiberacao
 		{
-			int getCodigoLiberacao(Agendamento idAgendamento);
+			int getCodigoLiberacao(@Agendamento idAgendamento);
 		}
 		Entity Recarga
 		{
@@ -144,86 +147,81 @@ BoundedContext GerenciamentoAgendamentosContext implements AgendaDomain
 	}
 }
 
-BoundedContext GerenciamentoAutenticacaoContext implements AutenticacaoDomain
+BoundedContext AutenticacaoEAutorizacaoContext implements AutenticacaoEAutorizacaoDomain
 {
 	type = APPLICATION
-	domainVisionStatement = "O contexto de gerenciamento de autenticacao é uma aplicação que permite aos usuários realizarem login e alterarem informações sobre seus dados, veiculos ou estações."
-	responsibilities = "Ajuste de dados sobre Cliente, Fornecedor, Veiculo ou Estação de Recarga"
-	Aggregate AlteracaoCliente
-	{
-		Entity AlteracaoDadosCliente
-		{
-			- ClienteAccount contaCliente
-			String alteracaoNomeCliente nullable
-			String alteracaoEmailCliente nullable
-		}
-		Entity AlteracaoDadosVeiculos
-		{
-			- Cliente clienteDono
-			- Veiculo veiculoAlterado
-			String alteracaoNomeVeiculo nullable
-		}
-	}
-	Aggregate AlteracaoFornecedor
-	{
-		Entity AlteracaoDadosFornecedor
-		{
-			- FornecedorAccount contaFornecedor
-			String alteracaoNomeFornecedor nullable
-			String alteracaoEmailFornecedor nullable
-		}
-		Entity AlteracaoDadosEstacao
-		{
-			- Fornecedor fornecedorDono
-			- EstacaoRecarga estacaoAlterada
-			String alteracaoNomeEstacao nullable
-			double alteracaoPrecoPKwH
-			- HorarioDisponivel alteracaoHorarioFuncionamento
-		}
-	}
-	Aggregate Accounts
-	{
-		Entity ClienteAccount
-		{
-			String usernameCliente
-			- Cliente dadosCliente
-		}
-		Entity FornecedorAccount
-		{
-			String usernameFornecedor
-			- Fornecedor dadosFornecedor
-		}
-	}
+	domainVisionStatement = "O contexto de gerenciamento de autenticacao é uma aplicação que valida o usuário que acessa o sistema."
+
+	Aggregate Autenticacao
+    {
+        Entity Usuario
+        {
+            aggregateRoot
+
+            String login
+            String senha
+            boolean tipoUsuario // Motorista ou Fornecedor
+        }
+    }
+}
+
+BoundedContext NotificacoesContext implements NotificacoesDomain
+{
+    Aggregate Notificacao
+    {
+        Entity Notificacao
+        {
+            - List <Usuario> destinatario
+            - Usuario origem nullable
+            int tipoNotificacao
+            String mensagem
+        }
+    }
 }
 
 /* Descrição do Domínio e Subdomínios */
 Domain RayChargeDomain
 {
-	// Subdomínio de Gestão de Estações de Recarga
-	Subdomain FornecimentoDomain
-	{
-		type = CORE_DOMAIN
-		domainVisionStatement = "Subdomínio responsável por armazenar tudo referente ao fornecimento da recarga"
-	}
+	// Subdomínio de Cadastro e Controle dos Fornecedores (genérico)
+    Subdomain CadastroEControleDeFornecedoresDomain
+    {
+        type = GENERIC_SUBDOMAIN
+		domainVisionStatement = "Subdomínio responsável por armazenar tudo referente ao Fornecedor, Estação e Carregadores da recarga"
+    }
 
-	// Subdomínio de Cadastro e Gestão de Veículos
-	Subdomain ClientelaDomain
-	{
-		type = CORE_DOMAIN
-		domainVisionStatement = "Subdomínio responsável por armazenar tudo referente ao consumo da recarga"
-	}
+	// Subdomínio de Cadastro e Controle dos Motoristas (genérico)
+    Subdomain CadastroEControleDeMotoristasDomain
+    {
+        type = GENERIC_SUBDOMAIN
+		domainVisionStatement = "Subdomínio responsável por armazenar tudo referente ao Motorista e Veículos da recarga"
+    }
 
-	// Subdomínio de Consulta e Agendamento de Recarga
-	Subdomain AgendaDomain
-	{
-		type = CORE_DOMAIN
-		domainVisionStatement = "Subdomínio responsável por gerenciar o serviço"
-	}
+	// Subdomínio de Consulta e Agendamento de Recarga (principal)
+    Subdomain ConsultaEAgendamentoDeRecargaDomain
+    {
+        type = CORE_DOMAIN
+		domainVisionStatement = "Subdomínio responsável por intermediar o Serviço e seu Histórico"
+    }
 
-	// Subdomínio de Autenticação e Autorização
-	Subdomain AutenticacaoDomain
-	{
-		type = SUPPORTING_DOMAIN
-		domainVisionStatement = "Subdomínio responsável pela autenticação e autorização de clientes e fornecedores"
-	}
+	// Subdomínio de Autenticação e Autorização (suporte)
+    Subdomain AutenticacaoEAutorizacaoDomain
+    {
+        type = SUPPORTING_DOMAIN
+		domainVisionStatement = "Subdomínio responsável pela autenticação e autorização de Motoristas e Fornecedores"
+    }
+
+	// Subdomínio de Notificações (suporte)
+    Subdomain NotificacoesDomain
+    {
+        type = SUPPORTING_DOMAIN
+		domainVisionStatement = "Subdomínio responsável por enviar alertas e atualizações aos Motoristas e Fornecedores em resposta a eventos específicos que ocorrem no sistema"
+    }
+
+	// verificar necessidade
+	// Subdomínio de Monitoramento de Desempenho das Estações de Recarga (suporte)
+    Subdomain MonitoramentoDeDesempenhoDomain
+    {
+        type = SUPPORTING_DOMAIN
+		domainVisionStatement = "Subdomínio responsável por informar ao Fornecedor sobre o desempenho das suas Estações de recarga"
+    }
 }
