@@ -5,17 +5,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.cesar.school.fds2</groupId>
-  <artifactId>raycharge-modulos</artifactId>
+  <artifactId>domain</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+
   <packaging>pom</packaging>
-
-
-  <modules>
-    <module>application</module>
-    <module>infra</module>
-  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <modules></modules>
+
 </project>

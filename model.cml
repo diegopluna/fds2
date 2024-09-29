@@ -6,19 +6,19 @@ ContextMap RayCharge
     contains AutenticacaoEAutorizacaoContext
     contains NotificacoesContext
     contains RelatoriosSobreAsEstacoesDeRecargaContext
-	
+
 	// revisar relacoes
-	
+
 	// all shared kernel
 	CadastroEControleDeFornecedoresContext [S] -> [C] RealizacaoDeRecargaContext
 	CadastroEControleDeMotoristasContext [S] -> [C] RealizacaoDeRecargaContext
-	
+
 	CadastroEControleDeFornecedoresContext [P] <-> [P] RelatoriosSobreAsEstacoesDeRecargaContext
 	NotificacoesContext [P] <-> [P] RealizacaoDeRecargaContext
 	NotificacoesContext [P] <-> [P] CadastroEControleDeFornecedoresContext
     NotificacoesContext [P] <-> [P] CadastroEControleDeMotoristasContext
     NotificacoesContext [P] <-> [P] AutenticacaoEAutorizacaoContext
-    
+
 	// all open host
 	AutenticacaoEAutorizacaoContext [U,OHS] -> [D, CF] CadastroEControleDeFornecedoresContext
 	AutenticacaoEAutorizacaoContext [U,OHS] -> [D, CF] CadastroEControleDeMotoristasContext
@@ -37,52 +37,52 @@ BoundedContext CadastroEControleDeFornecedoresContext implements CadastroEContro
 		Entity Fornecedor
 		{
 			aggregateRoot
-			
-			- IdUsuario usuarioFornecedor
+
+			- Usuario usuarioFornecedor
             String nomeFornecedor
             - List <EstacaoDeRecarga> estacoesDeRecarga
-            - List <Agendamento> historicoDeUso // idAgendamento
+            - List <Agendamento> historicoDeUso
 		}
+
 		Service AlteracoesContaFornecedor
 		{
-			// não tem criar conta pois é do dominio de autenticacao
-			int deletarConta(@IdUsuario usuarioFornecedor);
+			int deletarConta(@Usuario usuarioFornecedor);
 			int alterarNomeFornecedor(String novoNome);
 		}
+
 		Entity EstacaoDeRecarga
         {
-            String nomeDaEstacao
         	int quantidadeDeCarregadores
-			- Fornecedor fornecedor
-            
-			- HorarioDisponivel horarioFuncionamento
+            - HorarioDisponivel horarioFuncionamento
             - Endereco enderecoEstacao
-            - StatusEstacao statusEstacao
-            int precoMinimo
+            boolean statusEstacao // lotada ou com vaga
+            String nomeDaEstacao
+			- Fornecedor fornecedor
+            int precoReserva
             int precoPKwH
 
-			int tempoPorAgendamento
-
             - List <HorarioDisponivel> horariosDisponiveis
-            - List <Agendamento> historicoDeUso // idAgendamento
+
+            - List <Agendamento> historicoDeUso
         }
+
 		Service AlteracoesEstacao
 		{
-			int adicionarEstacao(int quantidadeDeCarregadores, @HorarioDisponivel horarioFuncionamento, @Endereco enderecoEstacao, String nomeDaEstacao, int precoMinimo, int precoPKwH, int tempoPorAgendamento);
 			int alterarQuantidadeCarregadores(int novaQuantidade);
 			int alterarHorarioFuncionamento(@HorarioDisponivel novoHorario);
 			String alterarNomeEstacao(String novoNome);
-			int alterarprecoMinimo(int novoPreco);
+			int alterarPrecoReserva(int novoPreco);
 			int alterarPrecoPKwH(int novoPreco);
-			int alterarTempoPorAgendamento(int novoTempo);
-			int definirHorariosDisponiveis(int tempoPorAgendamento, @HorarioDisponivel horarioFuncionamento);
 			int deletarEstacao(@EstacaoDeRecarga estacao);
+			int adicionarEstacao(int quantidadeDeCarregadores, @HorarioDisponivel horarioFuncionamento, @Endereco enderecoEstacao, String nomeDaEstacao, int precoReserva, int precoPKwH);
 		}
+
         ValueObject HorarioDisponivel
         {
             DateTime inicioAgendamento
             DateTime fimAgendamento
         }
+
 		ValueObject Endereco
 		{
 			String cep
@@ -90,10 +90,6 @@ BoundedContext CadastroEControleDeFornecedoresContext implements CadastroEContro
 			String bairro
 			String cidade
 			int numero
-		}
-		enum StatusEstacao
-		{
-			ATIVA, INATIVA
 		}
 	}
 }
@@ -103,37 +99,36 @@ BoundedContext CadastroEControleDeMotoristasContext implements CadastroEControle
 	type = FEATURE
 	domainVisionStatement = "O contexto de cadastro e controle dos Motoristas é responsável por armazenar os dados dos Motoristas e seus Veículos."
 	responsibilities = "Motorista"
-	
+
 	Aggregate Motorista
     {
         Entity Motorista
         {
             aggregateRoot
 
-            - IdUsuario usuarioMotorista
             String nomeMotorista
             - List <Veiculo> veiculos
-            - List <Agendamento> historicoDeUso // idAgendamento
+            - List <Agendamento> historicoDeUso
+            - Usuario usuarioMotorista
         }
     	Service AlteracoesContaMotorista
 		{
-			int deletarConta(@IdUsuario usuarioMotorista);
+			int deletarConta(@Usuario usuarioMotorista);
 			int alterarNomeMotorista(String novoNome);
 		}
         Entity Veiculo
         {
-            - Motorista motorista
-            String nomeVeiculo
             String placaVeiculo
-            - List <Agendamento> historicoDeUso // idAgendamento
-			// adicionar Marca e Modelo
+            - List <Agendamento> historicoDeUso
+            String nomeVeiculo
+            - Motorista motorista
         }
         Service AlteracoesVeiculo
 		{
-			int adicionarVeiculo(String placaVeiculo, String nomeVeiculo);
 			int deletarVeiculo(@Veiculo veiculo);
 			int alterarNomeVeiculo(String novoNome);
 			int alterarPlacaVeiculo(String novaPlaca);
+			int adicionarVeiculo(String placaVeiculo, String nomeVeiculo);
 		}
     }
 }
@@ -141,24 +136,25 @@ BoundedContext CadastroEControleDeMotoristasContext implements CadastroEControle
 BoundedContext RealizacaoDeRecargaContext implements RealizacaoDeRecargaDomain
 {
 	type = FEATURE
-	domainVisionStatement = "O contexto de Realizar Recarga é responsável por mostrar para os Motoristas as Estações Próximas, permitir que realizem Agendamentos e garantir que a Recarga seja feita."
+	domainVisionStatement = "O contexto de Realizar Recarga é responsável por mostrar para os Motoristas as Estações Próximas e permitir que realizem Agendamentos."
 	responsibilities = "Agenda"
 
 	Aggregate ConsultaEstacoesProximas
 	{
-		Entity ConsultaEstacoesProximas
-		{
-			aggregateRoot
+		 Entity ConsultaEstacoesProximas
+		 {
+		 	aggregateRoot
 		 	- Endereco enderecoAtualMotorista
 			int raioDeBusca
 			- List <EstacaoDeRecarga> estacoesProximas
-		}
-		Service SetNovoRaioDeBusca
-		{
+		 }
+
+		 Service SetNovoRaioDeBusca
+		 {
 		 	int setNovoRaio(int novoRaio);
-			// ver localização com base no endereço
-		}
+		 }
 	}
+
 	Aggregate  Agendamento
     {
         Entity Agendamento
@@ -169,35 +165,35 @@ BoundedContext RealizacaoDeRecargaContext implements RealizacaoDeRecargaDomain
             int codigoLiberacaoCarregador
             - HorarioDisponivel horarioAgendamento
 
-            - StatusAgendamento statusAgendamento
-			int valorTotalRecarga
+            boolean statusAgendamento // ativo ou cancelado
 
             - EstacaoDeRecarga estacaoDeRecarga
-            - Motorista motorista // vai puxar o motorista pela autenticacao
+            - Motorista motorista
             - Veiculo veiculo
+            - ConsultaEstacoesProximas estacoesProximas
         }
         ValueObject IdAgendamento
         {
             int idAgendamento key
         }
+
 		Service ServicoAgendamento
 		{
 			int realizarAgendamento(@HorarioDisponivel horarioAgendamento, @Veiculo veiculo, @EstacaoDeRecarga estacao); // retornar o id do agendamento
-			int cancelarAgendamento(@IdAgendamento idAgendamento); // retornar o id do agendamento e define o valorTotalRecarga
-			int getCodigoLiberacao(@IdAgendamento idAgendamento);
-			int concluirAgendamento(@IdAgendamento idAgendamento); // define o valorTotalRecarga
+			int cancelarAgendamento(int idAgendamento); // retornar o id do agendamento
 		}
-		enum StatusAgendamento
+		Service GetCodigoLiberacao
 		{
-			ATIVO, CANCELADO, CONCLUIDO
+			int getCodigoLiberacao(@Agendamento idAgendamento);
 		}
 	}
+
 	Aggregate Avaliacao
 	{
 		Entity Avaliacao
 		{
 			aggregateRoot
-			
+
 			- IdAgendamento idAgendamento
 			- Avaliacoes avaliacaoDada
 			String descricaoExperiencia nullable
@@ -222,22 +218,14 @@ BoundedContext AutenticacaoEAutorizacaoContext implements AutenticacaoEAutorizac
 
             String login
             String senha
-            - TipoUsuario tipoUsuario
-			- IdUsuario cpfOuCnpjUsuario
+            boolean tipoUsuario // Motorista ou Fornecedor
         }
-		ValueObject IdUsuario
-		{
-			int idUsuario key
-		}
+
     	Service NovosUsuarios
     	{
     		// Nao criamos a funcao de deletar contas aqui pois os subdominios especificos realizam isso
-    		int criarConta(String login, String senha, @TipoUsuario tipoUsuario, @IdUsuario cpfOuCnpjUsuario);
+    		int criarConta(String login, String senha, boolean tipoUsuario);
     	}
-		enum TipoUsuario
-		{
-			MOTORISTA, FORNECEDOR
-		}
     }
 }
 
@@ -245,13 +233,18 @@ BoundedContext NotificacoesContext implements NotificacoesDomain
 {
     Aggregate Notificacao
     {
+    	enum TipoNotificacoes
+    	{
+    		CONFIRMAR_CANCELAMENTO, INFORMAR_CANCELAMENTO, SISTEMA
+    	}
+
         Entity Notificacao
         {
-            - List <IdUsuario> destinatarios
-            - IdUsuario origem nullable
-			String descricaoEvento
+            - List <Usuario> destinatarios
+            - Usuario origem nullable
+			- TipoNotificacoes tipoNotificacao
             String mensagem
-        }    
+        }
     }
 }
 
@@ -261,25 +254,15 @@ BoundedContext RelatoriosSobreAsEstacoesDeRecargaContext implements RelatoriosSo
 	{
 		Entity Desempenho
 		{
-			aggregateRoot 
+			aggregateRoot
 			- EstacaoDeRecarga estacaoDeRecarga
 			- PeriodoDeAnalise periodoDeAnalise
-			- Relatorio relatorio
 		}
+
 		ValueObject PeriodoDeAnalise
 		{
 			DateTime inicioDaAnalise
 			DateTime fimDaAnalise
-		}
-		ValueObject Relatorio
-		{
-			int idRelatorio
-			String relatorio
-		}
-		Service ServicoRelatorio
-		{
-			int alterarPeriodoDeAnalise(@PeriodoDeAnalise novoPeriodo);
-			@Relatorio gerarRelatorio(@EstacaoDeRecarga estacao, @PeriodoDeAnalise periodo);
 		}
 	}
 }
@@ -291,35 +274,35 @@ Domain RayChargeDomain
     Subdomain CadastroEControleDeFornecedoresDomain
     {
         type = GENERIC_SUBDOMAIN
-		domainVisionStatement = "Subdomínio responsável por armazenar tudo referente ao Fornecedor e Estações de Recarga."
+		domainVisionStatement = "Subdomínio responsável por armazenar tudo referente ao Fornecedor e Estações de Recarga"
     }
 
 	// Subdomínio de Cadastro e Controle dos Motoristas (genérico)
     Subdomain CadastroEControleDeMotoristasDomain
     {
         type = GENERIC_SUBDOMAIN
-		domainVisionStatement = "Subdomínio responsável por armazenar tudo referente ao Motorista e Veículos da Recarga."
+		domainVisionStatement = "Subdomínio responsável por armazenar tudo referente ao Motorista e Veículos da recarga"
     }
 
 	// Subdomínio de Consulta e Agendamento de Recarga (principal)
     Subdomain RealizacaoDeRecargaDomain
     {
         type = CORE_DOMAIN
-		domainVisionStatement = "Subdomínio responsável por mostrar para os Motoristas as Estações Próximas, permitir que realizem Agendamentos e garantir a realização da Recarga."
+		domainVisionStatement = "Subdomínio responsável por mostrar para os Motoristas as Estações Próximas e permitir que realizem Agendamentos."
     }
 
 	// Subdomínio de Autenticação e Autorização (suporte)
     Subdomain AutenticacaoEAutorizacaoDomain
     {
         type = SUPPORTING_DOMAIN
-		domainVisionStatement = "Subdomínio responsável pela autenticação e autorização de Motoristas e Fornecedores."
+		domainVisionStatement = "Subdomínio responsável pela autenticação e autorização de Motoristas e Fornecedores"
     }
 
 	// Subdomínio de Notificações (suporte)
     Subdomain NotificacoesDomain
     {
         type = SUPPORTING_DOMAIN
-		domainVisionStatement = "Subdomínio responsável por enviar alertas e atualizações aos Motoristas e Fornecedores em resposta a eventos específicos que ocorrem no sistema."
+		domainVisionStatement = "Subdomínio responsável por enviar alertas e atualizações aos Motoristas e Fornecedores em resposta a eventos específicos que ocorrem no sistema"
     }
 
 	// verificar necessidade
@@ -327,6 +310,6 @@ Domain RayChargeDomain
     Subdomain RelatoriosSobreAsEstacoesDeRecargaDomain
     {
         type = SUPPORTING_DOMAIN
-		domainVisionStatement = "Subdomínio responsável por informar ao Fornecedor sobre o desempenho das suas Estações de Recarga."
+		domainVisionStatement = "Subdomínio responsável por informar ao Fornecedor sobre o desempenho das suas Estações de recarga"
     }
 }
