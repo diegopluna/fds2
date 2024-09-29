@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.cesar.school.fds2</groupId>
-  <artifactId>domain</artifactId>
+  <artifactId>raycharge-domain</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <packaging>pom</packaging>

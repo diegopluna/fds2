@@ -13,21 +13,102 @@
   </parent>
 
   <groupId>com.cesar.school.fds2</groupId>
-  <artifactId>raycharge</artifactId>
+  <artifactId>raycharge-core</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <!-- <build>
+  <build>
     <plugins>
       <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>genereate-sources</phase>
+            <goals>
+              <goal>graph</goal>
+            </goals>
+          </execution>
+        </executions>
+        <groupId>com.github.ferstl</groupId>
+        <artifactId>depgraph-maven-plugin</artifactId>
+        <version>4.0.3</version>
+        <configuration>
+					<graphFormat>puml</graphFormat>
+					<showDuplicates>true</showDuplicates>
+					<includes>
+						<include>dev.sauloaraujo.sgb*</include>
+					</includes>
+				</configuration>
       </plugin>
     </plugins>
-  </build> -->
+    <pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											com.github.ferstl
+										</groupId>
+										<artifactId>
+											depgraph-maven-plugin
+										</artifactId>
+										<versionRange>
+											[4.0.3,)
+										</versionRange>
+										<goals>
+											<goal>graph</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+  </build>
 
   <dependencyManagement>
-    <dependencies></dependencies>
+    <dependencies>
+      <dependency>
+        <groupId>commons-validator</groupId>
+        <artifactId>commons-validator</artifactId>
+        <version>1.9.0</version>
+      </dependency>
+
+      <dependency>
+				<groupId>org.jmolecules</groupId>
+				<artifactId>jmolecules-ddd</artifactId>
+				<version>1.9.0</version>
+			</dependency>
+
+      <dependency>
+				<groupId>org.jmolecules</groupId>
+				<artifactId>jmolecules-events</artifactId>
+				<version>1.9.0</version>
+			</dependency>
+
+      <dependency>
+				<groupId>org.jmolecules</groupId>
+				<artifactId>jmolecules-layered-architecture</artifactId>
+				<version>1.9.0</version>
+			</dependency>
+
+      <dependency>
+        <groupId>org.modelmapper</groupId>
+        <artifactId>modelmapper</artifactId>
+        <version>3.2.1</version>
+      </dependency>
+    </dependencies>
   </dependencyManagement>
 
 

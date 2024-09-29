@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cesar.school.fds2</groupId>
-    <artifactId>infra</artifactId>
+    <artifactId>raycharge-infra</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
@@ -14,6 +14,8 @@
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-    <modules></modules>
+    <modules>
+        <module>persistence</module>
+    </modules>
 
 </project>
