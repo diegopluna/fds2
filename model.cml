@@ -40,8 +40,9 @@ BoundedContext CadastroEControleDeFornecedoresContext implements CadastroEContro
 
 			- IdUsuario usuarioFornecedor
             String nomeFornecedor
-            - List <EstacaoDeRecarga> estacoesDeRecarga
-            - List <Agendamento> historicoDeUso // idAgendamento
+			- IdFornecedor idFornecedor
+            - List <IdEstacao> estacoesDeRecarga
+            - List <IdAgendamento> historicoDeUso // idAgendamento
 		}
 		Service AlteracoesContaFornecedor
 		{
@@ -49,12 +50,17 @@ BoundedContext CadastroEControleDeFornecedoresContext implements CadastroEContro
 			int deletarConta(@IdUsuario usuarioFornecedor);
 			int alterarNomeFornecedor(String novoNome);
 		}
+		ValueObject IdFornecedor
+		{
+			int idFornecedor key
+		}
 		Entity EstacaoDeRecarga
         {
             String nomeDaEstacao
+			- IdEstacao idEstacao
         	int quantidadeDeCarregadores
-			- Fornecedor fornecedor
-
+			- IdFornecedor idFornecedor
+            
 			- HorarioDisponivel horarioFuncionamento
             - Endereco enderecoEstacao
             - StatusEstacao statusEstacao
@@ -64,11 +70,11 @@ BoundedContext CadastroEControleDeFornecedoresContext implements CadastroEContro
 			int tempoPorAgendamento
 
             - List <HorarioDisponivel> horariosDisponiveis
-            - List <Agendamento> historicoDeUso // idAgendamento
+            - List <IdAgendamento> historicoDeUso // idAgendamento
         }
 		Service AlteracoesEstacao
 		{
-			int adicionarEstacao(int quantidadeDeCarregadores, @HorarioDisponivel horarioFuncionamento, @Endereco enderecoEstacao, String nomeDaEstacao, int precoMinimo, int precoPKwH, int tempoPorAgendamento);
+			int adicionarEstacao(int quantidadeDeCarregadores, @HorarioDisponivel horarioFuncionamento, @Endereco enderecoEstacao, String nomeDaEstacao, @IdEstacao idEstacao, int precoMinimo, int precoPKwH, int tempoPorAgendamento);
 			int alterarQuantidadeCarregadores(int novaQuantidade);
 			int alterarHorarioFuncionamento(@HorarioDisponivel novoHorario);
 			String alterarNomeEstacao(String novoNome);
@@ -83,6 +89,10 @@ BoundedContext CadastroEControleDeFornecedoresContext implements CadastroEContro
             DateTime inicioAgendamento
             DateTime fimAgendamento
         }
+		ValueObject IdEstacao
+		{
+			int idEstacao key
+		}
 		ValueObject Endereco
 		{
 			String cep
@@ -111,21 +121,27 @@ BoundedContext CadastroEControleDeMotoristasContext implements CadastroEControle
             aggregateRoot
 
             - IdUsuario usuarioMotorista
+			- IdMotorista idMotorista
             String nomeMotorista
-            - List <Veiculo> veiculos
-            - List <Agendamento> historicoDeUso // idAgendamento
+            - List <IdVeiculo> veiculos
+            - List <IdAgendamento> historicoDeUso // idAgendamento
         }
     	Service AlteracoesContaMotorista
 		{
 			int deletarConta(@IdUsuario usuarioMotorista);
 			int alterarNomeMotorista(String novoNome);
 		}
+		ValueObject IdMotorista
+		{
+			int idMotorista key
+		}
         Entity Veiculo
         {
-            - Motorista motorista
+            - IdMotorista motorista
             String nomeVeiculo
+			- IdVeiculo idVeiculo
             String placaVeiculo
-            - List <Agendamento> historicoDeUso // idAgendamento
+            - List <IdAgendamento> historicoDeUso // idAgendamento
 			// adicionar Marca e Modelo
         }
         Service AlteracoesVeiculo
@@ -134,6 +150,10 @@ BoundedContext CadastroEControleDeMotoristasContext implements CadastroEControle
 			int deletarVeiculo(@Veiculo veiculo);
 			int alterarNomeVeiculo(String novoNome);
 			int alterarPlacaVeiculo(String novaPlaca);
+		}
+		ValueObject IdVeiculo
+		{
+			int idVeiculo key
 		}
     }
 }
@@ -151,7 +171,7 @@ BoundedContext RealizacaoDeRecargaContext implements RealizacaoDeRecargaDomain
 			aggregateRoot
 		 	- Endereco enderecoAtualMotorista
 			int raioDeBusca
-			- List <EstacaoDeRecarga> estacoesProximas
+			- List <IdEstacao> estacoesProximas
 		}
 		Service SetNovoRaioDeBusca
 		{
@@ -172,9 +192,9 @@ BoundedContext RealizacaoDeRecargaContext implements RealizacaoDeRecargaDomain
             - StatusAgendamento statusAgendamento
 			int valorTotalRecarga
 
-            - EstacaoDeRecarga estacaoDeRecarga
-            - Motorista motorista // vai puxar o motorista pela autenticacao
-            - Veiculo veiculo
+            - IdEstacao estacaoDeRecarga
+            - IdMotorista motorista // vai puxar o motorista pela autenticacao
+            - IdVeiculo veiculo
         }
         ValueObject IdAgendamento
         {
@@ -261,8 +281,8 @@ BoundedContext RelatoriosSobreAsEstacoesDeRecargaContext implements RelatoriosSo
 	{
 		Entity Desempenho
 		{
-			aggregateRoot
-			- EstacaoDeRecarga estacaoDeRecarga
+			aggregateRoot 
+			- IdEstacao estacaoDeRecarga
 			- PeriodoDeAnalise periodoDeAnalise
 			- Relatorio relatorio
 		}
