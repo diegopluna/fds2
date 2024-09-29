@@ -1,0 +1,24 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'Notificacao' Aggregate" <<Rectangle>> {
+	enum TipoNotificacoes {
+		CONFIRMAR_CANCELAMENTO
+		INFORMAR_CANCELAMENTO
+		SISTEMA
+	}
+	class Notificacao <<(E,DarkSeaGreen) Entity>> {
+		String mensagem
+		List<Usuario> destinatarios
+		Usuario[0..1] origem
+		TipoNotificacoes tipoNotificacao
+	}
+}
+Notificacao --> TipoNotificacoes : tipoNotificacao
+legend left
+  This bounded context implements the subdomain 'NotificacoesDomain'.
+end legend
+
+
+@enduml

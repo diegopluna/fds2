@@ -1,0 +1,36 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'Motorista' Aggregate" <<Rectangle>> {
+	class Motorista <<(A,#fffab8) Aggregate Root>> {
+		String nomeMotorista
+		List<Veiculo> veiculos
+		List<Agendamento> historicoDeUso
+		Usuario usuarioMotorista
+	}
+	class Veiculo <<(E,DarkSeaGreen) Entity>> {
+		String placaVeiculo
+		String nomeVeiculo
+		List<Agendamento> historicoDeUso
+		Motorista motorista
+	}
+	class AlteracoesContaMotorista <<(S,DarkSeaGreen) Service>> {
+		int deletarConta(Usuario usuarioMotorista)
+		int alterarNomeMotorista(String novoNome)
+	}
+	class AlteracoesVeiculo <<(S,DarkSeaGreen) Service>> {
+		int deletarVeiculo(Veiculo veiculo)
+		int alterarNomeVeiculo(String novoNome)
+		int alterarPlacaVeiculo(String novaPlaca)
+		int adicionarVeiculo(String placaVeiculo, String nomeVeiculo)
+	}
+}
+Veiculo --> Motorista : motorista
+Motorista "1" *--> "*" Veiculo : veiculos
+legend left
+  This bounded context implements the subdomain 'CadastroEControleDeMotoristasDomain'.
+end legend
+
+
+@enduml

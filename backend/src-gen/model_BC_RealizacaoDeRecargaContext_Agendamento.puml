@@ -1,0 +1,30 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'Agendamento' Aggregate" <<Rectangle>> {
+	class Agendamento <<(A,#fffab8) Aggregate Root>> {
+		int codigoLiberacaoCarregador
+		boolean statusAgendamento
+		IdAgendamento idAgendamento
+		HorarioDisponivel horarioAgendamento
+		EstacaoDeRecarga estacaoDeRecarga
+		Motorista motorista
+		Veiculo veiculo
+		ConsultaEstacoesProximas estacoesProximas
+	}
+	class IdAgendamento <<(V,DarkSeaGreen) Value Object>> {
+		int idAgendamento
+	}
+	class ServicoAgendamento <<(S,DarkSeaGreen) Service>> {
+		int realizarAgendamento(HorarioDisponivel horarioAgendamento, Veiculo veiculo, EstacaoDeRecarga estacao)
+		int cancelarAgendamento(int idAgendamento)
+	}
+	class GetCodigoLiberacao <<(S,DarkSeaGreen) Service>> {
+		int getCodigoLiberacao(Agendamento idAgendamento)
+	}
+}
+Agendamento --> IdAgendamento : idAgendamento
+
+
+@enduml

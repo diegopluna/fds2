@@ -1,0 +1,17 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'Autenticacao' Aggregate" <<Rectangle>> {
+	class Usuario <<(A,#fffab8) Aggregate Root>> {
+		String login
+		String senha
+		boolean tipoUsuario
+	}
+	class NovosUsuarios <<(S,DarkSeaGreen) Service>> {
+		int criarConta(String login, String senha, boolean tipoUsuario)
+	}
+}
+
+
+@enduml

@@ -1,0 +1,60 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'ConsultaEstacoesProximas' Aggregate" <<Rectangle>> {
+	class ConsultaEstacoesProximas <<(A,#fffab8) Aggregate Root>> {
+		int raioDeBusca
+		Endereco enderecoAtualMotorista
+		List<EstacaoDeRecarga> estacoesProximas
+	}
+	class SetNovoRaioDeBusca <<(S,DarkSeaGreen) Service>> {
+		int setNovoRaio(int novoRaio)
+	}
+}
+package "'Agendamento' Aggregate" <<Rectangle>> {
+	class Agendamento <<(A,#fffab8) Aggregate Root>> {
+		int codigoLiberacaoCarregador
+		boolean statusAgendamento
+		IdAgendamento idAgendamento
+		HorarioDisponivel horarioAgendamento
+		EstacaoDeRecarga estacaoDeRecarga
+		Motorista motorista
+		Veiculo veiculo
+		ConsultaEstacoesProximas estacoesProximas
+	}
+	class IdAgendamento <<(V,DarkSeaGreen) Value Object>> {
+		int idAgendamento
+	}
+	class ServicoAgendamento <<(S,DarkSeaGreen) Service>> {
+		int realizarAgendamento(HorarioDisponivel horarioAgendamento, Veiculo veiculo, EstacaoDeRecarga estacao)
+		int cancelarAgendamento(int idAgendamento)
+	}
+	class GetCodigoLiberacao <<(S,DarkSeaGreen) Service>> {
+		int getCodigoLiberacao(Agendamento idAgendamento)
+	}
+}
+package "'Avaliacao' Aggregate" <<Rectangle>> {
+	class Avaliacao <<(A,#fffab8) Aggregate Root>> {
+		String[0..1] descricaoExperiencia
+		IdAgendamento idAgendamento
+		Avaliacoes avaliacaoDada
+	}
+	enum Avaliacoes {
+		UM
+		DOIS
+		TRES
+		QUATRO
+		CINCO
+	}
+}
+Agendamento --> IdAgendamento : idAgendamento
+Avaliacao --> IdAgendamento : idAgendamento
+Avaliacao --> Avaliacoes : avaliacaoDada
+Agendamento --> ConsultaEstacoesProximas : estacoesProximas
+legend left
+  This bounded context implements the subdomain 'RealizacaoDeRecargaDomain'.
+end legend
+
+
+@enduml
