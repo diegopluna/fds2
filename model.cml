@@ -60,7 +60,7 @@ BoundedContext CadastroEControleDeFornecedoresContext implements CadastroEContro
 			- IdEstacao idEstacao
         	int quantidadeDeCarregadores
 			- IdFornecedor idFornecedor
-            
+
 			- HorarioDisponivel horarioFuncionamento
             - Endereco enderecoEstacao
             - StatusEstacao statusEstacao
@@ -243,7 +243,7 @@ BoundedContext AutenticacaoEAutorizacaoContext implements AutenticacaoEAutorizac
             String login
             String senha
             - TipoUsuario tipoUsuario
-			- IdUsuario cpfOuCnpjUsuario
+			- IdUsuario id
         }
 		ValueObject IdUsuario
 		{
@@ -281,7 +281,7 @@ BoundedContext RelatoriosSobreAsEstacoesDeRecargaContext implements RelatoriosSo
 	{
 		Entity Desempenho
 		{
-			aggregateRoot 
+			aggregateRoot
 			- IdEstacao estacaoDeRecarga
 			- PeriodoDeAnalise periodoDeAnalise
 			- Relatorio relatorio

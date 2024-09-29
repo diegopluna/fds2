@@ -16,6 +16,7 @@
 
   <modules>
     <module>autenticacao</module>
+    <module>autenticacao-bdd</module>
     <module>common</module>
   </modules>
 

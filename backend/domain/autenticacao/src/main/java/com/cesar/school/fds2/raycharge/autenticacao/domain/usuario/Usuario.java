@@ -1,7 +1,7 @@
 package com.cesar.school.fds2.raycharge.autenticacao.domain.usuario;
 
 import static org.apache.commons.lang3.Validate.notBlank;
-import static org.apache.commons.lang3.Validate.notNull;
+import java.util.Objects;
 
 import org.jmolecules.ddd.types.AggregateRoot;
 
@@ -12,10 +12,10 @@ public class Usuario implements Cloneable, AggregateRoot<Usuario, IdUsuario> {
   private TipoUsuario tipoUsuario;
 
   public Usuario(IdUsuario id, String login, String senha, TipoUsuario tipoUsuario) {
-      this.id = notNull(id);
+      this.id = Objects.requireNonNull(id);
       this.login = notBlank(login);
       this.senha = notBlank(senha);
-      this.tipoUsuario = notNull(tipoUsuario);
+      this.tipoUsuario = Objects.requireNonNull(tipoUsuario);
   }
 
   public IdUsuario getId() {
@@ -43,7 +43,7 @@ public class Usuario implements Cloneable, AggregateRoot<Usuario, IdUsuario> {
   }
 
   public void setTipoUsuario(TipoUsuario tipoUsuario) {
-      this.tipoUsuario = notNull(tipoUsuario);
+      this.tipoUsuario = Objects.requireNonNull(tipoUsuario);
   }
 
   @Override
