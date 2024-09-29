@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-      <groupId>com.cesar.school.fds2</groupId>
+      <groupId>com.cesar.school.fds2.raycharge</groupId>
       <artifactId>raycharge-core</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <relativePath>../core</relativePath>

@@ -4,7 +4,7 @@
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.cesar.school.fds2</groupId>
+  <groupId>com.cesar.school.fds2.raycharge</groupId>
   <artifactId>raycharge-infra-persistence</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 

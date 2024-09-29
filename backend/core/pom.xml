@@ -12,7 +12,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
-  <groupId>com.cesar.school.fds2</groupId>
+  <groupId>com.cesar.school.fds2.raycharge</groupId>
   <artifactId>raycharge-core</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -35,7 +35,7 @@
 					<graphFormat>puml</graphFormat>
 					<showDuplicates>true</showDuplicates>
 					<includes>
-						<include>dev.sauloaraujo.sgb*</include>
+						<include>com.cesar.school.fds2.raycharge.*</include>
 					</includes>
 				</configuration>
       </plugin>
