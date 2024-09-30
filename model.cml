@@ -70,6 +70,8 @@ BoundedContext CadastroEControleDeFornecedoresContext implements CadastroEContro
             int precoMinimo
             int precoPKwH
 
+            int distancia
+
 			int tempoPorAgendamento
 
             - List <HorarioDisponivel> horariosDisponiveis

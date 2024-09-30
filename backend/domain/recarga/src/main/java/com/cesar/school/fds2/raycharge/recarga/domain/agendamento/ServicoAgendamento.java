@@ -1,5 +1,6 @@
 package com.cesar.school.fds2.raycharge.recarga.domain.agendamento;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
@@ -17,65 +18,57 @@ import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
 
 @Service
-public class AgendamentoService {
+public class ServicoAgendamento {
 
     private final AgendamentoRepositorio agendamentoRepositorio;
 
-    public AgendamentoService(AgendamentoRepositorio agendamentoRepositorio) {
+    public ServicoAgendamento(AgendamentoRepositorio agendamentoRepositorio) {
         Objects.requireNonNull(agendamentoRepositorio, "O repositório de agendamentos não pode ser nulo");
         this.agendamentoRepositorio = agendamentoRepositorio;
     }
 
-    /**
-     * Realiza um novo agendamento.
-     *
-     * @param horarioAgendamento Horário do agendamento.
-     * @param veiculo            Veículo do motorista.
-     * @param estacao            Estação de recarga selecionada.
-     * @return Id do novo agendamento.
-     */
     public IdAgendamento realizarAgendamento(IdMotorista idMotorista, HorarioDisponivel horarioAgendamento, IdVeiculo veiculo, IdEstacao estacao) {
-        // Generate a new unique ID for the Agendamento
-        IdAgendamento idAgendamento = new IdAgendamento(UUID.randomUUID().toString().hashCode()); // Changed to hashCode to match expected type
 
-        // Create a new Agendamento instance
+        IdAgendamento idAgendamento = new IdAgendamento(UUID.randomUUID().toString().hashCode());
+
         Agendamento agendamento = new Agendamento(
                 idAgendamento,
-                generateCodigoLiberacao(), // Generate a release code
+                generateCodigoLiberacao(),
                 horarioAgendamento,
                 StatusAgendamento.ATIVO,
-                0, // valorTotalRecarga will be calculated upon completion
-                new ArrayList<>(), // Empty list of Avaliacoes
+                0,
+                new ArrayList<>(),
                 estacao,
-                idMotorista, // Using the method from MotoristaRepositorio
+                idMotorista,
                 veiculo
         );
-        //comentario.
-        // Save the Agendamento to the repository
         agendamentoRepositorio.saveAgendamento(agendamento);
 
-        // Return the IdAgendamento
         return idAgendamento;
     }
 
-    /**
-     * Cancela um agendamento existente.
-     *
-     * @param idAgendamento Id do agendamento a ser cancelado.
-     * @return Id do agendamento cancelado.
-     */
-    public IdAgendamento cancelarAgendamento(IdAgendamento idAgendamento) {
-        // Retrieve the Agendamento from the repository
+    // HISTÓRIA 3
+    public IdAgendamento cancelarAgendamento(IdAgendamento idAgendamento, boolean forcarReembolso) {
         Agendamento agendamento = agendamentoRepositorio.findById(idAgendamento);
 
         if (agendamento != null && agendamento.getStatusAgendamento() == StatusAgendamento.ATIVO) {
-            // Update the status to CANCELADO
             agendamento.setStatusAgendamento(StatusAgendamento.CANCELADO);
+
+            HorarioDisponivel horarioAgendamento = agendamento.getHorarioAgendamento();
+            LocalDateTime inicioAgendamento = horarioAgendamento.getInicioAgendamento();
+            LocalDateTime agora = LocalDateTime.now();
+
+            if (inicioAgendamento.isBefore(agora.plusHours(24)) || forcarReembolso) {
+                // Se faltar menos de 24h, aplicar o preço mínimo
+                agendamento.setValorTotalRecarga(agendamento.getValorMinimo());
+            } else {
+                // Se faltar mais de 24h, valor total da recarga é 0
+                agendamento.setValorTotalRecarga(0);
+            }
 
             // Save the updated Agendamento
             agendamentoRepositorio.saveAgendamento(agendamento);
 
-            // Return the IdAgendamento
             return idAgendamento;
         } else {
             // Handle the case where the Agendamento doesn't exist or is not active

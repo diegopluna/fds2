@@ -16,7 +16,8 @@ public class Agendamento implements Cloneable, AggregateRoot<Agendamento, IdAgen
     private int codigoLiberacaoCarregador;
     private HorarioDisponivel horarioAgendamento;
     private StatusAgendamento statusAgendamento;
-    private int valorTotalRecarga;
+    private float valorTotalRecarga;
+    private float valorMinimo;
     private List<Avaliacoes> avaliacao;
     private IdEstacao estacaoDeRecarga;
     private IdMotorista motorista;
@@ -65,11 +66,19 @@ public class Agendamento implements Cloneable, AggregateRoot<Agendamento, IdAgen
         this.statusAgendamento = statusAgendamento;
     }
 
-    public int getValorTotalRecarga() {
+    public float getValorMinimo() {
+        return valorMinimo;
+    }
+
+    public void setValorMinimo(float valorMinimo) {
+        this.valorMinimo = valorMinimo;
+    }
+
+    public float getValorTotalRecarga() {
         return valorTotalRecarga;
     }
 
-    public void setValorTotalRecarga(int valorTotalRecarga) {
+    public void setValorTotalRecarga(float valorTotalRecarga) {
         this.valorTotalRecarga = valorTotalRecarga;
     }
 

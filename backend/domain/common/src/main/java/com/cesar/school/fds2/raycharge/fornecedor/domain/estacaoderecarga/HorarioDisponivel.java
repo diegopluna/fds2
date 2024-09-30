@@ -1,23 +1,23 @@
 package com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.jmolecules.ddd.types.ValueObject;
 
 public class HorarioDisponivel implements ValueObject {
-  private final Date inicioAgendamento;
-  private final Date fimAgendamento;
+  private final LocalDateTime inicioAgendamento;
+  private final LocalDateTime fimAgendamento;
 
-  public HorarioDisponivel(Date inicioAgendamento, Date fimAgendamento) {
+  public HorarioDisponivel(LocalDateTime inicioAgendamento, LocalDateTime fimAgendamento) {
     this.inicioAgendamento = inicioAgendamento;
     this.fimAgendamento = fimAgendamento;
   }
 
-  public Date getInicioAgendamento() {
+  public LocalDateTime getInicioAgendamento() {
     return inicioAgendamento;
   }
 
-  public Date getFimAgendamento() {
+  public LocalDateTime getFimAgendamento() {
     return fimAgendamento;
   }
 
@@ -40,9 +40,8 @@ public class HorarioDisponivel implements ValueObject {
     return inicioAgendamento.toString() + " - " + fimAgendamento.toString();
   }
 
-    public int getDurationInMinutes(HorarioDisponivel horario) {
-      // revisar
-      long diffInMillies = Math.abs(horario.getFimAgendamento().getTime() - horario.getInicioAgendamento().getTime());
-      return (int) diffInMillies;
-    }
+  public int getDurationInMinutes(HorarioDisponivel horario) {
+    long diffInMinutes = java.time.Duration.between(horario.getInicioAgendamento(), horario.getFimAgendamento()).toMinutes();
+    return (int) diffInMinutes;
+  }
 }

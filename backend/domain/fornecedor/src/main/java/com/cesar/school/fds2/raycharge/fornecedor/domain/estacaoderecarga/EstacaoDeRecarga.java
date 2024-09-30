@@ -17,12 +17,13 @@ public class EstacaoDeRecarga implements Cloneable, AggregateRoot<EstacaoDeRecar
   private StatusEstacao statusEstacao;
   private int precoMinimo;
   private int precoPKwH;
+  private int distancia;
   private int tempoPorAgendamento;
   private List<HorarioDisponivel> horarioDisponiveis;
   private List<IdAgendamento> historicoDeUso;
 
 
-  public EstacaoDeRecarga(IdEstacao idEstacao, IdFornecedor idFornecedor, String nomeDaEstacao, int quantidadeDeCarregadores, HorarioDisponivel horarioFuncionamento, Endereco enderecoEstacao, StatusEstacao statusEstacao, int precoMinimo, int precoPKwH, int tempoPorAgendamento, List<HorarioDisponivel> horarioDisponiveis, List<IdAgendamento> historicoDeUso) {
+  public EstacaoDeRecarga(IdEstacao idEstacao, IdFornecedor idFornecedor, String nomeDaEstacao, int quantidadeDeCarregadores, HorarioDisponivel horarioFuncionamento, Endereco enderecoEstacao, StatusEstacao statusEstacao, int precoMinimo, int precoPKwH, int distancia, int tempoPorAgendamento, List<HorarioDisponivel> horarioDisponiveis, List<IdAgendamento> historicoDeUso) {
     this.idEstacao = idEstacao;
     this.idFornecedor = idFornecedor;
     this.nomeDaEstacao = nomeDaEstacao;
@@ -32,6 +33,7 @@ public class EstacaoDeRecarga implements Cloneable, AggregateRoot<EstacaoDeRecar
     this.statusEstacao = statusEstacao;
     this.precoMinimo = precoMinimo;
     this.precoPKwH = precoPKwH;
+    this.distancia = 0; // distancia como NULL
     this.tempoPorAgendamento = tempoPorAgendamento;
     this.horarioDisponiveis = horarioDisponiveis;
     this.historicoDeUso = historicoDeUso;
@@ -100,6 +102,14 @@ public class EstacaoDeRecarga implements Cloneable, AggregateRoot<EstacaoDeRecar
 
   public void setPrecoPKwH(int precoPKwH) {
     this.precoPKwH = precoPKwH;
+  }
+
+  public int getDistancia() {
+    return distancia;
+  }
+
+  public void setDistancia(int distancia) {
+    this.distancia = distancia;
   }
 
   public int getTempoPorAgendamento() {
