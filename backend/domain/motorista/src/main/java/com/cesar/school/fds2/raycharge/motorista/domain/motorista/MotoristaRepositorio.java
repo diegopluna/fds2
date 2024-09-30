@@ -9,6 +9,6 @@ public interface MotoristaRepositorio {
     void saveMotorista(Motorista motorista);
     Optional<Motorista> findById(IdMotorista idMotorista);
     Optional<Motorista> findByUsuarioMotorista(IdUsuario usuarioMotorista);
-    void updateMotorista(Motorista motorista);
-    void deleteMotorista(IdMotorista idMotorista);
+    Optional<Motorista> updateMotorista(Motorista motorista);
+    Optional<Motorista> deleteMotorista(IdMotorista idMotorista);
 }

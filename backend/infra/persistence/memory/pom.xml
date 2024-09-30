@@ -25,6 +25,12 @@
 			<artifactId>raycharge-domain-motorista</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-	</dependencies>
+	  <dependency>
+		  <groupId>com.cesar.school.fds2.raycharge</groupId>
+		  <artifactId>raycharge-domain-motorista</artifactId>
+		  <version>0.0.1-SNAPSHOT</version>
+		  <scope>compile</scope>
+	  </dependency>
+  </dependencies>
 
 </project>

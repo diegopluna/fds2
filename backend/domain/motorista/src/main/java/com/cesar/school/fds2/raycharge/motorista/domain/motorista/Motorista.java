@@ -3,7 +3,7 @@ package com.cesar.school.fds2.raycharge.motorista.domain.motorista;
 import static org.apache.commons.lang3.Validate.notBlank;
 import java.util.Objects;
 import java.util.ArrayList;
-import java.util.List; 
+import java.util.List;
 
 import com.cesar.school.fds2.raycharge.autenticacao.domain.usuario.IdUsuario;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
@@ -24,7 +24,7 @@ public class Motorista implements Cloneable, AggregateRoot<Motorista, IdMotorist
         this.veiculos = new ArrayList<>(veiculos);
         this.historicoDeUso = new ArrayList<>(historicoDeUso);
     }
-    
+
     public IdMotorista getIdMotorista() {
         return idMotorista;
     }
@@ -68,5 +68,10 @@ public class Motorista implements Cloneable, AggregateRoot<Motorista, IdMotorist
       } catch (CloneNotSupportedException e) {
           throw new AssertionError();
       }
+    }
+
+    @Override
+    public IdMotorista getId() {
+        return null;
     }
 }
