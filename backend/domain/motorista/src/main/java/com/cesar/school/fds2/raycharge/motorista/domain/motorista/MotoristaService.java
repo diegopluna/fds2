@@ -1,11 +1,11 @@
 package com.cesar.school.fds2.raycharge.motorista.domain.motorista;
 
 import java.util.List; 
-
-import com.cesar.school.fds2.raycharge.autenticacao.domain.usuario.*;
-import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
-
 import java.util.Objects;
+
+import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
+import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
+import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
 
 public class MotoristaService {
     private final MotoristaRepositorio motoristaRepositorio;

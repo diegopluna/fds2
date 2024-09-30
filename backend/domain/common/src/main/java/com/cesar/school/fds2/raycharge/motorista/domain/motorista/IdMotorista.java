@@ -1,12 +1,10 @@
 package com.cesar.school.fds2.raycharge.motorista.domain.motorista;
 
-import static org.apache.commons.lang3.Validate.isTrue;
-
 import java.util.Objects;
 
-import com.cesar.school.fds2.raycharge.autenticacao.domain.usuario.IdUsuario;
-import org.jmolecules.ddd.types.ValueObject;
+import static org.apache.commons.lang3.Validate.isTrue;
 import org.jmolecules.ddd.types.Identifier;
+import org.jmolecules.ddd.types.ValueObject;
 
 public class IdMotorista implements ValueObject, Identifier {
     private final int id;

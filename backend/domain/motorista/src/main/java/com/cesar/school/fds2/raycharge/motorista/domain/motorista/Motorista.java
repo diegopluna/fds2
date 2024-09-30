@@ -1,13 +1,15 @@
 package com.cesar.school.fds2.raycharge.motorista.domain.motorista;
 
-import static org.apache.commons.lang3.Validate.notBlank;
-import java.util.Objects;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import com.cesar.school.fds2.raycharge.autenticacao.domain.usuario.IdUsuario;
-import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
+import static org.apache.commons.lang3.Validate.notBlank;
 import org.jmolecules.ddd.types.AggregateRoot;
+
+import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
+import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
+import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
 
 public class Motorista implements Cloneable, AggregateRoot<Motorista, IdMotorista> {
 
