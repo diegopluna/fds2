@@ -1,19 +1,19 @@
 package com.cesar.school.fds2.raycharge.recarga.domain.agendamento;
 
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacoes;
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.StatusAgendamento;
-import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
-import com.cesar.school.fds2.raycharge.motorista.domain.motorista.MotoristaRepositorio;
-import org.jmolecules.ddd.annotation.Service;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.jmolecules.ddd.annotation.Service;
+
+import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacao;
+import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacoes;
+import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
+import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.StatusAgendamento;
+import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.EstacaoDeRecarga;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.HorarioDisponivel;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.IdEstacao;
+import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
 
 @Service
@@ -142,13 +142,13 @@ public class AgendamentoService {
         if (agendamento != null && agendamento.getStatusAgendamento() == StatusAgendamento.CONCLUIDO) {
             // Create a new Avaliacao
             Avaliacao novaAvaliacao = new Avaliacao (
-                    generateIdAvaliacao(), // Generate a new ID for the Avaliacao
-                    avaliacao,
-                    descricaoExperiencia
+                generateIdAvaliacao(), // Generate a new ID for the Avaliacao
+                avaliacao,
+                descricaoExperiencia
             );
 
             // Add the Avaliacao to the Agendamento
-            agendamento.getAvaliacoes().add(novaAvaliacao);
+            agendamentoRepositorio.saveAvaliacao(idAgendamento, novaAvaliacao);
 
             // Save the updated Agendamento
             agendamentoRepositorio.saveAgendamento(agendamento);
@@ -168,12 +168,15 @@ public class AgendamentoService {
     private int calculateValorTotal(Agendamento agendamento) {
         // Logic to calculate the total charge value based on business rules
         // For example, based on the duration and station pricing
-        int tempo = agendamento.getHorarioAgendamento().getDurationInMinutes();
-        EstacaoDeRecarga estacao = // Retrieve EstacaoDeRecarga based on agendamento.getEstacaoDeRecarga()
-                getEstacaoById(agendamento.getEstacaoDeRecarga());
-        int precoPorMinuto = estacao.getPrecoPKwH();
 
-        return Math.max(tempo * precoPorMinuto, estacao.getPrecoMinimo());
+        HorarioDisponivel horario = agendamento.getHorarioAgendamento();
+
+        int tempo = horario.getDurationInMinutes(horario);
+        IdEstacao estacao = agendamento.getEstacaoDeRecarga();
+        EstacaoDeRecarga estacaoDeRecarga = getEstacaoById(estacao);
+        int precoPorMinuto = estacaoDeRecarga.getPrecoPKwH();
+
+        return Math.max(tempo * precoPorMinuto, estacaoDeRecarga.getPrecoMinimo());
     }
 
     private EstacaoDeRecarga getEstacaoById(IdEstacao idEstacao) {

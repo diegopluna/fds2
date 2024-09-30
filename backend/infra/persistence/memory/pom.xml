@@ -32,6 +32,12 @@
 			<artifactId>raycharge-domain-motorista</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>raycharge-domain-recarga</artifactId>
+			<version>${project.version}</version>
+		</dependency>
   </dependencies>
 
 </project>

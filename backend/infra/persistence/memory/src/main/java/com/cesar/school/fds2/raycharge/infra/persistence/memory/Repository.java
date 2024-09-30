@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacao;
 import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.UsuarioRepositorio;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
@@ -24,6 +25,9 @@ import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Agendamento;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.AgendamentoRepositorio;
 
 public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio, AgendamentoRepositorio {
+  // Implementar metodos do repositorio aqui
+  private Map<IdFornecedor, Fornecedor> fornecedores = new HashMap<>();
+
   private Map<IdUsuario, Usuario> usuarios = new HashMap<>();
 
   private Map<IdMotorista, Motorista> motoristas = new HashMap<>();
@@ -47,10 +51,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
     veiculos.put(veiculo.getId(), veiculo);
   }
 
-  @Override
-  public void saveAgendamento(Agendamento agendamento) {
-    agendamentos.put(agendamento.getId(), agendamento);
-  }
 
   //usuario
   @Override
@@ -100,9 +100,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
 
   // fornecedor
 
-  // Implementar metodos do repositorio aqui
-  private Map<IdFornecedor, Fornecedor> fornecedores = new HashMap<>();
-
   @Override
   public Optional<Fornecedor> findByUsuarioFornecedor(IdUsuario usuarioFornecedor) {
     return fornecedores.values().stream()
@@ -122,8 +119,8 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
 
   // agendamento
   @Override
-  public void save(Agendamento agendamento) {
-
+  public void saveAgendamento(Agendamento agendamento) {
+    agendamentos.put(agendamento.getId(), agendamento);
   }
 
   @Override
@@ -139,5 +136,10 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   @Override
   public List<Agendamento> findAll() {
     return List.of();
+  }
+
+  @Override
+  public void saveAvaliacao(IdAgendamento idAgendamento, Avaliacao avaliacao) {
+
   }
 }

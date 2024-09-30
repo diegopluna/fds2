@@ -2,6 +2,7 @@ package com.cesar.school.fds2.raycharge.recarga.domain.agendamento;
 
 import java.util.List;
 
+import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacao;
 import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
 
 public interface AgendamentoRepositorio {
@@ -9,4 +10,5 @@ public interface AgendamentoRepositorio {
     Agendamento findById(IdAgendamento idAgendamento);
     void deleteById(IdAgendamento idAgendamento);
     List<Agendamento> findAll();
+    void saveAvaliacao(IdAgendamento idAgendamento, Avaliacao avaliacao);
 }

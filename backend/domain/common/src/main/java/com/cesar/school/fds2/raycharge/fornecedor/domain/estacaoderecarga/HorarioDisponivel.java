@@ -1,8 +1,8 @@
 package com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga;
 
-import org.jmolecules.ddd.types.ValueObject;
-
 import java.util.Date;
+
+import org.jmolecules.ddd.types.ValueObject;
 
 public class HorarioDisponivel implements ValueObject {
   private final Date inicioAgendamento;
@@ -39,4 +39,10 @@ public class HorarioDisponivel implements ValueObject {
   public String toString() {
     return inicioAgendamento.toString() + " - " + fimAgendamento.toString();
   }
+
+    public int getDurationInMinutes(HorarioDisponivel horario) {
+      // revisar
+      long diffInMillies = Math.abs(horario.getFimAgendamento().getTime() - horario.getInicioAgendamento().getTime());
+      return (int) diffInMillies;
+    }
 }
