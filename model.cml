@@ -153,6 +153,7 @@ BoundedContext CadastroEControleDeMotoristasContext implements CadastroEControle
 			// adicionar Marca e Modelo
         }
         Service VeiculoService
+        Service AlteracoesVeiculo
 		{
 			int adicionarVeiculo(String placaVeiculo, String nomeVeiculo);
 			int deletarVeiculo(@Veiculo veiculo);
