@@ -1,8 +1,11 @@
 package com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.jmolecules.ddd.annotation.Service;
 
@@ -94,5 +97,26 @@ public class EstacaoDeRecargaService {
 
     public List<EstacaoDeRecarga> listarEstacoes() {
         return estacaoRepositorio.listarEstacoes();
+    }
+
+    // HITSÓRIA 1
+    public List<EstacaoDeRecarga> listarEstacoesPorDistancia() {
+        List<EstacaoDeRecarga> estacoes = estacaoRepositorio.listarEstacoes().stream()
+            .map(EstacaoDeRecarga::clone)
+            .collect(Collectors.toList());
+
+        List<EstacaoDeRecarga> estacoesFiltradas = estacoes.stream()
+            .filter(estacao -> estacao.getHorarioDisponiveis() != null && !estacao.getHorarioDisponiveis().isEmpty())
+            .filter(estacao -> estacao.getStatusEstacao() != StatusEstacao.INATIVA) 
+            .collect(Collectors.toList());
+
+        for (EstacaoDeRecarga estacao : estacoesFiltradas) {
+            float distancia = Math.round((new Random().nextFloat() * 15) * 10) / 10.0f;
+            estacao.setDistancia(distancia);
+        }
+
+        estacoesFiltradas.sort(Comparator.comparing(EstacaoDeRecarga::getDistancia));
+
+        return estacoesFiltradas;
     }
 }
