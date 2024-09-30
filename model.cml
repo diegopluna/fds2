@@ -269,7 +269,7 @@ BoundedContext NotificacoesContext implements NotificacoesDomain
         {
             - List <IdUsuario> destinatarios
             - IdUsuario origem nullable
-			String descricaoEvento
+			- IdNotificacao id
             String mensagem
         }
     }
