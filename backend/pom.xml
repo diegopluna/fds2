@@ -12,9 +12,10 @@
 
   <modules>
     <module>application</module>
+    <module>core</module>
+    <!-- <module>docker</module> -->
     <module>infra</module>
     <module>domain</module>
-    <module>core</module>
   </modules>
 
   <properties>
