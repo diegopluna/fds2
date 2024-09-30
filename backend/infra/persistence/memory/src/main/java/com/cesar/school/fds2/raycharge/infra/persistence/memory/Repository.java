@@ -17,14 +17,15 @@ import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.IdFornecedor
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.MotoristaRepositorio;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.Motorista;
-
-import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.VeiculoRepositorio;
-import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.*;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Agendamento;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.AgendamentoRepositorio;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.IdNotificacao;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.Notificacao;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.NotificacaoRepositorio;
 
-public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio, AgendamentoRepositorio {
+
+public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio, AgendamentoRepositorio, NotificacaoRepositorio {
   // Implementar metodos do repositorio aqui
   private Map<IdFornecedor, Fornecedor> fornecedores = new HashMap<>();
 
@@ -35,6 +36,7 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   private Map<IdVeiculo, Veiculo> veiculos = new HashMap<>();
 
   private Map<IdAgendamento, Agendamento> agendamentos = new HashMap<>();
+
 
   @Override
   public void saveUsuario(Usuario usuario) {
@@ -141,5 +143,32 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   @Override
   public void saveAvaliacao(IdAgendamento idAgendamento, Avaliacao avaliacao) {
 
+  }
+
+  @Override
+  public Optional<Notificacao> findById(IdNotificacao id) {
+    // Implementação do método findById para NotificacaoRepositorio
+    return null; // Substitua por lógica real
+  }
+
+  @Override
+  public void deleteNotificacao(IdNotificacao id) {
+    // Implementação do método deleteNotificacao
+  }
+
+  @Override
+  public void saveNotificacao(Notificacao notificacao) {
+    // Implementação do método saveNotificacao
+  }
+
+  @Override
+  public void updateNotificacao(Notificacao notificacao) {
+    // Implementação do método updateNotificacao
+  }
+
+  @Override
+  public List<Notificacao> findByDestinatario(IdUsuario destinatario) {
+      // Implementação do método findByDestinatario
+      return List.of(); // Substitua por lógica real
   }
 }
