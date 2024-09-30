@@ -24,7 +24,10 @@ import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.*;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Agendamento;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.AgendamentoRepositorio;
 
-public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio, AgendamentoRepositorio {
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.NotificacaoRepositorio;
+
+
+public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio, AgendamentoRepositorio, NotificacaoRepositorio{
   // Implementar metodos do repositorio aqui
   private Map<IdFornecedor, Fornecedor> fornecedores = new HashMap<>();
 

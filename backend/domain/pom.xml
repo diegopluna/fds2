@@ -21,6 +21,7 @@
     <module>motorista</module>
     <module>common</module>
     <module>recarga</module>
+    <module>notificacao</module>
   </modules>
 
 </project>
