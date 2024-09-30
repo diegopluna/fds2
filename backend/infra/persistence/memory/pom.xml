@@ -19,6 +19,12 @@
 			<artifactId>raycharge-domain-autenticacao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-  </dependencies>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>raycharge-domain-motorista</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 
 </project>

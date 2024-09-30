@@ -18,6 +18,7 @@
     <module>autenticacao</module>
     <module>autenticacao-bdd</module>
     <module>common</module>
+    <module>motorista</module>
   </modules>
 
 </project>
