@@ -7,6 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="raycharge-domain-autenticacao-bdd" />
+        <module name="raycharge-presentation-backend" />
+        <module name="raycharge-docker" />
         <module name="raycharge-application" />
         <module name="raycharge-infra-persistence-memory" />
         <module name="raycharge-domain-autenticacao" />
@@ -17,10 +19,12 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="raycharge-application" options="-parameters" />
+      <module name="raycharge-docker" options="-parameters" />
       <module name="raycharge-domain-autenticacao" options="-parameters" />
       <module name="raycharge-domain-autenticacao-bdd" options="-parameters" />
       <module name="raycharge-domain-common" options="-parameters" />
       <module name="raycharge-infra-persistence-memory" options="-parameters" />
+      <module name="raycharge-presentation-backend" options="-parameters" />
     </option>
   </component>
 </project>

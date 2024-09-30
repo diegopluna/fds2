@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/application/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/docker/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/domain/autenticacao-bdd/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/domain/autenticacao/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/domain/common/src/main/java" charset="UTF-8" />
@@ -14,6 +15,9 @@
     <file url="file://$PROJECT_DIR$/infra/persistence/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infra/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infra/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/presentation/backend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/presentation/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/presentation/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>

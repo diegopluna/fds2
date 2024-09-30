@@ -13,7 +13,8 @@
   <modules>
     <module>application</module>
     <module>core</module>
-    <!-- <module>docker</module> -->
+    <module>docker</module>
+    <module>presentation</module>
     <module>infra</module>
     <module>domain</module>
   </modules>
