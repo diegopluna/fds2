@@ -15,6 +15,7 @@
         <module name="raycharge-infra-persistence-memory" />
         <module name="raycharge-domain-autenticacao" />
         <module name="raycharge-domain-common" />
+        <module name="raycharge-domain-recarga" />
       </profile>
     </annotationProcessing>
   </component>
@@ -27,6 +28,7 @@
       <module name="raycharge-domain-autenticacao-bdd" options="-parameters" />
       <module name="raycharge-domain-common" options="-parameters" />
       <module name="raycharge-domain-fornecedor" options="-parameters" />
+      <module name="raycharge-domain-recarga" options="-parameters" />
       <module name="raycharge-infra-persistence-memory" options="-parameters" />
       <module name="raycharge-presentation-backend" options="-parameters" />
     </option>

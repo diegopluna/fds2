@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.UsuarioRepositorio;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.Usuario;
@@ -19,20 +20,17 @@ import com.cesar.school.fds2.raycharge.motorista.domain.motorista.Motorista;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.VeiculoRepositorio;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.*;
+import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Agendamento;
+import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.AgendamentoRepositorio;
 
-public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio {
+public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio, AgendamentoRepositorio {
   private Map<IdUsuario, Usuario> usuarios = new HashMap<>();
 
   private Map<IdMotorista, Motorista> motoristas = new HashMap<>();
 
   private Map<IdVeiculo, Veiculo> veiculos = new HashMap<>();
 
-  @Override
-  public Optional<Usuario> findByLogin(String login) {
-    return usuarios.values().stream()
-        .filter(usuario -> usuario.getLogin().equals(login))
-        .findFirst();
-  }
+  private Map<IdAgendamento, Agendamento> agendamentos = new HashMap<>();
 
   @Override
   public void saveUsuario(Usuario usuario) {
@@ -49,7 +47,20 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
     veiculos.put(veiculo.getId(), veiculo);
   }
 
-  // revisar
+  @Override
+  public void saveAgendamento(Agendamento agendamento) {
+    agendamentos.put(agendamento.getId(), agendamento);
+  }
+
+  //usuario
+  @Override
+  public Optional<Usuario> findByLogin(String login) {
+    return usuarios.values().stream()
+        .filter(usuario -> usuario.getLogin().equals(login))
+        .findFirst();
+  }
+
+  // motorista
   @Override
   public Optional<Motorista> findById(IdMotorista idMotorista) {
     return Optional.empty();
@@ -87,6 +98,8 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
     return List.of();
   }
 
+  // fornecedor
+
   // Implementar metodos do repositorio aqui
   private Map<IdFornecedor, Fornecedor> fornecedores = new HashMap<>();
 
@@ -105,5 +118,26 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   @Override
   public void updateFornecedor(Fornecedor fornecedor) {
     fornecedores.put(fornecedor.getId(), fornecedor);
+  }
+
+  // agendamento
+  @Override
+  public void save(Agendamento agendamento) {
+
+  }
+
+  @Override
+  public Agendamento findById(IdAgendamento idAgendamento) {
+    return null;
+  }
+
+  @Override
+  public void deleteById(IdAgendamento idAgendamento) {
+
+  }
+
+  @Override
+  public List<Agendamento> findAll() {
+    return List.of();
   }
 }
