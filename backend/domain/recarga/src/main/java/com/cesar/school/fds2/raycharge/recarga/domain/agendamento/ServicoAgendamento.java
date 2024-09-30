@@ -2,8 +2,10 @@ package com.cesar.school.fds2.raycharge.recarga.domain.agendamento;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.jmolecules.ddd.annotation.Service;
 
@@ -12,22 +14,53 @@ import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacoes
 import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
 import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.StatusAgendamento;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.EstacaoDeRecarga;
+import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.EstacaoDeRecargaRepositorio;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.HorarioDisponivel;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.IdEstacao;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
-import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
+import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;rio;
 
 @Service
 public class ServicoAgendamento {
 
     private final AgendamentoRepositorio agendamentoRepositorio;
+    private final EstacaoDeRecargaRepositorio estacaoDeRecargaRepositorio;
+    private final NotificacaoRepositorio notificacaoRepositorio;
 
     public ServicoAgendamento(AgendamentoRepositorio agendamentoRepositorio) {
         Objects.requireNonNull(agendamentoRepositorio, "O repositório de agendamentos não pode ser nulo");
         this.agendamentoRepositorio = agendamentoRepositorio;
     }
 
+    // HISÓRIA 2
     public IdAgendamento realizarAgendamento(IdMotorista idMotorista, HorarioDisponivel horarioAgendamento, IdVeiculo veiculo, IdEstacao estacao) {
+        
+        List<Agendamento> todosAgendamentosDoMotorista = agendamentoRepositorio.buscarMotoristaPorId(idMotorista);
+        
+        List<Agendamento> agendamentosAtivos = todosAgendamentosDoMotorista.stream()
+        .filter(agendamento -> agendamento.getStatusAgendamento() == StatusAgendamento.ATIVO)
+        .collect(Collectors.toList());
+        
+        if (!agendamentosAtivos.isEmpty()) {
+            Notificacao notificacaoErro = new Notificacao(
+            motorista,
+            "Você já possui um agendamento ativo. Para criar um novo agendamento, finalize o atual ou cancele-o."
+            );
+            notificacaoRepositorio.save(notificacaoErro);
+            return null;
+        }
+        EstacaoDeRecarga estacaoDeRecarga = estacaoDeRecargaRepositorio.getEstacaoById(estacao);
+
+        if (!estacaoDeRecarga.getHorarioDisponiveis().contains(horarioAgendamento)) {
+            // Cenário 2: Horário indisponível
+            Notificacao notificacaoErro = new Notificacao(
+                    motorista,
+                    "Não foi possível agendar para a estação " + estacaoDeRecarga.getNomeDaEstacao() +
+                            " no horário " + horarioAgendamento + ", por favor selecione um horário disponível"
+            );
+            notificacaoRepositorio.save(notificacaoErro);
+            return null;
+        }
 
         IdAgendamento idAgendamento = new IdAgendamento(UUID.randomUUID().toString().hashCode());
 
@@ -42,7 +75,15 @@ public class ServicoAgendamento {
                 idMotorista,
                 veiculo
         );
+
         agendamentoRepositorio.saveAgendamento(agendamento);
+
+        Notificacao notificacaoSucesso = new Notificacao(
+                motorista,
+                "Agendamento realizado com sucesso para a estação " + estacaoDeRecarga.getNome() +
+                        " no dia e horário " + horarioAgendamento + "."
+        );
+        notificacaoRepositorio.save(notificacaoSucesso);
 
         return idAgendamento;
     }
