@@ -141,12 +141,24 @@ Implementação de testes automatizados baseados nos cenários definidos em BDD 
 ## Adotar os níveis preliminar do DDD
 
 A definição de entidades, agregados, acoplamento das relações, value objects serviços e eventos no domínio foi realizado na fase de criação do Context Map.
+Neste projeto, nossa equipe adotou os níveis preliminares de DDD com o objetivo de alinhar a arquitetura do sistema ao domínio do problema focou na identificação clara dos Bounded Contexts e na definição de Entidades e Value Objects em cada contexto. Dessa forma, a abordagem incluiu:
+
+- **Definição de Bounded Contexts**: Cada contexto delimitado foi mapeado de forma a garantir a separação de responsabilidades, tornando o sistema mais modular e fácil de evoluir.
+- **Identificação de Entidades e Value Objects**: As principais Entidades e Value Objects foram claramente definidas em cada contexto, representando os conceitos fundamentais do domínio.
+- **Separação de Subdomínios**: Organizamos o domínio em subdomínios lógicos, o que nos permitiu concentrar a modelagem no núcleo do negócio, deixando espaço para evolução contínua à medida que novas funcionalidades são adicionadas.
+
+Essa abordagem inicial permitiu que o sistema evoluísse de forma mais estruturada, garantindo consistência entre os modelos de domínio e os requisitos do negócio. Confira na prática observando a definição de entidades, agregados, acoplamento das relações, value objects serviços e eventos no **Context Map**, e ressaltado ao longo de todo o desenvolvimento do **Backend**.
 
 ## Arquiquetura limpa
 
-Padrão de arquitetura que promove a independência dos frameworks e facilita testes, ao dividir o sistema em camadas com responsabilidades bem definidas.
+Implementamos a Arquitetura Limpa com o objetivo de garantir flexibilidade e manutenção ao longo do ciclo de vida do projeto, com o sistema sendo organizado em camadas, onde cada uma tem uma responsabilidade clara e as dependências sempre apontam para o núcleo do negócio. As camadas definidas foram: 
+- Dominio (*domain*)
+- Infraestrurura (*infra*)
+- Aplicação (*application*)
+- Apresentação (*presentation*)
+
+Vejamos que foi utilizado um padrão de arquitetura que promove a independência dos frameworks e facilita testes, ao dividir o sistema em camadas com responsabilidades bem definidas.
 
 ## Camada de persistência e memória
 
-Componente responsável por gerenciar o armazenamento e recuperação de dados do sistema, separando a lógica de negócios do acesso a dados.
-
+A camada de persistência foi implementada de forma a manter a lógica de acesso aos dados separada do núcleo do sistema, seguindo os princípios de Arquitetura Limpa, permitindo que o sistema utilize diferentes estratégias de persistência (em memória ou em banco de dados real) sem afetar as regras de negócios. Dessa forma, estando desacoplada das regras de negócios e de outros aspectos do sistema, proporcionou uma flexibilidade que facilitará a troca ou substituição posterior da tecnologia de armazenamento (em memória para JPA, na 2ª entrega) sem necessidade de grandes alterações no código base.
