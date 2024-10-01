@@ -130,7 +130,7 @@ Foi realizado o protótipo de baixa fidelidade das 4 histórias mencionadas e po
 
 A descrição dos comportamentos esperados do sistema para as histórias a serem implementadas pode ser encontrado no documento baixo: 
 
-- [Documento com cenários de teste](https://drive.google.com/file/d/1h5JuYP3Lzcu-ww4hzgAeoYkpY_6lE3k4/view?usp=drive_link)
+- [Documento com cenários de teste](https://docs.google.com/document/d/1g-X5fO7bv61q-QN7DXnDysgAQ-6353iIx_OwgE39lj8/edit?usp=drive_link)
 
 ## Automação dos cenários BDD
 
