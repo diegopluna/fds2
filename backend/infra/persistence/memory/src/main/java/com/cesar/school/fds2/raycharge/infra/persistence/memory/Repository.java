@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacao;
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
+import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Avaliacao;
+import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.IdAgendamento;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.UsuarioRepositorio;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.Usuario;
@@ -19,7 +19,6 @@ import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.Motorista;
 
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.VeiculoRepositorio;
-import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.*;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Agendamento;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.AgendamentoRepositorio;
@@ -63,39 +62,41 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   // motorista
   @Override
   public Optional<Motorista> findById(IdMotorista idMotorista) {
-    return Optional.empty();
+    return Optional.ofNullable(motoristas.get(idMotorista));
   }
 
   @Override
   public Optional<Motorista> findByUsuarioMotorista(IdUsuario usuarioMotorista) {
-    return Optional.empty();
+    return motoristas.values().stream()
+        .filter(motorista -> motorista.getUsuarioMotorista().equals(usuarioMotorista))
+        .findFirst();
   }
 
   @Override
   public Optional<Motorista> updateMotorista(Motorista motorista) {
-    return Optional.empty();
+    return Optional.ofNullable(motoristas.put(motorista.getId(), motorista));
   }
 
   @Override
   public Optional<Motorista> deleteMotorista(IdMotorista idMotorista) {
-    return Optional.empty();
+    return Optional.ofNullable(motoristas.remove(idMotorista));
   }
 
   // veiculo
 
   @Override
   public void deleteVeiculo(IdVeiculo idVeiculo) {
-
+    veiculos.remove(idVeiculo);
   }
 
   @Override
   public Veiculo buscarPorId(IdVeiculo idVeiculo) {
-    return null;
+    return veiculos.get(idVeiculo);
   }
 
   @Override
   public List<Veiculo> listarTodos() {
-    return List.of();
+    return List.copyOf(veiculos.values());
   }
 
   // fornecedor
@@ -124,22 +125,23 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   }
 
   @Override
-  public Agendamento findById(IdAgendamento idAgendamento) {
-    return null;
+  public Optional<Agendamento> findById(IdAgendamento id) {
+    return Optional.ofNullable(agendamentos.get(id));
   }
 
   @Override
   public void deleteById(IdAgendamento idAgendamento) {
-
+    agendamentos.remove(idAgendamento);
   }
 
   @Override
   public List<Agendamento> findAll() {
-    return List.of();
+    return List.copyOf(agendamentos.values());
   }
 
   @Override
   public void saveAvaliacao(IdAgendamento idAgendamento, Avaliacao avaliacao) {
-
+    Agendamento agendamento = agendamentos.get(idAgendamento);
+    agendamento.getAvaliacao().add(avaliacao.getAvaliacaoDada());
   }
 }

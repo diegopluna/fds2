@@ -3,7 +3,7 @@ package com.cesar.school.fds2.raycharge.motorista.domain.motorista;
 import java.util.List; 
 import java.util.Objects;
 
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
+import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.IdAgendamento;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
 

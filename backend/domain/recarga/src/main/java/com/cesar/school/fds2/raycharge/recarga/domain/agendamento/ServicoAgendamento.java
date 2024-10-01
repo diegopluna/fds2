@@ -7,10 +7,6 @@ import java.util.UUID;
 
 import org.jmolecules.ddd.annotation.Service;
 
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacao;
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacoes;
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.StatusAgendamento;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.EstacaoDeRecarga;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.HorarioDisponivel;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.IdEstacao;
@@ -49,7 +45,7 @@ public class ServicoAgendamento {
 
     // HISTÓRIA 3
     public IdAgendamento cancelarAgendamento(IdAgendamento idAgendamento, boolean forcarReembolso) {
-        Agendamento agendamento = agendamentoRepositorio.findById(idAgendamento);
+        Agendamento agendamento = agendamentoRepositorio.findById(idAgendamento).orElse(null);
 
         if (agendamento != null && agendamento.getStatusAgendamento() == StatusAgendamento.ATIVO) {
             agendamento.setStatusAgendamento(StatusAgendamento.CANCELADO);
@@ -84,7 +80,7 @@ public class ServicoAgendamento {
      */
     public int getCodigoLiberacao(IdAgendamento idAgendamento) {
         // Retrieve the Agendamento from the repository
-        Agendamento agendamento = agendamentoRepositorio.findById(idAgendamento);
+        Agendamento agendamento = agendamentoRepositorio.findById(idAgendamento).orElse(null);
 
         if (agendamento != null && agendamento.getStatusAgendamento() == StatusAgendamento.ATIVO) {
             // Return the release code
@@ -102,7 +98,7 @@ public class ServicoAgendamento {
      */
     public void concluirAgendamento(IdAgendamento idAgendamento) {
         // Retrieve the Agendamento from the repository
-        Agendamento agendamento = agendamentoRepositorio.findById(idAgendamento);
+        Agendamento agendamento = agendamentoRepositorio.findById(idAgendamento).orElse(null);
 
         if (agendamento != null && agendamento.getStatusAgendamento() == StatusAgendamento.ATIVO) {
             // Update the status to CONCLUIDO
@@ -130,7 +126,7 @@ public class ServicoAgendamento {
      */
     public void avaliarAgendamento(IdAgendamento idAgendamento, Avaliacoes avaliacao, String descricaoExperiencia) {
         // Retrieve the Agendamento from the repository
-        Agendamento agendamento = agendamentoRepositorio.findById(idAgendamento);
+        Agendamento agendamento = agendamentoRepositorio.findById(idAgendamento).orElse(null);
 
         if (agendamento != null && agendamento.getStatusAgendamento() == StatusAgendamento.CONCLUIDO) {
             // Create a new Avaliacao
