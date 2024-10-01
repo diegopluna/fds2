@@ -24,13 +24,23 @@ public class CancelarAgendamentoFuncionalidade {
 
     public CancelarAgendamentoFuncionalidade() {
         this.repository = new Repository();
-        this.servicoAgendamento = new ServicoAgendamento(repository);
+        this.servicoAgendamento = new ServicoAgendamento(
+            this.repository,
+            new Repository(),
+            new Repository(),
+            new Repository()
+        );
     }
 
     @BeforeEach
     public void setUp() {
         this.repository = new Repository();
-        this.servicoAgendamento = new ServicoAgendamento(repository);
+        this.servicoAgendamento = new ServicoAgendamento(
+            this.repository,
+            new Repository(),
+            new Repository(),
+            new Repository()
+        );
     }
 
     @Given("que o motorista possui um agendamento persistido no sistema com status ativo")
