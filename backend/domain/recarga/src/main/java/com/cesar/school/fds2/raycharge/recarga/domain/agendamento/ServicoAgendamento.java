@@ -48,12 +48,13 @@ public class ServicoAgendamento {
         
         List<Agendamento> agendamentosAtivos = todosAgendamentosDoMotorista.stream()
         .filter(agendamento -> agendamento.getStatusAgendamento() == StatusAgendamento.ATIVO)
-        .collect(Collectors.toList());
+        .toList();
         
         Motorista motorista = motoristaRepositorio.findMotoristaById(idMotorista).orElse(null);
 
         List<IdUsuario> usuariosMotoristas = new ArrayList<>();
-        usuariosMotoristas.add(motorista.getUsuarioMotorista());
+      assert motorista != null;
+      usuariosMotoristas.add(motorista.getUsuarioMotorista());
         
         if (!agendamentosAtivos.isEmpty()) {
             Notificacao notificacaoErro = new Notificacao(
@@ -89,7 +90,8 @@ public class ServicoAgendamento {
             new ArrayList<>(),
             estacao,
             idMotorista,
-            veiculo
+            veiculo,
+            estacaoDeRecarga.getPrecoMinimo()
         );
 
         agendamentoRepositorio.saveAgendamento(agendamento);
@@ -117,18 +119,20 @@ public class ServicoAgendamento {
             LocalDateTime agora = LocalDateTime.now();
 
             boolean canceladoComMaisDe24h = inicioAgendamento.isAfter(agora.plusHours(24));
-
+            String mensagem;
             if (canceladoComMaisDe24h || forcarReembolso) {
                 agendamento.setValorTotalRecarga(0);
+                mensagem = "Cancelamento processado com sucesso. Por ter sido solicitado a mais de 24h do horário agendado, o preço mínimo será reembolsado";
+
             } else {
                 agendamento.setValorTotalRecarga(agendamento.getValorMinimo());
+                mensagem = "Cancelamento processado com sucesso. Por ter sido solicitado a menos de 24h do horário agendado, o preço mínimo será cobrado";
             }
 
             agendamentoRepositorio.saveAgendamento(agendamento);
 
             List<IdUsuario> destinatarios = new ArrayList<>();
             destinatarios.add(new IdUsuario(agendamento.getMotorista().getId()));
-            String mensagem = "Cancelamento processado com sucesso. Por ter sido solicitado a mais de 24h do horário agendado, o preço mínimo será reembolsado";
             Notificacao notificacao = new Notificacao(new IdNotificacao(), destinatarios, mensagem);
             notificacaoRepositorio.saveNotificacao(notificacao);
 

@@ -22,7 +22,7 @@ public class Agendamento implements Cloneable, AggregateRoot<Agendamento, IdAgen
 
     public Agendamento(IdAgendamento idAgendamento, int codigoLiberacaoCarregador, HorarioDisponivel horarioAgendamento,
                        StatusAgendamento statusAgendamento, int valorTotalRecarga, List<Avaliacoes> avaliacao,
-                       IdEstacao estacaoDeRecarga, IdMotorista motorista, IdVeiculo veiculo) {
+                       IdEstacao estacaoDeRecarga, IdMotorista motorista, IdVeiculo veiculo, int valorMinimo) {
         this.idAgendamento = idAgendamento;
         this.codigoLiberacaoCarregador = codigoLiberacaoCarregador;
         this.horarioAgendamento = horarioAgendamento;
@@ -32,6 +32,7 @@ public class Agendamento implements Cloneable, AggregateRoot<Agendamento, IdAgen
         this.estacaoDeRecarga = estacaoDeRecarga;
         this.motorista = motorista;
         this.veiculo = veiculo;
+        this.valorMinimo = valorMinimo;
     }
 
     @Override
