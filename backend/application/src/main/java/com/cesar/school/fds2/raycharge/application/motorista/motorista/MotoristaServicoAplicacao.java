@@ -1,7 +1,5 @@
 package com.cesar.school.fds2.raycharge.application.motorista.motorista;
 
-import com.cesar.school.fds2.raycharge.application.autenticacao.usuario.UsuarioRepositorioAplicacao;
-
 import java.util.Objects;
 
 public class MotoristaServicoAplicacao {
