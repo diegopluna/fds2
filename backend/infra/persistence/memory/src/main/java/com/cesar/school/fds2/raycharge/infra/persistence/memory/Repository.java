@@ -7,23 +7,23 @@ import java.util.Optional;
 
 import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacao;
 import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
-import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.UsuarioRepositorio;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.Usuario;
+import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.UsuarioRepositorio;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.Fornecedor;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.FornecedorRepositorio;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.IdFornecedor;
-
-import com.cesar.school.fds2.raycharge.motorista.domain.motorista.MotoristaRepositorio;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.Motorista;
-import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.*;
-import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Agendamento;
-import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.AgendamentoRepositorio;
+import com.cesar.school.fds2.raycharge.motorista.domain.motorista.MotoristaRepositorio;
+import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
+import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.Veiculo;
+import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.VeiculoRepositorio;
 import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.IdNotificacao;
 import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.Notificacao;
 import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.NotificacaoRepositorio;
-
+import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Agendamento;
+import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.AgendamentoRepositorio;
 
 public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio, AgendamentoRepositorio, NotificacaoRepositorio {
   // Implementar metodos do repositorio aqui
@@ -61,7 +61,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   }
 
   // motorista
-  @Override
   public Optional<Motorista> findById(IdMotorista idMotorista) {
     return Optional.empty();
   }
@@ -145,7 +144,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   public void saveAvaliacao(IdAgendamento idAgendamento, Avaliacao avaliacao) {
   }
 
-  @Override
   public Optional<Notificacao> findById(IdNotificacao id) {
     // Implementação do método findById para NotificacaoRepositorio
     return null; // Substitua por lógica real
@@ -171,4 +169,14 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
       // Implementação do método findByDestinatario
       return List.of(); // Substitua por lógica real
   }
+
+    @Override
+    public Optional<Motorista> findMotoristaById(IdMotorista idMotorista) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Optional<Notificacao> findNotificacaoById(IdNotificacao id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
