@@ -2,7 +2,6 @@ package com.cesar.school.fds2.raycharge.fornecedor.domain.visualizacao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,7 @@ import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.Estaca
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.HorarioDisponivel;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.StatusEstacao;
 
+import com.cesar.school.fds2.raycharge.infra.persistence.memory.Repository;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
@@ -24,19 +24,21 @@ public class VisualizarEstacoesSteps {
 
     @Given("que existam três estações de recarga cadastradas")
     public void que_existam_tres_estacoes_de_recarga_cadastradas() {
-        estacaoDeRecargaRepositorio = new EstacaoDeRecargaRepositorioImpl();
+        estacaoDeRecargaRepositorio = new Repository();
         estacoesCadastradas = new ArrayList<>();
 
-        estacoesCadastradas.add(new EstacaoDeRecarga("Estacao 1", "Endereco 1", 1.0, 5.0, 0.5, StatusEstacao.ATIVO, List.of(new HorarioDisponivel())));
-        estacoesCadastradas.add(new EstacaoDeRecarga("Estacao 2", "Endereco 2", 2.0, 5.0, 0.5, StatusEstacao.ATIVO, List.of(new HorarioDisponivel())));
-        estacoesCadastradas.add(new EstacaoDeRecarga("Estacao 3", "Endereco 3", 3.0, 5.0, 0.5, StatusEstacao.ATIVO, List.of(new HorarioDisponivel())));
+        estacoesCadastradas.add(new EstacaoDeRecarga("Estacao 1", "Endereco 1", 1.0, 5.0, 0.5, StatusEstacao.ATIVA, List.of(new HorarioDisponivel())));
+        estacoesCadastradas.add(new EstacaoDeRecarga("Estacao 2", "Endereco 2", 2.0, 5.0, 0.5, StatusEstacao.ATIVA, List.of(new HorarioDisponivel())));
+        estacoesCadastradas.add(new EstacaoDeRecarga("Estacao 3", "Endereco 3", 3.0, 5.0, 0.5, StatusEstacao.ATIVA, List.of(new HorarioDisponivel())));
 
-        estacaoDeRecargaRepositorio.saveAll(estacoesCadastradas);
+        for (EstacaoDeRecarga estacao : estacoesCadastradas) {
+            estacaoDeRecargaRepositorio.salvarEstacao(estacao);
+        }
     }
 
     @When("o motorista realizar a busca")
     public void o_motorista_realizar_a_busca() {
-        estacoesRetornadas = estacaoDeRecargaRepositorio.findAll().stream()
+        estacoesRetornadas = estacaoDeRecargaRepositorio.listarEstacoes().stream()
             .sorted((e1, e2) -> Double.compare(e1.getDistancia(), e2.getDistancia()))
             .collect(Collectors.toList());
     }
@@ -45,11 +47,11 @@ public class VisualizarEstacoesSteps {
     public void as_estacoes_cadastradas_retornadas_com_nome_endereco_distancia_do_motorista_ate_a_estacao_preco_minimo_e_preco_por_kWh() {
         assertEquals(3, estacoesRetornadas.size());
         for (EstacaoDeRecarga estacao : estacoesRetornadas) {
-            assertTrue(estacao.getNome() != null && !estacao.getNome().isEmpty());
-            assertTrue(estacao.getEndereco() != null && !estacao.getEndereco().isEmpty());
+            assertTrue(estacao.getNomeDaEstacao() != null && !estacao.getNomeDaEstacao().isEmpty());
+            assertTrue(estacao.getEnderecoEstacao() != null);
             assertTrue(estacao.getDistancia() > 0);
             assertTrue(estacao.getPrecoMinimo() > 0);
-            assertTrue(estacao.getPrecoPorKwh() > 0);
+            assertTrue(estacao.getPrecoPKwH() > 0);
         }
     }
 
@@ -62,18 +64,20 @@ public class VisualizarEstacoesSteps {
 
     @Given("que há uma estação de recarga cadastrada no sistema sem horários disponíveis")
     public void que_ha_uma_estacao_de_recarga_cadastrada_no_sistema_sem_horarios_disponiveis() {
-        estacaoDeRecargaRepositorio = new EstacaoDeRecargaRepositorio();
+        estacaoDeRecargaRepositorio = new Repository();
         estacoesCadastradas = new ArrayList<>();
 
         estacoesCadastradas.add(new EstacaoDeRecarga("Estacao 1", "Endereco 1", 1.0, 5.0, 0.5, StatusEstacao.ATIVO, new ArrayList<>()));
 
-        estacaoDeRecargaRepositorio.saveAll(estacoesCadastradas);
+        for (EstacaoDeRecarga estacao : estacoesCadastradas) {
+            estacaoDeRecargaRepositorio.salvarEstacao(estacao);
+        }
     }
 
     @Then("a estação sem horário disponível não deve ser retornada")
     public void a_estacao_sem_horario_disponivel_nao_deve_ser_retornada() {
-        estacoesRetornadas = estacaoDeRecargaRepositorio.findAll().stream()
-            .filter(estacao -> !estacao.getHorariosDisponiveis().isEmpty())
+        estacoesRetornadas = estacaoDeRecargaRepositorio.listarEstacoes().stream()
+            .filter(estacao -> !estacao.getHorarioDisponiveis().isEmpty())
             .collect(Collectors.toList());
 
         assertTrue(estacoesRetornadas.isEmpty());
@@ -81,24 +85,26 @@ public class VisualizarEstacoesSteps {
 
     @Given("que há uma estação de recarga cadastrada no sistema com status inativo")
     public void que_ha_uma_estacao_de_recarga_cadastrada_no_sistema_com_status_inativo() {
-        estacaoDeRecargaRepositorio = new EstacaoDeRecargaRepositorio();
+        estacaoDeRecargaRepositorio = new Repository();
         estacoesCadastradas = new ArrayList<>();
 
         estacoesCadastradas.add(new EstacaoDeRecarga("Estacao 1", "Endereco 1", 1.0, 5.0, 0.5, StatusEstacao.INATIVO, List.of(new HorarioDisponivel())));
 
-        estacaoDeRecargaRepositorio.saveAll(estacoesCadastradas);
+        for (EstacaoDeRecarga estacao : estacoesCadastradas) {
+            estacaoDeRecargaRepositorio.salvarEstacao(estacao);
+        }
     }
 
     @Then("a estação com status inativo não deve ser retornada")
     public void a_estacao_com_status_inativo_nao_deve_ser_retornada() {
-        estacoesRetornadas = estacaoDeRecargaRepositorio.findAll().stream()
-            .filter(estacao -> estacao.getStatus() == StatusEstacao.ATIVO)
+        estacoesRetornadas = estacaoDeRecargaRepositorio.listarEstacoes().stream()
+            .filter(estacao -> estacao.getStatusEstacao() == StatusEstacao.ATIVA)
             .collect(Collectors.toList());
     }
 }
 
-// Classe de implementação concreta para fins de teste
-class EstacaoDeRecargaRepositorioImpl extends EstacaoDeRecargaRepositorio {
-    // Implementar métodos abstratos aqui
-}
+//// Classe de implementação concreta para fins de teste
+//class EstacaoDeRecargaRepositorioImpl extends EstacaoDeRecargaRepositorio {
+//    // Implementar métodos abstratos aqui
+//}
 
