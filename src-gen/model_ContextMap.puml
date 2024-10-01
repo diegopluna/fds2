@@ -6,9 +6,10 @@ component [RealizacaoDeRecargaContext]
 note right of [RealizacaoDeRecargaContext]
 O contexto de Realizar Recarga 
 é responsável por mostrar para 
-os Motoristas as Estações Próximas 
-e permitir que realizem Agendamentos. 
-
+os Motoristas as Estações Próximas, 
+permitir que realizem Agendamentos 
+e garantir que a Recarga seja 
+feita. 
 end note
 component [CadastroEControleDeFornecedoresContext]
 note right of [CadastroEControleDeFornecedoresContext]

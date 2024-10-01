@@ -2,22 +2,6 @@
 
 skinparam componentStyle uml2
 
-package "'Fornecedor' Aggregate" <<Rectangle>> {
-	class Fornecedor <<(A,#fffab8) Aggregate Root>> {
-		String nomeFornecedor
-		IdUsuario usuarioFornecedor
-		IdFornecedor idFornecedor
-		List<IdEstacao> estacoesDeRecarga
-		List<IdAgendamento> historicoDeUso
-	}
-	class IdFornecedor <<(V,DarkSeaGreen) Value Object>> {
-		int idFornecedor
-	}
-	class AlteracoesContaFornecedor <<(S,DarkSeaGreen) Service>> {
-		int deletarConta(IdUsuario usuarioFornecedor)
-		int alterarNomeFornecedor(String novoNome)
-	}
-}
 package "'EstacaoDeRecarga' Aggregate" <<Rectangle>> {
 	class EstacaoDeRecarga <<(E,DarkSeaGreen) Entity>> {
 		String nomeDaEstacao
@@ -65,16 +49,10 @@ package "'EstacaoDeRecarga' Aggregate" <<Rectangle>> {
 	}
 }
 EstacaoDeRecarga "1" *--> "*" HorarioDisponivel : horariosDisponiveis
-EstacaoDeRecarga --> IdFornecedor : idFornecedor
-Fornecedor "1" o--> "*" IdEstacao : estacoesDeRecarga
 EstacaoDeRecarga --> Endereco : enderecoEstacao
-Fornecedor --> IdFornecedor : idFornecedor
 EstacaoDeRecarga --> StatusEstacao : statusEstacao
 EstacaoDeRecarga --> IdEstacao : idEstacao
 EstacaoDeRecarga --> HorarioDisponivel : horarioFuncionamento
-legend left
-  This bounded context implements the subdomain 'CadastroEControleDeFornecedoresDomain'.
-end legend
 
 
 @enduml

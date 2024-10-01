@@ -2,42 +2,29 @@
 
 skinparam componentStyle uml2
 
-package "'ConsultaEstacoesProximas' Aggregate" <<Rectangle>> {
-	class ConsultaEstacoesProximas <<(A,#fffab8) Aggregate Root>> {
-		int raioDeBusca
-		Endereco enderecoAtualMotorista
-		List<EstacaoDeRecarga> estacoesProximas
-	}
-	class SetNovoRaioDeBusca <<(S,DarkSeaGreen) Service>> {
-		int setNovoRaio(int novoRaio)
-	}
-}
 package "'Agendamento' Aggregate" <<Rectangle>> {
 	class Agendamento <<(A,#fffab8) Aggregate Root>> {
 		int codigoLiberacaoCarregador
-		boolean statusAgendamento
+		int valorTotalRecarga
 		IdAgendamento idAgendamento
 		HorarioDisponivel horarioAgendamento
-		EstacaoDeRecarga estacaoDeRecarga
-		Motorista motorista
-		Veiculo veiculo
-		ConsultaEstacoesProximas estacoesProximas
+		StatusAgendamento statusAgendamento
+		List<Avaliacao> avaliacao
+		IdEstacao estacaoDeRecarga
+		IdMotorista motorista
+		IdVeiculo veiculo
 	}
 	class IdAgendamento <<(V,DarkSeaGreen) Value Object>> {
 		int idAgendamento
 	}
-	class ServicoAgendamento <<(S,DarkSeaGreen) Service>> {
-		int realizarAgendamento(HorarioDisponivel horarioAgendamento, Veiculo veiculo, EstacaoDeRecarga estacao)
-		int cancelarAgendamento(int idAgendamento)
+	enum StatusAgendamento {
+		ATIVO
+		CANCELADO
+		CONCLUIDO
 	}
-	class GetCodigoLiberacao <<(S,DarkSeaGreen) Service>> {
-		int getCodigoLiberacao(Agendamento idAgendamento)
-	}
-}
-package "'Avaliacao' Aggregate" <<Rectangle>> {
-	class Avaliacao <<(A,#fffab8) Aggregate Root>> {
+	class Avaliacao <<(V,DarkSeaGreen) Value Object>> {
+		int idAvaliacao
 		String[0..1] descricaoExperiencia
-		IdAgendamento idAgendamento
 		Avaliacoes avaliacaoDada
 	}
 	enum Avaliacoes {
@@ -47,11 +34,24 @@ package "'Avaliacao' Aggregate" <<Rectangle>> {
 		QUATRO
 		CINCO
 	}
+	class ServicoAgendamento <<(S,DarkSeaGreen) Service>> {
+		int realizarAgendamento(HorarioDisponivel horarioAgendamento, Veiculo veiculo, EstacaoDeRecarga estacao)
+		int cancelarAgendamento(IdAgendamento idAgendamento)
+		int getCodigoLiberacao(IdAgendamento idAgendamento)
+		int concluirAgendamento(IdAgendamento idAgendamento)
+	}
+	class ServicoAvaliacao <<(S,DarkSeaGreen) Service>> {
+		int avaliarAgendamento(IdAgendamento idAgendamento, Avaliacoes avaliacao, String descricaoExperiencia)
+	}
+	class ConsultaEstacoesProximas <<(S,DarkSeaGreen) Service>> {
+		int getEstacoesProximas(Endereco enderecoAtualMotorista, int raioDeBusca)
+		int setNovoRaio(int novoRaio)
+	}
 }
 Agendamento --> IdAgendamento : idAgendamento
-Avaliacao --> IdAgendamento : idAgendamento
 Avaliacao --> Avaliacoes : avaliacaoDada
-Agendamento --> ConsultaEstacoesProximas : estacoesProximas
+Agendamento --> StatusAgendamento : statusAgendamento
+Agendamento "1" *--> "*" Avaliacao : avaliacao
 legend left
   This bounded context implements the subdomain 'RealizacaoDeRecargaDomain'.
 end legend
