@@ -1,0 +1,69 @@
+@startuml
+
+skinparam componentStyle uml2
+
+component [RealizacaoDeRecargaContext]
+note right of [RealizacaoDeRecargaContext]
+O contexto de Realizar Recarga 
+é responsável por mostrar para 
+os Motoristas as Estações Próximas 
+e permitir que realizem Agendamentos. 
+
+end note
+component [CadastroEControleDeFornecedoresContext]
+note right of [CadastroEControleDeFornecedoresContext]
+O contexto de cadastro e controle 
+de Fornecedores é responsável 
+por armazenar os dados dos Fornecedores 
+e suas Estações. 
+end note
+component [CadastroEControleDeMotoristasContext]
+note right of [CadastroEControleDeMotoristasContext]
+O contexto de cadastro e controle 
+dos Motoristas é responsável por 
+armazenar os dados dos Motoristas 
+e seus Veículos. 
+end note
+component [AutenticacaoEAutorizacaoContext]
+note right of [AutenticacaoEAutorizacaoContext]
+O contexto de gerenciamento de 
+autenticacao é uma aplicação que 
+valida o usuário que acessa o 
+sistema. 
+end note
+component [NotificacoesContext]
+component [RelatoriosSobreAsEstacoesDeRecargaContext]
+
+interface "Customer-Supplier" as RealizacaoDeRecargaContext_to_CadastroEControleDeFornecedoresContext
+[CadastroEControleDeFornecedoresContext] --> RealizacaoDeRecargaContext_to_CadastroEControleDeFornecedoresContext : Supplier
+RealizacaoDeRecargaContext_to_CadastroEControleDeFornecedoresContext <.. [RealizacaoDeRecargaContext] : Customer 
+
+interface "Customer-Supplier" as RealizacaoDeRecargaContext_to_CadastroEControleDeMotoristasContext
+[CadastroEControleDeMotoristasContext] --> RealizacaoDeRecargaContext_to_CadastroEControleDeMotoristasContext : Supplier
+RealizacaoDeRecargaContext_to_CadastroEControleDeMotoristasContext <.. [RealizacaoDeRecargaContext] : Customer 
+
+[CadastroEControleDeFornecedoresContext]<-->[RelatoriosSobreAsEstacoesDeRecargaContext] : Partnership
+
+[NotificacoesContext]<-->[RealizacaoDeRecargaContext] : Partnership
+
+[NotificacoesContext]<-->[CadastroEControleDeFornecedoresContext] : Partnership
+
+[NotificacoesContext]<-->[CadastroEControleDeMotoristasContext] : Partnership
+
+[NotificacoesContext]<-->[AutenticacaoEAutorizacaoContext] : Partnership
+
+interface "Upstream-Downstream" as CadastroEControleDeFornecedoresContext_to_AutenticacaoEAutorizacaoContext
+[AutenticacaoEAutorizacaoContext] --> CadastroEControleDeFornecedoresContext_to_AutenticacaoEAutorizacaoContext : OPEN_HOST_SERVICE
+CadastroEControleDeFornecedoresContext_to_AutenticacaoEAutorizacaoContext <.. [CadastroEControleDeFornecedoresContext] : use as CONFORMIST
+
+interface "Upstream-Downstream" as CadastroEControleDeMotoristasContext_to_AutenticacaoEAutorizacaoContext
+[AutenticacaoEAutorizacaoContext] --> CadastroEControleDeMotoristasContext_to_AutenticacaoEAutorizacaoContext : OPEN_HOST_SERVICE
+CadastroEControleDeMotoristasContext_to_AutenticacaoEAutorizacaoContext <.. [CadastroEControleDeMotoristasContext] : use as CONFORMIST
+
+interface "Upstream-Downstream" as RealizacaoDeRecargaContext_to_AutenticacaoEAutorizacaoContext
+[AutenticacaoEAutorizacaoContext] --> RealizacaoDeRecargaContext_to_AutenticacaoEAutorizacaoContext : OPEN_HOST_SERVICE
+RealizacaoDeRecargaContext_to_AutenticacaoEAutorizacaoContext <.. [RealizacaoDeRecargaContext] : use as CONFORMIST
+
+
+
+@enduml

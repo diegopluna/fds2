@@ -1,0 +1,18 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'RelatorioDesempenho' Aggregate" <<Rectangle>> {
+	class Desempenho <<(A,#fffab8) Aggregate Root>> {
+		EstacaoDeRecarga estacaoDeRecarga
+		PeriodoDeAnalise periodoDeAnalise
+	}
+	class PeriodoDeAnalise <<(V,DarkSeaGreen) Value Object>> {
+		DateTime inicioDaAnalise
+		DateTime fimDaAnalise
+	}
+}
+Desempenho --> PeriodoDeAnalise : periodoDeAnalise
+
+
+@enduml
