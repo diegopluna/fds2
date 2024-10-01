@@ -1,32 +1,36 @@
 package com.cesar.school.fds2.raycharge.recarga.domain.agendamento;
 
+import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
 import com.cesar.school.fds2.raycharge.infra.persistence.memory.Repository;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.HorarioDisponivel;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
-import com.cesar.school.fds2.raycharge.recarga.domain.RecargaFuncionalidade;
-import io.cucumber.java.en.And;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.Notificacao;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.NotificacaoRepositorio;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CancelarAgendamentoFuncionalidade {
     private Repository repository;
     private ServicoAgendamento servicoAgendamento;
+    private NotificacaoRepositorio notificacaoRepositorio;
     private IdAgendamento idAgendamento;
     private Agendamento agendamento;
     private int resultadoCancelamento;
 
     public CancelarAgendamentoFuncionalidade() {
         this.repository = new Repository();
+        this.notificacaoRepositorio = new Repository();
         this.servicoAgendamento = new ServicoAgendamento(
             this.repository,
-            new Repository(),
+            this.notificacaoRepositorio,
             new Repository(),
             new Repository()
         );
@@ -35,9 +39,10 @@ public class CancelarAgendamentoFuncionalidade {
     @BeforeEach
     public void setUp() {
         this.repository = new Repository();
+        this.notificacaoRepositorio = new Repository();
         this.servicoAgendamento = new ServicoAgendamento(
             this.repository,
-            new Repository(),
+            this.notificacaoRepositorio,
             new Repository(),
             new Repository()
         );
@@ -70,9 +75,15 @@ public class CancelarAgendamentoFuncionalidade {
     }
 
     @Then("criada e persistida uma notificação com a seguinte mensagem: {string}.")
-    public void criada_e_persistida_uma_notificação_com_a_seguinte_mensagem(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        assertEquals(1, 1);
+    public void criada_e_persistida_uma_notificação_com_a_seguinte_mensagem(String mensagemEsperada) {
+        // Retrieve all notifications for the motorista
+        List<Notificacao> notificacoes = notificacaoRepositorio.findByDestinatario(new IdUsuario(agendamento.getMotorista().getId()));
+        
+        // Check if there's a notification with the expected message
+        boolean notificacaoEncontrada = notificacoes.stream()
+            .anyMatch(notificacao -> notificacao.getMensagem().trim().equalsIgnoreCase(mensagemEsperada.trim()));
+        
+        assertTrue(notificacaoEncontrada, "Notificação com a mensagem esperada não foi encontrada. Notificações encontradas: " + notificacoes);
     }
 
     @Given("que o motorista possui um agendamento persistido no sistema com status ativo a menos de 24h do momento atual")

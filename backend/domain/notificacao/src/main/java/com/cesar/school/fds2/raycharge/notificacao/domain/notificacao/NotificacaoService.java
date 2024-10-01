@@ -5,12 +5,15 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
+import org.jmolecules.ddd.annotation.Service;
 
+@Service
 public class NotificacaoService {
     private final NotificacaoRepositorio notificacaoRepositorio;
 
     public NotificacaoService(NotificacaoRepositorio notificacaoRepositorio) {
-        this.notificacaoRepositorio = Objects.requireNonNull(notificacaoRepositorio, "O repositório de notificações não pode ser nulo");
+        Objects.requireNonNull(notificacaoRepositorio, "O repositório de notificações não pode ser nulo");
+        this.notificacaoRepositorio = notificacaoRepositorio;
     }
 
     public int enviarNotificacao(IdNotificacao id, List<IdUsuario> destinatarios, IdUsuario origem, String mensagem) {

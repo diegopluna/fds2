@@ -116,13 +116,21 @@ public class ServicoAgendamento {
             LocalDateTime inicioAgendamento = horarioAgendamento.getInicioAgendamento();
             LocalDateTime agora = LocalDateTime.now();
 
-            if (inicioAgendamento.isBefore(agora.plusHours(24)) || forcarReembolso) {
-                agendamento.setValorTotalRecarga(agendamento.getValorMinimo());
-            } else {
+            boolean canceladoComMaisDe24h = inicioAgendamento.isAfter(agora.plusHours(24));
+
+            if (canceladoComMaisDe24h || forcarReembolso) {
                 agendamento.setValorTotalRecarga(0);
+            } else {
+                agendamento.setValorTotalRecarga(agendamento.getValorMinimo());
             }
 
             agendamentoRepositorio.saveAgendamento(agendamento);
+
+            List<IdUsuario> destinatarios = new ArrayList<>();
+            destinatarios.add(new IdUsuario(agendamento.getMotorista().getId()));
+            String mensagem = "Cancelamento processado com sucesso. Por ter sido solicitado a mais de 24h do horário agendado, o preço mínimo será reembolsado";
+            Notificacao notificacao = new Notificacao(new IdNotificacao(), destinatarios, mensagem);
+            notificacaoRepositorio.saveNotificacao(notificacao);
 
             return idAgendamento;
         } else {

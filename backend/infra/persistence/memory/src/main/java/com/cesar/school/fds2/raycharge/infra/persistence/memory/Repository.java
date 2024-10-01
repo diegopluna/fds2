@@ -181,7 +181,7 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   @Override
   public List<Notificacao> findByDestinatario(IdUsuario destinatario) {
     return notificacoes.values().stream()
-        .filter(notificacao -> notificacao.getDestinatarios().equals(destinatario))
+        .filter(notificacao -> notificacao.getDestinatarios().contains(destinatario))
         .toList();
   }
 
