@@ -98,12 +98,12 @@ O domínio engloba subdomínios principais, genéricos e de suporte, além das r
 
 O mapa de contexto foi realizando utilizando o Context Mapper e pode ser acessado nos links abaixo: 
 
-- Arquivo model.cml
-- Diagramas UML 
+- [Arquivo model.cml](https://github.com/diegopluna/fds2/blob/develop/model.cml)
+- [Código Diagramas UML](https://github.com/diegopluna/fds2/tree/develop/src-gen)
 
 ## Mapa histórias dos usuários
 
-É a representação visual das interações do usuário com o sistema e foi desenvolvido no Avion e pode ser visualido abaixo: 
+O mapa de história é a representação visual das interações do usuário com o sistema e foi desenvolvido no Avion e pode ser visualizado pelos links abaixo: 
 
 - [Mapa de histórias diretamente do Avion](https://cesar.avion.io/share/FxPRxTzF4gkdtsQ2E)
 - [Mapa de histórias em pdf](https://drive.google.com/file/d/1y9WiLlNyOw82ORwd2GbFGCED5i-B37oi/view?usp=drive_link)
@@ -136,7 +136,9 @@ A descrição dos comportamentos esperados do sistema para as histórias a serem
 
 Implementação de testes automatizados baseados nos cenários definidos em BDD para garantir que o sistema se comporta conforme o esperado. 
 
-- referenciar as pastas
+- [autenticação-bdd](https://github.com/diegopluna/fds2/tree/develop/backend/domain/autenticacao-bdd)
+- [recarga-bdd](https://github.com/diegopluna/fds2/tree/develop/backend/domain/recarga-bdd)
+- [visualização-bdd](https://github.com/diegopluna/fds2/tree/develop/backend/domain/visualizacao-bdd)
 
 ## Adotar os níveis preliminar do DDD
 
