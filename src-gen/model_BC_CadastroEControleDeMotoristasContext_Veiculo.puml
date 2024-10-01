@@ -1,0 +1,28 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package "'Veiculo' Aggregate" <<Rectangle>> {
+	class Veiculo <<(A,#fffab8) Aggregate Root>> {
+		String nomeVeiculo
+		String placaVeiculo
+		IdMotorista motorista
+		IdVeiculo idVeiculo
+		List<IdAgendamento> historicoDeUso
+	}
+	class IdVeiculo <<(V,DarkSeaGreen) Value Object>> {
+		int idVeiculo
+	}
+	class VeiculoService <<(S,DarkSeaGreen) Service>> {
+	}
+	class AlteracoesVeiculo <<(S,DarkSeaGreen) Service>> {
+		int adicionarVeiculo(String placaVeiculo, String nomeVeiculo)
+		int deletarVeiculo(Veiculo veiculo)
+		int alterarNomeVeiculo(String novoNome)
+		int alterarPlacaVeiculo(String novaPlaca)
+	}
+}
+Veiculo --> IdVeiculo : idVeiculo
+
+
+@enduml

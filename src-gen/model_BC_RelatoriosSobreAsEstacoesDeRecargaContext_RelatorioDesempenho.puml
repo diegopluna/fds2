@@ -4,14 +4,24 @@ skinparam componentStyle uml2
 
 package "'RelatorioDesempenho' Aggregate" <<Rectangle>> {
 	class Desempenho <<(A,#fffab8) Aggregate Root>> {
-		EstacaoDeRecarga estacaoDeRecarga
+		IdEstacao estacaoDeRecarga
 		PeriodoDeAnalise periodoDeAnalise
+		Relatorio relatorio
 	}
 	class PeriodoDeAnalise <<(V,DarkSeaGreen) Value Object>> {
 		DateTime inicioDaAnalise
 		DateTime fimDaAnalise
 	}
+	class Relatorio <<(V,DarkSeaGreen) Value Object>> {
+		int idRelatorio
+		String relatorio
+	}
+	class ServicoRelatorio <<(S,DarkSeaGreen) Service>> {
+		int alterarPeriodoDeAnalise(PeriodoDeAnalise novoPeriodo)
+		Relatorio gerarRelatorio(EstacaoDeRecarga estacao, PeriodoDeAnalise periodo)
+	}
 }
+Desempenho --> Relatorio : relatorio
 Desempenho --> PeriodoDeAnalise : periodoDeAnalise
 
 

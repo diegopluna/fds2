@@ -5,29 +5,20 @@ skinparam componentStyle uml2
 package "'Motorista' Aggregate" <<Rectangle>> {
 	class Motorista <<(A,#fffab8) Aggregate Root>> {
 		String nomeMotorista
-		List<Veiculo> veiculos
-		List<Agendamento> historicoDeUso
-		Usuario usuarioMotorista
+		IdUsuario usuarioMotorista
+		IdMotorista idMotorista
+		List<IdVeiculo> veiculos
+		List<IdAgendamento> historicoDeUso
 	}
-	class Veiculo <<(E,DarkSeaGreen) Entity>> {
-		String placaVeiculo
-		String nomeVeiculo
-		List<Agendamento> historicoDeUso
-		Motorista motorista
+	class IdMotorista <<(V,DarkSeaGreen) Value Object>> {
+		int idMotorista
 	}
 	class AlteracoesContaMotorista <<(S,DarkSeaGreen) Service>> {
-		int deletarConta(Usuario usuarioMotorista)
+		int deletarConta(IdUsuario usuarioMotorista)
 		int alterarNomeMotorista(String novoNome)
 	}
-	class AlteracoesVeiculo <<(S,DarkSeaGreen) Service>> {
-		int deletarVeiculo(Veiculo veiculo)
-		int alterarNomeVeiculo(String novoNome)
-		int alterarPlacaVeiculo(String novaPlaca)
-		int adicionarVeiculo(String placaVeiculo, String nomeVeiculo)
-	}
 }
-Veiculo --> Motorista : motorista
-Motorista "1" *--> "*" Veiculo : veiculos
+Motorista --> IdMotorista : idMotorista
 
 
 @enduml

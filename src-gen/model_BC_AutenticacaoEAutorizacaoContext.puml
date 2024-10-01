@@ -6,12 +6,22 @@ package "'Autenticacao' Aggregate" <<Rectangle>> {
 	class Usuario <<(A,#fffab8) Aggregate Root>> {
 		String login
 		String senha
-		boolean tipoUsuario
+		TipoUsuario tipoUsuario
+		IdUsuario id
+	}
+	class IdUsuario <<(V,DarkSeaGreen) Value Object>> {
+		int idUsuario
+	}
+	enum TipoUsuario {
+		MOTORISTA
+		FORNECEDOR
 	}
 	class NovosUsuarios <<(S,DarkSeaGreen) Service>> {
-		int criarConta(String login, String senha, boolean tipoUsuario)
+		int criarConta(String login, String senha, TipoUsuario tipoUsuario, IdUsuario cpfOuCnpjUsuario)
 	}
 }
+Usuario --> IdUsuario : id
+Usuario --> TipoUsuario : tipoUsuario
 legend left
   This bounded context implements the subdomain 'AutenticacaoEAutorizacaoDomain'.
 end legend

@@ -5,52 +5,20 @@ skinparam componentStyle uml2
 package "'Fornecedor' Aggregate" <<Rectangle>> {
 	class Fornecedor <<(A,#fffab8) Aggregate Root>> {
 		String nomeFornecedor
-		Usuario usuarioFornecedor
-		List<EstacaoDeRecarga> estacoesDeRecarga
-		List<Agendamento> historicoDeUso
+		IdUsuario usuarioFornecedor
+		IdFornecedor idFornecedor
+		List<IdEstacao> estacoesDeRecarga
+		List<IdAgendamento> historicoDeUso
 	}
-	class EstacaoDeRecarga <<(E,DarkSeaGreen) Entity>> {
-		int quantidadeDeCarregadores
-		boolean statusEstacao
-		String nomeDaEstacao
-		int precoReserva
-		int precoPKwH
-		HorarioDisponivel horarioFuncionamento
-		Endereco enderecoEstacao
-		Fornecedor fornecedor
-		List<HorarioDisponivel> horariosDisponiveis
-		List<Agendamento> historicoDeUso
-	}
-	class HorarioDisponivel <<(V,DarkSeaGreen) Value Object>> {
-		DateTime inicioAgendamento
-		DateTime fimAgendamento
-	}
-	class Endereco <<(V,DarkSeaGreen) Value Object>> {
-		String cep
-		String rua
-		String bairro
-		String cidade
-		int numero
+	class IdFornecedor <<(V,DarkSeaGreen) Value Object>> {
+		int idFornecedor
 	}
 	class AlteracoesContaFornecedor <<(S,DarkSeaGreen) Service>> {
-		int deletarConta(Usuario usuarioFornecedor)
+		int deletarConta(IdUsuario usuarioFornecedor)
 		int alterarNomeFornecedor(String novoNome)
 	}
-	class AlteracoesEstacao <<(S,DarkSeaGreen) Service>> {
-		int alterarQuantidadeCarregadores(int novaQuantidade)
-		int alterarHorarioFuncionamento(HorarioDisponivel novoHorario)
-		String alterarNomeEstacao(String novoNome)
-		int alterarPrecoReserva(int novoPreco)
-		int alterarPrecoPKwH(int novoPreco)
-		int deletarEstacao(EstacaoDeRecarga estacao)
-		int adicionarEstacao(int quantidadeDeCarregadores, HorarioDisponivel horarioFuncionamento, Endereco enderecoEstacao, String nomeDaEstacao, int precoReserva, int precoPKwH)
-	}
 }
-EstacaoDeRecarga "1" *--> "*" HorarioDisponivel : horariosDisponiveis
-EstacaoDeRecarga --> Endereco : enderecoEstacao
-EstacaoDeRecarga --> Fornecedor : fornecedor
-EstacaoDeRecarga --> HorarioDisponivel : horarioFuncionamento
-Fornecedor "1" *--> "*" EstacaoDeRecarga : estacoesDeRecarga
+Fornecedor --> IdFornecedor : idFornecedor
 
 
 @enduml

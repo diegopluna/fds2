@@ -5,26 +5,53 @@ skinparam componentStyle uml2
 package "'Agendamento' Aggregate" <<Rectangle>> {
 	class Agendamento <<(A,#fffab8) Aggregate Root>> {
 		int codigoLiberacaoCarregador
-		boolean statusAgendamento
+		int valorTotalRecarga
 		IdAgendamento idAgendamento
 		HorarioDisponivel horarioAgendamento
-		EstacaoDeRecarga estacaoDeRecarga
-		Motorista motorista
-		Veiculo veiculo
-		ConsultaEstacoesProximas estacoesProximas
+		StatusAgendamento statusAgendamento
+		List<Avaliacao> avaliacao
+		IdEstacao estacaoDeRecarga
+		IdMotorista motorista
+		IdVeiculo veiculo
 	}
 	class IdAgendamento <<(V,DarkSeaGreen) Value Object>> {
 		int idAgendamento
 	}
+	enum StatusAgendamento {
+		ATIVO
+		CANCELADO
+		CONCLUIDO
+	}
+	class Avaliacao <<(V,DarkSeaGreen) Value Object>> {
+		int idAvaliacao
+		String[0..1] descricaoExperiencia
+		Avaliacoes avaliacaoDada
+	}
+	enum Avaliacoes {
+		UM
+		DOIS
+		TRES
+		QUATRO
+		CINCO
+	}
 	class ServicoAgendamento <<(S,DarkSeaGreen) Service>> {
 		int realizarAgendamento(HorarioDisponivel horarioAgendamento, Veiculo veiculo, EstacaoDeRecarga estacao)
-		int cancelarAgendamento(int idAgendamento)
+		int cancelarAgendamento(IdAgendamento idAgendamento)
+		int getCodigoLiberacao(IdAgendamento idAgendamento)
+		int concluirAgendamento(IdAgendamento idAgendamento)
 	}
-	class GetCodigoLiberacao <<(S,DarkSeaGreen) Service>> {
-		int getCodigoLiberacao(Agendamento idAgendamento)
+	class ServicoAvaliacao <<(S,DarkSeaGreen) Service>> {
+		int avaliarAgendamento(IdAgendamento idAgendamento, Avaliacoes avaliacao, String descricaoExperiencia)
+	}
+	class ConsultaEstacoesProximas <<(S,DarkSeaGreen) Service>> {
+		int getEstacoesProximas(Endereco enderecoAtualMotorista, int raioDeBusca)
+		int setNovoRaio(int novoRaio)
 	}
 }
 Agendamento --> IdAgendamento : idAgendamento
+Avaliacao --> Avaliacoes : avaliacaoDada
+Agendamento --> StatusAgendamento : statusAgendamento
+Agendamento "1" *--> "*" Avaliacao : avaliacao
 
 
 @enduml
