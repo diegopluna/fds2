@@ -18,7 +18,10 @@
     <module>autenticacao</module>
     <module>autenticacao-bdd</module>
     <module>fornecedor</module>
+    <module>motorista</module>
     <module>common</module>
+    <module>recarga</module>
+    <module>recarga-bdd</module>
   </modules>
 
 </project>
