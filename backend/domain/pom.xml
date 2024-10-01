@@ -23,6 +23,7 @@
     <module>recarga</module>
     <module>recarga-bdd</module>
     <module>notificacao</module>
+    <module>visualizacao-bdd</module>
   </modules>
 
 </project>
