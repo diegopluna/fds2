@@ -11,6 +11,7 @@
         <module name="raycharge-presentation-backend" />
         <module name="motorista" />
         <module name="raycharge-docker" />
+        <module name="raycharge-domain-notificacao" />
         <module name="raycharge-application" />
         <module name="raycharge-infra-persistence-memory" />
         <module name="raycharge-domain-autenticacao" />
@@ -28,6 +29,7 @@
       <module name="raycharge-domain-autenticacao-bdd" options="-parameters" />
       <module name="raycharge-domain-common" options="-parameters" />
       <module name="raycharge-domain-fornecedor" options="-parameters" />
+      <module name="raycharge-domain-notificacao" options="-parameters" />
       <module name="raycharge-domain-recarga" options="-parameters" />
       <module name="raycharge-infra-persistence-memory" options="-parameters" />
       <module name="raycharge-presentation-backend" options="-parameters" />

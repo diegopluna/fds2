@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
-import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.IdNotificacao;
 
 public class NotificacaoService {
     private final NotificacaoRepositorio notificacaoRepositorio;
@@ -17,11 +16,11 @@ public class NotificacaoService {
     public int enviarNotificacao(IdNotificacao id, List<IdUsuario> destinatarios, IdUsuario origem, String mensagem) {
         Notificacao notificacao = new Notificacao(id, destinatarios, origem, mensagem);
         notificacaoRepositorio.saveNotificacao(notificacao);
-        return notificacao.getId().getId();
+        return notificacao.getId().getIdNotificacao();
     }
 
     public Notificacao buscarNotificacaoPorId(IdNotificacao id) {
-        return notificacaoRepositorio.findById(id).orElse(null);
+        return notificacaoRepositorio.findNotificacaoById(id).orElse(null);
     }
 
     public List<Notificacao> buscarNotificacoesPorDestinatario(IdUsuario idUsuario) {
@@ -37,7 +36,7 @@ public class NotificacaoService {
     }
 
     public int alterarMensagemNotificacao(IdNotificacao id, String novaMensagem) {
-        Optional<Notificacao> notificacaoOpt = notificacaoRepositorio.findById(id);
+        Optional<Notificacao> notificacaoOpt = notificacaoRepositorio.findNotificacaoById(id);
         if (notificacaoOpt.isPresent()) {
             Notificacao notificacao = notificacaoOpt.get();
             notificacao.setMensagem(novaMensagem);

@@ -13,12 +13,18 @@ import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacao;
 import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacoes;
 import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
 import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.StatusAgendamento;
+import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.EstacaoDeRecarga;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.EstacaoDeRecargaRepositorio;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.HorarioDisponivel;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.IdEstacao;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
-import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;rio;
+import com.cesar.school.fds2.raycharge.motorista.domain.motorista.Motorista;
+import com.cesar.school.fds2.raycharge.motorista.domain.motorista.MotoristaRepositorio;
+import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.IdNotificacao;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.Notificacao;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.NotificacaoRepositorio;
 
 @Service
 public class ServicoAgendamento {
@@ -26,10 +32,17 @@ public class ServicoAgendamento {
     private final AgendamentoRepositorio agendamentoRepositorio;
     private final EstacaoDeRecargaRepositorio estacaoDeRecargaRepositorio;
     private final NotificacaoRepositorio notificacaoRepositorio;
+    private final MotoristaRepositorio motoristaRepositorio;
 
-    public ServicoAgendamento(AgendamentoRepositorio agendamentoRepositorio) {
+    public ServicoAgendamento(AgendamentoRepositorio agendamentoRepositorio, NotificacaoRepositorio notificacaoRepositorio, EstacaoDeRecargaRepositorio estacaoDeRecargaRepositorio, MotoristaRepositorio motoristaRepositorio) {
         Objects.requireNonNull(agendamentoRepositorio, "O repositório de agendamentos não pode ser nulo");
+        Objects.requireNonNull(notificacaoRepositorio, "O repositório de notificações não pode ser nulo");
+        Objects.requireNonNull(estacaoDeRecargaRepositorio, "O repositório de estações de recarga não pode ser nulo");
+        Objects.requireNonNull(motoristaRepositorio, "O repositório de motoristas não pode ser nulo");
         this.agendamentoRepositorio = agendamentoRepositorio;
+        this.notificacaoRepositorio = notificacaoRepositorio;
+        this.estacaoDeRecargaRepositorio = estacaoDeRecargaRepositorio;
+        this.motoristaRepositorio = motoristaRepositorio;
     }
 
     // HISÓRIA 2
@@ -41,49 +54,57 @@ public class ServicoAgendamento {
         .filter(agendamento -> agendamento.getStatusAgendamento() == StatusAgendamento.ATIVO)
         .collect(Collectors.toList());
         
+        Motorista motorista = motoristaRepositorio.findMotoristaById(idMotorista).orElse(null);
+
+        List<IdUsuario> usuariosMotoristas = new ArrayList<>();
+        usuariosMotoristas.add(motorista.getUsuarioMotorista());
+        
         if (!agendamentosAtivos.isEmpty()) {
             Notificacao notificacaoErro = new Notificacao(
-            motorista,
-            "Você já possui um agendamento ativo. Para criar um novo agendamento, finalize o atual ou cancele-o."
+                new IdNotificacao(),
+                usuariosMotoristas,
+                "Você já possui um agendamento ativo. Para criar um novo agendamento, finalize o atual ou cancele-o."
             );
-            notificacaoRepositorio.save(notificacaoErro);
+            notificacaoRepositorio.saveNotificacao(notificacaoErro);
             return null;
         }
+        
         EstacaoDeRecarga estacaoDeRecarga = estacaoDeRecargaRepositorio.getEstacaoById(estacao);
 
         if (!estacaoDeRecarga.getHorarioDisponiveis().contains(horarioAgendamento)) {
-            // Cenário 2: Horário indisponível
             Notificacao notificacaoErro = new Notificacao(
-                    motorista,
-                    "Não foi possível agendar para a estação " + estacaoDeRecarga.getNomeDaEstacao() +
-                            " no horário " + horarioAgendamento + ", por favor selecione um horário disponível"
+                new IdNotificacao(),
+                usuariosMotoristas,
+                "Não foi possível agendar para a estação " + estacaoDeRecarga.getNomeDaEstacao() +
+                    " no horário " + horarioAgendamento + ", pois ele está indisponível. Por favor selecione um horário disponível."
             );
-            notificacaoRepositorio.save(notificacaoErro);
+            notificacaoRepositorio.saveNotificacao(notificacaoErro);
             return null;
         }
 
         IdAgendamento idAgendamento = new IdAgendamento(UUID.randomUUID().toString().hashCode());
 
         Agendamento agendamento = new Agendamento(
-                idAgendamento,
-                generateCodigoLiberacao(),
-                horarioAgendamento,
-                StatusAgendamento.ATIVO,
-                0,
-                new ArrayList<>(),
-                estacao,
-                idMotorista,
-                veiculo
+            idAgendamento,
+            generateCodigoLiberacao(),
+            horarioAgendamento,
+            StatusAgendamento.ATIVO,
+            0,
+            new ArrayList<>(),
+            estacao,
+            idMotorista,
+            veiculo
         );
 
         agendamentoRepositorio.saveAgendamento(agendamento);
 
         Notificacao notificacaoSucesso = new Notificacao(
-                motorista,
-                "Agendamento realizado com sucesso para a estação " + estacaoDeRecarga.getNome() +
-                        " no dia e horário " + horarioAgendamento + "."
+            new IdNotificacao(),
+            usuariosMotoristas,
+            "Agendamento realizado com sucesso para a estação " + estacaoDeRecarga.getNomeDaEstacao() +
+                " no dia e horário " + horarioAgendamento + "."
         );
-        notificacaoRepositorio.save(notificacaoSucesso);
+        notificacaoRepositorio.saveNotificacao(notificacaoSucesso);
 
         return idAgendamento;
     }
@@ -100,19 +121,15 @@ public class ServicoAgendamento {
             LocalDateTime agora = LocalDateTime.now();
 
             if (inicioAgendamento.isBefore(agora.plusHours(24)) || forcarReembolso) {
-                // Se faltar menos de 24h, aplicar o preço mínimo
                 agendamento.setValorTotalRecarga(agendamento.getValorMinimo());
             } else {
-                // Se faltar mais de 24h, valor total da recarga é 0
                 agendamento.setValorTotalRecarga(0);
             }
 
-            // Save the updated Agendamento
             agendamentoRepositorio.saveAgendamento(agendamento);
 
             return idAgendamento;
         } else {
-            // Handle the case where the Agendamento doesn't exist or is not active
             throw new IllegalArgumentException("Agendamento não encontrado ou já concluído/cancelado.");
         }
     }

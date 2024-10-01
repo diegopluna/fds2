@@ -2,19 +2,17 @@ package com.cesar.school.fds2.raycharge.notificacao.domain.notificacao;
 
 import java.util.Objects;
 
-import static org.apache.commons.lang3.Validate.isTrue;
 import org.jmolecules.ddd.types.Identifier;
 import org.jmolecules.ddd.types.ValueObject;
 
 public class IdNotificacao implements ValueObject, Identifier {
     private final int id;
 
-    public IdNotificacao(int id) {
-        isTrue(id > 0, "O id deve ser positivo");
-        this.id = id;
+    public IdNotificacao() {
+        this.id = (int) (Math.random() * Integer.MAX_VALUE);
     }
 
-    public int getId() {
+    public int getIdNotificacao() {
         return id;
     }
 

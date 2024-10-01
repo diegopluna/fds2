@@ -37,7 +37,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
 
   private Map<IdAgendamento, Agendamento> agendamentos = new HashMap<>();
 
-
   @Override
   public void saveUsuario(Usuario usuario) {
     usuarios.put(usuario.getId(), usuario);
@@ -52,7 +51,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   public void saveVeiculo(Veiculo veiculo) {
     veiculos.put(veiculo.getId(), veiculo);
   }
-
 
   //usuario
   @Override
@@ -87,7 +85,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
 
   @Override
   public void deleteVeiculo(IdVeiculo idVeiculo) {
-
   }
 
   @Override
@@ -131,8 +128,12 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   }
 
   @Override
-  public void deleteById(IdAgendamento idAgendamento) {
+  public List<Agendamento> buscarMotoristaPorId(IdMotorista idMotorista) {
+    return List.of();
+  }
 
+  @Override
+  public void deleteById(IdAgendamento idAgendamento) {
   }
 
   @Override
@@ -142,7 +143,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
 
   @Override
   public void saveAvaliacao(IdAgendamento idAgendamento, Avaliacao avaliacao) {
-
   }
 
   @Override
