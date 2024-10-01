@@ -9,6 +9,8 @@
         <module name="raycharge-domain-fornecedor" />
         <module name="raycharge-domain-autenticacao-bdd" />
         <module name="raycharge-presentation-backend" />
+        <module name="raycharge-infra-event" />
+        <module name="raycharge-infra-persistence-jpa" />
         <module name="raycharge-docker" />
         <module name="raycharge-application" />
         <module name="raycharge-infra-persistence-memory" />
@@ -16,6 +18,9 @@
         <module name="raycharge-domain-common" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="raycharge-domain-exemplo" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -24,7 +29,10 @@
       <module name="raycharge-domain-autenticacao" options="-parameters" />
       <module name="raycharge-domain-autenticacao-bdd" options="-parameters" />
       <module name="raycharge-domain-common" options="-parameters" />
+      <module name="raycharge-domain-exemplo" options="-parameters" />
       <module name="raycharge-domain-fornecedor" options="-parameters" />
+      <module name="raycharge-infra-event" options="-parameters" />
+      <module name="raycharge-infra-persistence-jpa" options="-parameters" />
       <module name="raycharge-infra-persistence-memory" options="-parameters" />
       <module name="raycharge-presentation-backend" options="-parameters" />
     </option>

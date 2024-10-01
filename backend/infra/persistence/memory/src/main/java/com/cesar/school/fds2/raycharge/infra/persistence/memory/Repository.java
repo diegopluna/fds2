@@ -12,6 +12,7 @@ import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.FornecedorRe
 import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.IdFornecedor;
 
 public class Repository implements UsuarioRepositorio, FornecedorRepositorio {
+  /*-----------------------------------------------------------------------*/
   private Map<IdUsuario, Usuario> usuarios = new HashMap<>();
 
   @Override
@@ -25,8 +26,7 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio {
   public void saveUsuario(Usuario usuario) {
     usuarios.put(usuario.getId(), usuario);
   }
-
-  // Implementar metodos do repositorio aqui
+  /*-----------------------------------------------------------------------*/
   private Map<IdFornecedor, Fornecedor> fornecedores = new HashMap<>();
 
   @Override
@@ -45,4 +45,5 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio {
   public void updateFornecedor(Fornecedor fornecedor) {
     fornecedores.put(fornecedor.getId(), fornecedor);
   }
+  /*-----------------------------------------------------------------------*/
 }

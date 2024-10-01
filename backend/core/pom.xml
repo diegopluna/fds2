@@ -22,7 +22,7 @@
       <plugin>
         <executions>
           <execution>
-            <phase>genereate-sources</phase>
+            <phase>generate-sources</phase>
             <goals>
               <goal>graph</goal>
             </goals>
