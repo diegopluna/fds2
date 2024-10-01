@@ -12,9 +12,12 @@
     <file url="file://$PROJECT_DIR$/backend/domain/motorista/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/motorista/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/notificacao/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/domain/recarga-bdd/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/recarga/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/infra/event/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/infra/persistence/jpa/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/infra/persistence/memory/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/infra/persistence/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/infra/persistence/src/main/resources" charset="UTF-8" />
