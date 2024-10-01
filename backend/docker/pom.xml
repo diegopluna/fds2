@@ -26,21 +26,22 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>${project.groupId}</groupId>-->
-<!--			<artifactId>sgb-infraestrutura-evento</artifactId>-->
-<!--			<version>0.0.1-SNAPSHOT</version>		-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>raycharge-infra-persistence-jpa</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>${project.groupId}</groupId>-->
-<!--			<artifactId>sgb-infraestrutura-persistencia-jpa</artifactId>-->
-<!--			<version>0.0.1-SNAPSHOT</version>		-->
-<!--		</dependency>-->
-		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>raycharge-infra-event</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 		<dependency>
 		    <groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 </project>

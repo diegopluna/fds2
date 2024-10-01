@@ -1,4 +1,4 @@
-package com.cesar.school.fds2.raycharge.agendamento.domain.agendamento;
+package com.cesar.school.fds2.raycharge.recarga.domain.agendamento;
 
 public enum StatusAgendamento {
     ATIVO,

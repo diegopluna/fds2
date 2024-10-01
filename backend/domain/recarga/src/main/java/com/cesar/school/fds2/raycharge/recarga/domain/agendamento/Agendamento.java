@@ -1,8 +1,5 @@
 package com.cesar.school.fds2.raycharge.recarga.domain.agendamento;
 
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.Avaliacoes;
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.StatusAgendamento;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.HorarioDisponivel;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga.IdEstacao;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;

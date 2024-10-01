@@ -7,7 +7,7 @@ import java.util.Objects;
 import static org.apache.commons.lang3.Validate.notBlank;
 import org.jmolecules.ddd.types.AggregateRoot;
 
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
+import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.IdAgendamento;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
 
 public class Veiculo implements Cloneable, AggregateRoot<Veiculo, IdVeiculo> {
