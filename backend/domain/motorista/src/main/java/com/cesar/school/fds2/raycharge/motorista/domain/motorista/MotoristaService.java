@@ -21,7 +21,7 @@ public class MotoristaService {
     }
 
     public Motorista buscarMotoristaPorId(IdMotorista idMotorista) {
-        return motoristaRepositorio.findById(idMotorista).orElse(null);
+        return motoristaRepositorio.findMotoristaById(idMotorista).orElse(null);
     }
 
     public void atualizarMotorista(Motorista motorista) {
@@ -42,7 +42,7 @@ public class MotoristaService {
     }
 
     public int alterarNomeMotorista(IdMotorista idMotorista, String novoNome) {
-        Motorista motorista = motoristaRepositorio.findById(idMotorista).orElse(null);
+        Motorista motorista = motoristaRepositorio.findMotoristaById(idMotorista).orElse(null);
         if (motorista != null) {
             motorista.setNomeMotorista(novoNome);
             motoristaRepositorio.updateMotorista(motorista);

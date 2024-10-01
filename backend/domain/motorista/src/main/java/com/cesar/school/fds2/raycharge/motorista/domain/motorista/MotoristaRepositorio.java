@@ -6,7 +6,7 @@ import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuari
 public interface MotoristaRepositorio {
     //Colocar metodos do Repositorio aqui
     void saveMotorista(Motorista motorista);
-    Optional<Motorista> findById(IdMotorista idMotorista);
+    Optional<Motorista> findMotoristaById(IdMotorista idMotorista);
     Optional<Motorista> findByUsuarioMotorista(IdUsuario usuarioMotorista);
     Optional<Motorista> updateMotorista(Motorista motorista);
     Optional<Motorista> deleteMotorista(IdMotorista idMotorista);

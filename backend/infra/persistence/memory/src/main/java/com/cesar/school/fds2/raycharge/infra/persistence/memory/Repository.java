@@ -7,23 +7,25 @@ import java.util.Optional;
 
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Avaliacao;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.IdAgendamento;
-import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.UsuarioRepositorio;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.IdUsuario;
 import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.Usuario;
+import com.cesar.school.fds2.raycharge.autenticacao.domain.autenticacao.UsuarioRepositorio;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.Fornecedor;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.FornecedorRepositorio;
 import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.IdFornecedor;
-
-import com.cesar.school.fds2.raycharge.motorista.domain.motorista.MotoristaRepositorio;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.IdMotorista;
 import com.cesar.school.fds2.raycharge.motorista.domain.motorista.Motorista;
-
+import com.cesar.school.fds2.raycharge.motorista.domain.motorista.MotoristaRepositorio;
+import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.IdVeiculo;
+import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.Veiculo;
 import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.VeiculoRepositorio;
-import com.cesar.school.fds2.raycharge.motorista.domain.veiculo.*;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.IdNotificacao;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.Notificacao;
+import com.cesar.school.fds2.raycharge.notificacao.domain.notificacao.NotificacaoRepositorio;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.Agendamento;
 import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.AgendamentoRepositorio;
 
-public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio, AgendamentoRepositorio {
+public class Repository implements UsuarioRepositorio, FornecedorRepositorio, MotoristaRepositorio, VeiculoRepositorio, AgendamentoRepositorio, NotificacaoRepositorio {
   // Implementar metodos do repositorio aqui
   private Map<IdFornecedor, Fornecedor> fornecedores = new HashMap<>();
 
@@ -51,7 +53,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
     veiculos.put(veiculo.getId(), veiculo);
   }
 
-
   //usuario
   @Override
   public Optional<Usuario> findByLogin(String login) {
@@ -61,7 +62,6 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   }
 
   // motorista
-  @Override
   public Optional<Motorista> findById(IdMotorista idMotorista) {
     return Optional.ofNullable(motoristas.get(idMotorista));
   }
@@ -126,8 +126,8 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   }
 
   @Override
-  public Optional<Agendamento> findById(IdAgendamento id) {
-    return Optional.ofNullable(agendamentos.get(id));
+  public Agendamento findById(IdAgendamento idAgendamento) {
+    return null;
   }
 
   @Override
@@ -143,7 +143,42 @@ public class Repository implements UsuarioRepositorio, FornecedorRepositorio, Mo
   @Override
   public void saveAvaliacao(IdAgendamento idAgendamento, Avaliacao avaliacao) {
     Agendamento agendamento = agendamentos.get(idAgendamento);
-    agendamento.getAvaliacao().add(avaliacao.getAvaliacaoDada());
+    agendamento.getAvaliacao().add(avaliacao.getAvaliacaoDada());  }
+
+  public Optional<Notificacao> findById(IdNotificacao id) {
+    // Implementação do método findById para NotificacaoRepositorio
+    return null; // Substitua por lógica real
   }
+
+  @Override
+  public void deleteNotificacao(IdNotificacao id) {
+    // Implementação do método deleteNotificacao
+  }
+
+  @Override
+  public void saveNotificacao(Notificacao notificacao) {
+    // Implementação do método saveNotificacao
+  }
+
+  @Override
+  public void updateNotificacao(Notificacao notificacao) {
+    // Implementação do método updateNotificacao
+  }
+
+  @Override
+  public List<Notificacao> findByDestinatario(IdUsuario destinatario) {
+      // Implementação do método findByDestinatario
+      return List.of(); // Substitua por lógica real
+  }
+
+    @Override
+    public Optional<Motorista> findMotoristaById(IdMotorista idMotorista) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Optional<Notificacao> findNotificacaoById(IdNotificacao id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
   /*-----------------------------------------------------------------------*/
 }

@@ -22,6 +22,7 @@
     <module>common</module>
     <module>recarga</module>
     <module>recarga-bdd</module>
+    <module>notificacao</module>
   </modules>
 
 </project>
