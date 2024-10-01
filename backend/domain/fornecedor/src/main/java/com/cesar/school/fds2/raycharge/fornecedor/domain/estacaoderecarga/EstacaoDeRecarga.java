@@ -1,10 +1,11 @@
 package com.cesar.school.fds2.raycharge.fornecedor.domain.estacaoderecarga;
 
-import com.cesar.school.fds2.raycharge.agendamento.domain.agendamento.IdAgendamento;
-import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.IdFornecedor;
+import java.util.List;
+
 import org.jmolecules.ddd.types.AggregateRoot;
 
-import java.util.List;
+import com.cesar.school.fds2.raycharge.recarga.domain.agendamento.IdAgendamento;
+import com.cesar.school.fds2.raycharge.fornecedor.domain.fornecedor.IdFornecedor;
 
 public class EstacaoDeRecarga implements Cloneable, AggregateRoot<EstacaoDeRecarga, IdEstacao> {
   private final IdEstacao idEstacao;
@@ -16,12 +17,13 @@ public class EstacaoDeRecarga implements Cloneable, AggregateRoot<EstacaoDeRecar
   private StatusEstacao statusEstacao;
   private int precoMinimo;
   private int precoPKwH;
+  private float distancia;
   private int tempoPorAgendamento;
   private List<HorarioDisponivel> horarioDisponiveis;
   private List<IdAgendamento> historicoDeUso;
 
 
-  public EstacaoDeRecarga(IdEstacao idEstacao, IdFornecedor idFornecedor, String nomeDaEstacao, int quantidadeDeCarregadores, HorarioDisponivel horarioFuncionamento, Endereco enderecoEstacao, StatusEstacao statusEstacao, int precoMinimo, int precoPKwH, int tempoPorAgendamento, List<HorarioDisponivel> horarioDisponiveis, List<IdAgendamento> historicoDeUso) {
+  public EstacaoDeRecarga(IdEstacao idEstacao, IdFornecedor idFornecedor, String nomeDaEstacao, int quantidadeDeCarregadores, HorarioDisponivel horarioFuncionamento, Endereco enderecoEstacao, StatusEstacao statusEstacao, int precoMinimo, int precoPKwH, float distancia, int tempoPorAgendamento, List<HorarioDisponivel> horarioDisponiveis, List<IdAgendamento> historicoDeUso) {
     this.idEstacao = idEstacao;
     this.idFornecedor = idFornecedor;
     this.nomeDaEstacao = nomeDaEstacao;
@@ -31,11 +33,13 @@ public class EstacaoDeRecarga implements Cloneable, AggregateRoot<EstacaoDeRecar
     this.statusEstacao = statusEstacao;
     this.precoMinimo = precoMinimo;
     this.precoPKwH = precoPKwH;
+    this.distancia = 0.0f; // distancia como NULL
     this.tempoPorAgendamento = tempoPorAgendamento;
     this.horarioDisponiveis = horarioDisponiveis;
     this.historicoDeUso = historicoDeUso;
   }
 
+  @Override
   public IdEstacao getId() {
     return idEstacao;
   }
@@ -98,6 +102,14 @@ public class EstacaoDeRecarga implements Cloneable, AggregateRoot<EstacaoDeRecar
 
   public void setPrecoPKwH(int precoPKwH) {
     this.precoPKwH = precoPKwH;
+  }
+
+  public float getDistancia() {
+    return distancia;
+  }
+
+  public void setDistancia(float distancia) {
+    this.distancia = distancia;
   }
 
   public int getTempoPorAgendamento() {
