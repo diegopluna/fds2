@@ -14,11 +14,6 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
-    <modules>
-        <module>../domain/authentication</module>
-        <module>../domain/common</module>
-        <module>../infra/persistence/memory</module>
-    </modules>
 
     <build>
         <plugins>

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cesar.school.raycharge</groupId>
-    <artifactId>raycharge-infra-persistence</artifactId>
+    <artifactId>raycharge-infra-security</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
@@ -15,7 +15,6 @@
     </properties>
 
     <modules>
-        <module>memory</module>
     </modules>
 
 </project>

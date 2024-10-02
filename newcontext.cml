@@ -36,4 +36,11 @@ BoundedContext Authentication {
             @User createUser(@User user);
         }
     }
+
+    Aggregate Security {
+        Service PasswordHasher {
+            String hashPassword(String password);
+            boolean verifyPassword(String plainPassword, String hashedPassword);
+        }
+    }
 }

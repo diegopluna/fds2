@@ -16,6 +16,7 @@
 
     <modules>
         <module>persistence</module>
+        <module>security</module>
     </modules>
 
 </project>
