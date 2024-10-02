@@ -1,29 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.cesar.school.fds2.raycharge</groupId>
-  <artifactId>raycharge-domain</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+    <groupId>cesar.school.raycharge</groupId>
+    <artifactId>raycharge-domain</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
-  <packaging>pom</packaging>
+    <packaging>pom</packaging>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-  <modules>
-    <module>autenticacao</module>
-    <module>autenticacao-bdd</module>
-    <module>fornecedor</module>
-    <module>motorista</module>
-    <module>common</module>
-    <module>recarga</module>
-    <module>recarga-bdd</module>
-    <module>notificacao</module>
-    <module>visualizacao-bdd</module>
-  </modules>
-
+    <modules>
+        <module>common</module>
+        <module>authentication</module>
+    </modules>
 </project>

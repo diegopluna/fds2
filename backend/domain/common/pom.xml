@@ -1,37 +1,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cesar.school.raycharge</groupId>
+        <artifactId>raycharge-core</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../core/pom.xml</relativePath>
+    </parent>
 
-	<parent>
-		<groupId>com.cesar.school.fds2.raycharge</groupId>
-		<artifactId>raycharge-core</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	    <relativePath>../../core</relativePath>
-	</parent>
+    <artifactId>raycharge-domain-common</artifactId>
 
-	<artifactId>raycharge-domain-common</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
 
-	<dependencies>
-		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.jmolecules</groupId>
+            <artifactId>jmolecules-ddd</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.jmolecules</groupId>
-			<artifactId>jmolecules-ddd</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.jmolecules</groupId>
+            <artifactId>jmolecules-events</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.jmolecules</groupId>
-			<artifactId>jmolecules-events</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.jmolecules</groupId>
+            <artifactId>jmolecules-layered-architecture</artifactId>
+        </dependency>
+    </dependencies>
 
-		<dependency>
-			<groupId>org.jmolecules</groupId>
-			<artifactId>jmolecules-layered-architecture</artifactId>
-		</dependency>
-	</dependencies>
 </project>
