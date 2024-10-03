@@ -4,17 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cesar.school.raycharge</groupId>
+    <parent>
+        <groupId>cesar.school.raycharge</groupId>
+        <artifactId>raycharge-core</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../core/pom.xml</relativePath>
+    </parent>
+
     <artifactId>raycharge-infra-security</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>raycharge-domain-authentication</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
-    <modules>
-    </modules>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
