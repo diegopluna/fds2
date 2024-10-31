@@ -13,7 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ListaDeAgendamentoImport } from './routes/listaDeAgendamento'
+import { Route as AgendamentosImport } from './routes/Agendamentos'
 
 // Create Virtual Routes
 
@@ -27,8 +27,8 @@ const AboutLazyRoute = AboutLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
-const ListaDeAgendamentoRoute = ListaDeAgendamentoImport.update({
-  path: '/listaDeAgendamento',
+const AgendamentosRoute = AgendamentosImport.update({
+  path: '/Agendamentos',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -48,11 +48,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/listaDeAgendamento': {
-      id: '/listaDeAgendamento'
-      path: '/listaDeAgendamento'
-      fullPath: '/listaDeAgendamento'
-      preLoaderRoute: typeof ListaDeAgendamentoImport
+    '/Agendamentos': {
+      id: '/Agendamentos'
+      path: '/Agendamentos'
+      fullPath: '/Agendamentos'
+      preLoaderRoute: typeof AgendamentosImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -69,41 +69,41 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '/listaDeAgendamento': typeof ListaDeAgendamentoRoute
+  '/Agendamentos': typeof AgendamentosRoute
   '/about': typeof AboutLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '/listaDeAgendamento': typeof ListaDeAgendamentoRoute
+  '/Agendamentos': typeof AgendamentosRoute
   '/about': typeof AboutLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
-  '/listaDeAgendamento': typeof ListaDeAgendamentoRoute
+  '/Agendamentos': typeof AgendamentosRoute
   '/about': typeof AboutLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/listaDeAgendamento' | '/about'
+  fullPaths: '/' | '/Agendamentos' | '/about'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/listaDeAgendamento' | '/about'
-  id: '__root__' | '/' | '/listaDeAgendamento' | '/about'
+  to: '/' | '/Agendamentos' | '/about'
+  id: '__root__' | '/' | '/Agendamentos' | '/about'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
-  ListaDeAgendamentoRoute: typeof ListaDeAgendamentoRoute
+  AgendamentosRoute: typeof AgendamentosRoute
   AboutLazyRoute: typeof AboutLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  ListaDeAgendamentoRoute: ListaDeAgendamentoRoute,
+  AgendamentosRoute: AgendamentosRoute,
   AboutLazyRoute: AboutLazyRoute,
 }
 
@@ -120,15 +120,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/listaDeAgendamento",
+        "/Agendamentos",
         "/about"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/listaDeAgendamento": {
-      "filePath": "listaDeAgendamento.tsx"
+    "/Agendamentos": {
+      "filePath": "Agendamentos.tsx"
     },
     "/about": {
       "filePath": "about.lazy.tsx"
