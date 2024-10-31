@@ -56,12 +56,6 @@ Este projeto foi desenvolvido como parte da disciplina de **Requisitos, Projeto 
         </sub>
       </a>
     </td>
-    <td align="center">
-      <a href="https://github.com/FernandaFBMarques">
-        <img src="https://avatars.githubusercontent.com/u/101741395?v=4" width="200px;" alt="Foto Fernanda"/><br>
-        <sub>
-          <b>Fernanda Marques</b>
-        </sub>
       </a>
     </td>
     <td align="center">
