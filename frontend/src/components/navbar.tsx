@@ -16,22 +16,22 @@ const Navbar: React.FC = () => {
       </div>
       <ul className="flex gap-12 list-none mr-6">
         <li className='flex items-center'>
-            <a href="#"><img src={home} alt="Home Icon" /></a>
+            <a href="#"><img src={home} alt="Home Icon" title='Home'/></a>
         </li>
         <li className='flex items-center'>
-            <a href="#"><img src={user} alt="User Icon" /></a>
+            <a href="#"><img src={user} alt="User Icon" title='User'/></a>
         </li>
         <li className='flex items-center'>
-            <a href="#"><img src={car} alt="Cars Icon" /></a>
+            <a href="#"><img src={car} alt="Cars Icon" title='Cars'/></a>
         </li>
         <li className='flex items-center'>
-            <a href="#"><img src={calendar} alt="Calendar Icon" /></a>
+            <a href="#"><img src={calendar} alt="Calendar Icon" title='Calendar'/></a>
         </li>
         <li className='flex items-center'>
-            <a href="#"><img src={map} alt="Map Icon" /></a>
+            <a href="#"><img src={map} alt="Map Icon" title='Map'/></a>
             </li>
         <li className='flex items-center'>
-            <a href="#"><img src={settings} alt="Settings Icon" /></a>
+            <a href="#"><img src={settings} alt="Settings Icon" title='Settings'/></a>
             </li>
       </ul>
     </nav>

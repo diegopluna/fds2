@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as DetalhesEstacaoImport } from './routes/detalhesEstacao'
 import { Route as AgendamentosImport } from './routes/Agendamentos'
 
 // Create Virtual Routes
@@ -26,6 +27,11 @@ const AboutLazyRoute = AboutLazyImport.update({
   path: '/about',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
+
+const DetalhesEstacaoRoute = DetalhesEstacaoImport.update({
+  path: '/detalhesEstacao',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AgendamentosRoute = AgendamentosImport.update({
   path: '/Agendamentos',
@@ -55,6 +61,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AgendamentosImport
       parentRoute: typeof rootRoute
     }
+    '/detalhesEstacao': {
+      id: '/detalhesEstacao'
+      path: '/detalhesEstacao'
+      fullPath: '/detalhesEstacao'
+      preLoaderRoute: typeof DetalhesEstacaoImport
+      parentRoute: typeof rootRoute
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -70,12 +83,14 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/Agendamentos': typeof AgendamentosRoute
+  '/detalhesEstacao': typeof DetalhesEstacaoRoute
   '/about': typeof AboutLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/Agendamentos': typeof AgendamentosRoute
+  '/detalhesEstacao': typeof DetalhesEstacaoRoute
   '/about': typeof AboutLazyRoute
 }
 
@@ -83,27 +98,30 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/Agendamentos': typeof AgendamentosRoute
+  '/detalhesEstacao': typeof DetalhesEstacaoRoute
   '/about': typeof AboutLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/Agendamentos' | '/about'
+  fullPaths: '/' | '/Agendamentos' | '/detalhesEstacao' | '/about'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/Agendamentos' | '/about'
-  id: '__root__' | '/' | '/Agendamentos' | '/about'
+  to: '/' | '/Agendamentos' | '/detalhesEstacao' | '/about'
+  id: '__root__' | '/' | '/Agendamentos' | '/detalhesEstacao' | '/about'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AgendamentosRoute: typeof AgendamentosRoute
+  DetalhesEstacaoRoute: typeof DetalhesEstacaoRoute
   AboutLazyRoute: typeof AboutLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AgendamentosRoute: AgendamentosRoute,
+  DetalhesEstacaoRoute: DetalhesEstacaoRoute,
   AboutLazyRoute: AboutLazyRoute,
 }
 
@@ -121,6 +139,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/Agendamentos",
+        "/detalhesEstacao",
         "/about"
       ]
     },
@@ -129,6 +148,9 @@ export const routeTree = rootRoute
     },
     "/Agendamentos": {
       "filePath": "Agendamentos.tsx"
+    },
+    "/detalhesEstacao": {
+      "filePath": "detalhesEstacao.tsx"
     },
     "/about": {
       "filePath": "about.lazy.tsx"
