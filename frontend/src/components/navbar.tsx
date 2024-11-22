@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="flex justify-between items-center p-4 bg-white shadow-md">
       <div className="flex items-center ml-6">
-        <img src={logo} alt="RayCharge Logo" />
+        <a href="/"><img src={logo} alt="RayCharge Logo" /></a>
       </div>
       <ul className="flex gap-12 list-none mr-6">
         <li className='flex items-center'>
