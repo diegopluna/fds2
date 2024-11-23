@@ -144,7 +144,16 @@ public class ChargingStation {
     }
 
     public boolean isInRadius(double latitude, double longitude, int radiusKm) {
-        double distance = Math.sqrt(Math.pow(this.latitude - latitude, 2) + Math.pow(this.longitude - longitude, 2));
+        double lat1Rad = Math.toRadians(this.latitude);
+        double lat2Rad = Math.toRadians(latitude);
+        double lon1Rad = Math.toRadians(this.longitude);
+        double lon2Rad = Math.toRadians(longitude);
+
+        double x = (lon2Rad - lon1Rad) * Math.cos((lat1Rad + lat2Rad) / 2);
+        double y = (lat2Rad - lat1Rad);
+        double distance = Math.sqrt(x * x + y * y) * 6371;
+        System.out.println("Distance: " + distance);
         return distance <= radiusKm;
+
     }
 }

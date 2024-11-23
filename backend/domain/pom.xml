@@ -18,5 +18,6 @@
         <module>authentication</module>
         <module>authentication-bdd</module>
         <module>supplier</module>
+        <module>supplier-bdd</module>
     </modules>
 </project>

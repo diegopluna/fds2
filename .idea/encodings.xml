@@ -18,6 +18,8 @@
     <file url="file://$PROJECT_DIR$/backend/domain/recarga/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/domain/supplier-bdd/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/domain/supplier-bdd/src/test/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/supplier/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/visualizacao-bdd/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/infra/event/src/main/java" charset="UTF-8" />

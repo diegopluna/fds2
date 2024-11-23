@@ -3,12 +3,16 @@ package cesar.school.raycharge.infra.persistence.memory;
 import cesar.school.raycharge.authentication.domain.user.User;
 import cesar.school.raycharge.authentication.domain.user.UserId;
 import cesar.school.raycharge.authentication.domain.user.UserRepository;
+import cesar.school.raycharge.supplier.domain.station.ChargingStation;
+import cesar.school.raycharge.supplier.domain.station.ChargingStationRepository;
+import cesar.school.raycharge.supplier.domain.station.StationId;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Repository implements UserRepository {
+public class Repository implements UserRepository, ChargingStationRepository {
   /*-----------------------------------------------------------------------*/
   /* UserRepository                                                        */
   private Map<UserId, User> users = new HashMap<>();
@@ -40,4 +44,27 @@ public class Repository implements UserRepository {
   }
 
   /*-----------------------------------------------------------------------*/
+  /* ChargingStationRepository                                             */
+  private Map<StationId, ChargingStation> chargingStations = new HashMap<>();
+
+  @Override
+  public List<ChargingStation> fetchAll() {
+    return List.copyOf(chargingStations.values());
+  }
+
+  @Override
+  public ChargingStation save(ChargingStation station) {
+    Objects.requireNonNull(station, "station must not be null");
+    if (chargingStations.containsKey(station.getId())) {
+      return null;
+    }
+
+    for (ChargingStation s : chargingStations.values()) {
+      if (s.getName().equals(station.getName())) {
+        return null;
+      }
+    }
+    chargingStations.put(station.getId(), station);
+    return station;
+  }
 }
