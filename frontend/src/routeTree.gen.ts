@@ -13,6 +13,8 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as MapaImport } from './routes/mapa'
+import { Route as DetalhesEstacaoImport } from './routes/detalhesEstacao'
 import { Route as AgendamentosImport } from './routes/Agendamentos'
 
 // Create Virtual Routes
@@ -26,6 +28,16 @@ const AboutLazyRoute = AboutLazyImport.update({
   path: '/about',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
+
+const MapaRoute = MapaImport.update({
+  path: '/mapa',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DetalhesEstacaoRoute = DetalhesEstacaoImport.update({
+  path: '/detalhesEstacao',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AgendamentosRoute = AgendamentosImport.update({
   path: '/Agendamentos',
@@ -55,6 +67,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AgendamentosImport
       parentRoute: typeof rootRoute
     }
+    '/detalhesEstacao': {
+      id: '/detalhesEstacao'
+      path: '/detalhesEstacao'
+      fullPath: '/detalhesEstacao'
+      preLoaderRoute: typeof DetalhesEstacaoImport
+      parentRoute: typeof rootRoute
+    }
+    '/mapa': {
+      id: '/mapa'
+      path: '/mapa'
+      fullPath: '/mapa'
+      preLoaderRoute: typeof MapaImport
+      parentRoute: typeof rootRoute
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -70,12 +96,16 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/Agendamentos': typeof AgendamentosRoute
+  '/detalhesEstacao': typeof DetalhesEstacaoRoute
+  '/mapa': typeof MapaRoute
   '/about': typeof AboutLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/Agendamentos': typeof AgendamentosRoute
+  '/detalhesEstacao': typeof DetalhesEstacaoRoute
+  '/mapa': typeof MapaRoute
   '/about': typeof AboutLazyRoute
 }
 
@@ -83,27 +113,39 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/Agendamentos': typeof AgendamentosRoute
+  '/detalhesEstacao': typeof DetalhesEstacaoRoute
+  '/mapa': typeof MapaRoute
   '/about': typeof AboutLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/Agendamentos' | '/about'
+  fullPaths: '/' | '/Agendamentos' | '/detalhesEstacao' | '/mapa' | '/about'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/Agendamentos' | '/about'
-  id: '__root__' | '/' | '/Agendamentos' | '/about'
+  to: '/' | '/Agendamentos' | '/detalhesEstacao' | '/mapa' | '/about'
+  id:
+    | '__root__'
+    | '/'
+    | '/Agendamentos'
+    | '/detalhesEstacao'
+    | '/mapa'
+    | '/about'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AgendamentosRoute: typeof AgendamentosRoute
+  DetalhesEstacaoRoute: typeof DetalhesEstacaoRoute
+  MapaRoute: typeof MapaRoute
   AboutLazyRoute: typeof AboutLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AgendamentosRoute: AgendamentosRoute,
+  DetalhesEstacaoRoute: DetalhesEstacaoRoute,
+  MapaRoute: MapaRoute,
   AboutLazyRoute: AboutLazyRoute,
 }
 
@@ -121,6 +163,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/Agendamentos",
+        "/detalhesEstacao",
+        "/mapa",
         "/about"
       ]
     },
@@ -129,6 +173,12 @@ export const routeTree = rootRoute
     },
     "/Agendamentos": {
       "filePath": "Agendamentos.tsx"
+    },
+    "/detalhesEstacao": {
+      "filePath": "detalhesEstacao.tsx"
+    },
+    "/mapa": {
+      "filePath": "mapa.tsx"
     },
     "/about": {
       "filePath": "about.lazy.tsx"
