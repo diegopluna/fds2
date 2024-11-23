@@ -20,9 +20,6 @@ public class ChargingStationService {
 
     public List<ChargingStation> fetchByDistance(double latitude, double longitude, int radiusKm) {
         List<ChargingStation> stations = chargingStationRepository.fetchAll();
-        System.out.println("Stations: " + stations);
-        System.out.println("Latitude: " + latitude);
-        System.out.println("Longitude: " + longitude);
         return stations.stream()
                 .filter(station -> station.isInRadius(latitude, longitude, radiusKm))
                 .toList();

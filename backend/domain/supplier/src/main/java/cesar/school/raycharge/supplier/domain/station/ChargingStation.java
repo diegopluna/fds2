@@ -144,15 +144,26 @@ public class ChargingStation {
     }
 
     public boolean isInRadius(double latitude, double longitude, int radiusKm) {
+        double SEMI_MAJOR_AXIS = 6378137.0;
+        double FLATTENING = 1 / 298.257223563;
+        double ECCENTRICITY_SQUARED = 2 * FLATTENING - FLATTENING * FLATTENING;
+
         double lat1Rad = Math.toRadians(this.latitude);
         double lat2Rad = Math.toRadians(latitude);
         double lon1Rad = Math.toRadians(this.longitude);
         double lon2Rad = Math.toRadians(longitude);
 
-        double x = (lon2Rad - lon1Rad) * Math.cos((lat1Rad + lat2Rad) / 2);
-        double y = (lat2Rad - lat1Rad);
-        double distance = Math.sqrt(x * x + y * y) * 6371;
-        System.out.println("Distance: " + distance);
+        double meanLat = (lat1Rad + lat2Rad) / 2;
+
+        double K = SEMI_MAJOR_AXIS * (1 - ECCENTRICITY_SQUARED) / Math.pow(1 - ECCENTRICITY_SQUARED * Math.pow(Math.sin(meanLat), 2), 1.5);
+
+        double d_lat = lat2Rad - lat1Rad;
+        double d_lon = lon2Rad - lon1Rad;
+
+        double X = K * d_lat;
+        double Y = K * Math.cos(meanLat) * d_lon;
+
+        double distance = Math.sqrt(Math.pow(X, 2) + Math.pow(Y, 2)) / 1000;
         return distance <= radiusKm;
 
     }

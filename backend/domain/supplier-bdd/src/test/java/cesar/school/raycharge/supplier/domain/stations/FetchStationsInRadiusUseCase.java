@@ -24,7 +24,7 @@ public class FetchStationsInRadiusUseCase extends SupplierUseCase {
     @Given("a station with name {string}, latitude {double}, and longitude {double}")
     public void a_station_with_name_latitude_and_longitude(String name, double latitude, double longitude) {
         System.out.println("Creating station with name " + name + " at latitude " + latitude + " and longitude " + longitude);
-        ChargingStation newStation = new ChargingStation(new StationId(), supplierId, name, 10, workingHours ,address, StationStatus.ACTIVE, 10 ,1,  latitude, longitude, 2, List.of(workingHours), List.of(scheduleId));
+        ChargingStation newStation = new ChargingStation(new StationId(), supplierId, name, 10, workingHours ,address, StationStatus.ACTIVE, 10 ,1,  longitude, latitude, 2, List.of(workingHours), List.of(scheduleId));
         chargingStationService.addStation(newStation);
     }
 
