@@ -1,9 +1,11 @@
 package cesar.school.raycharge.authentication.domain.user;
 
 import cesar.school.raycharge.authentication.domain.security.PasswordHasher;
+import org.jmolecules.ddd.annotation.Service;
 
 import static org.apache.commons.lang3.Validate.notNull;
 
+@Service
 public class AuthenticationService {
   private final UserRepository userRepository;
   private final PasswordHasher passwordHasher;
@@ -24,5 +26,17 @@ public class AuthenticationService {
       return userRepository.save(insertedUser);
     }
     return userRepository.save(user);
+  }
+
+  public boolean login(String login, String password) {
+    notNull(login, "Login cannot be null");
+    notNull(password, "Password cannot be null");
+
+    User user = userRepository.findByLogin(login);
+    if (user == null) {
+      return false;
+    }
+
+    return passwordHasher.verifyPassword(password, user.getPassword());
   }
 }

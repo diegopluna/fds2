@@ -2,9 +2,11 @@ package cesar.school.raycharge.infra.security;
 
 import cesar.school.raycharge.authentication.domain.security.PasswordHasher;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
 
+@Component
 public class PasswordHasherImpl implements PasswordHasher {
 
     private final BCryptPasswordEncoder passwordEncoder;

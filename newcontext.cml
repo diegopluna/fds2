@@ -23,6 +23,7 @@ BoundedContext Authentication {
 
             Repository UserRepository {
                 @User save(@User user);
+                @User findByLogin(String login);
             }
         }
         ValueObject UserId {
@@ -34,6 +35,7 @@ BoundedContext Authentication {
         }
         Service AuthenticationService {
             @User createUser(@User user);
+            boolean login(String login, String password);
         }
     }
 

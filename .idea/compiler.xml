@@ -6,10 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="raycharge-infra-persistence-memory" />
-        <module name="raycharge-domain-authentication" />
+        <module name="raycharge-presentation-backend" />
         <module name="motorista" />
+        <module name="raycharge-domain-authentication-bdd" />
+        <module name="raycharge-infra-persistence-jpa" />
+        <module name="raycharge-docker" />
+        <module name="raycharge-infra-security" />
+        <module name="raycharge-infra-persistence-memory" />
+        <module name="raycharge-application" />
         <module name="raycharge-domain-common" />
+        <module name="raycharge-domain-authentication" />
       </profile>
     </annotationProcessing>
   </component>
@@ -21,6 +27,7 @@
       <module name="raycharge-domain-autenticacao" options="-parameters" />
       <module name="raycharge-domain-autenticacao-bdd" options="-parameters" />
       <module name="raycharge-domain-authentication" options="-parameters" />
+      <module name="raycharge-domain-authentication-bdd" options="-parameters" />
       <module name="raycharge-domain-common" options="-parameters" />
       <module name="raycharge-domain-fornecedor" options="-parameters" />
       <module name="raycharge-domain-notificacao" options="-parameters" />
@@ -30,6 +37,7 @@
       <module name="raycharge-infra-event" options="-parameters" />
       <module name="raycharge-infra-persistence-jpa" options="-parameters" />
       <module name="raycharge-infra-persistence-memory" options="-parameters" />
+      <module name="raycharge-infra-security" options="-parameters" />
       <module name="raycharge-presentation-backend" options="-parameters" />
     </option>
   </component>

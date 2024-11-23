@@ -17,5 +17,8 @@
         <module>core</module>
         <module>domain</module>
         <module>infra</module>
+        <module>presentation</module>
+        <module>application</module>
+        <module>docker</module>
     </modules>
 </project>

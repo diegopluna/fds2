@@ -28,5 +28,16 @@ public class Repository implements UserRepository {
     return user;
   }
 
+  @Override
+  public User findByLogin(String login) {
+    Objects.requireNonNull(login, "login must not be null");
+    for (User u : users.values()) {
+      if (u.getLogin().equals(login)) {
+        return u;
+      }
+    }
+    return null;
+  }
+
   /*-----------------------------------------------------------------------*/
 }
