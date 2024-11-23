@@ -13,7 +13,7 @@ public class JpaMapper extends ModelMapper {
     JpaMapper() {
         var config = getConfiguration();
         config.setFieldMatchingEnabled(true);
-        config.setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+        ((Configuration) config).setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
 
         addConverter(new AbstractConverter<UserJpa, User>() {
             @Override

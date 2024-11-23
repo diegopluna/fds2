@@ -8,39 +8,26 @@
         <groupId>cesar.school.raycharge</groupId>
         <artifactId>raycharge-core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../../core/pom.xml</relativePath>
+        <relativePath>../../core</relativePath>
     </parent>
 
-    <artifactId>raycharge-infra-persistence-jpa</artifactId>
+    <artifactId>raycharge-infra-event</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>raycharge-domain-authentication</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>raycharge-application</artifactId>
+            <artifactId>raycharge-domain-common</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-
-
 </project>

@@ -17,5 +17,6 @@
         <module>common</module>
         <module>authentication</module>
         <module>authentication-bdd</module>
+        <module>supplier</module>
     </modules>
 </project>

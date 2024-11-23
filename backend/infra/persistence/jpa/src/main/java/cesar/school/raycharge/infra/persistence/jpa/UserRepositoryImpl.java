@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByLogin(String login) {
-        var userJpa = repository.findUserJpaByLogin(login);
+        java.util.Optional<UserJpa> userJpa = repository.findUserJpaByLogin(login);
         return userJpa.map(jpa -> mapper.map(jpa, User.class)).orElse(null);
     }
 }
