@@ -24,7 +24,7 @@ const AgendamentoBox: React.FC<AgendamentoProps> = ({ estacao, endereco, numero,
           </p>
         </div>
         <div className="flex items-center space-x-4">
-          <button className="bg-[#4A5468] text-white px-4 py-2 rounded-md hover:bg-[#2D3648]">
+          <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
             Detalhes
           </button>
           {status === 'Ativo' && onCancel && (
