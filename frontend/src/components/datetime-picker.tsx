@@ -343,7 +343,7 @@ export function DateTimePicker({
           )}
           <div className="flex flex-row-reverse items-center justify-between">
             <Button className="ms-2 h-7 px-2" onClick={onSumbit}>
-              Done
+              Selecionar
             </Button>
             {timezone && (
               <div className="text-sm">
