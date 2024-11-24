@@ -6,6 +6,10 @@ import EstacaoBox from '@/components/estacao-box'
 import { chargingStationsMock } from '@/mocks/chargingStationsMock' 
 import estacaoAtiva from '@/assets/estacao-ativa.png';
 import estacaoInativa from '@/assets/estacao-inativa.png';
+import { formatarHorario } from '@/utils/formatarHorario';
+
+
+
 export const Route = createFileRoute('/mapa')({
   component: mapa,
 })
@@ -32,7 +36,7 @@ function mapa() {
   }
 
   return (
-    <div className="px-16 py-4 w-full">
+    <div className="px-32 py-4 w-full">
       <h2 className="text-[#2D3648] text-center text-2xl font-bold mb-4">
         Escolha sua estação
       </h2>
@@ -61,8 +65,7 @@ function mapa() {
                     </p>
                     <p className="m-0">
                       Horário de funcionamento:{' '}
-                      {station.workingHours.scheduleStart} às{' '}
-                      {station.workingHours.scheduleEnd}
+                      {formatarHorario(station.workingHours.scheduleStart, station.workingHours.scheduleEnd)}
                     </p>
                     <p className="m-0">
                       Endereço: {station.stationAddress.street},{' '}

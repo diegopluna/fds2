@@ -4,6 +4,7 @@ import { DateTimePicker } from '@/components/datetime-picker';
 import { Button } from '@/components/ui/button';
 import { chargingStationsMock } from '@/mocks/chargingStationsMock';
 import { ChargingStation } from '@/models/chargingStationsModel';
+import { formatarHorario } from '@/utils/formatarHorario';
 
 interface DetalhesEstacaoProps {
   stationId: string;
@@ -52,8 +53,7 @@ const DetalhesEstacao = ({ stationId }: DetalhesEstacaoProps) => {
                 {station.stationAddress.state}
               </p>
               <p>
-                Horário de Funcionamento: {station.workingHours.scheduleStart} às{' '}
-                {station.workingHours.scheduleEnd}
+                Horário de Funcionamento: {formatarHorario(station.workingHours.scheduleStart, station.workingHours.scheduleEnd)}
               </p>
               <p>Preço Mínimo: R$ {station.minimumPrice.toFixed(2)}</p>
               <p>Preço por KWh: R$ {station.pricePerKwh.toFixed(2)}</p>
