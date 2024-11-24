@@ -20,6 +20,7 @@
         <module name="raycharge-domain-driver" />
         <module name="raycharge-infra-persistence-jpa" />
         <module name="raycharge-domain-recharge-bdd" />
+        <module name="raycharge-domain-notification" />
         <module name="raycharge-domain-common" />
       </profile>
     </annotationProcessing>
@@ -40,6 +41,7 @@
       <module name="raycharge-domain-driver" options="-parameters" />
       <module name="raycharge-domain-fornecedor" options="-parameters" />
       <module name="raycharge-domain-notificacao" options="-parameters" />
+      <module name="raycharge-domain-notification" options="-parameters" />
       <module name="raycharge-domain-recarga" options="-parameters" />
       <module name="raycharge-domain-recarga-bdd" options="-parameters" />
       <module name="raycharge-domain-recharge" options="-parameters" />

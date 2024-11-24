@@ -21,5 +21,6 @@
         <module>driver</module>
         <module>recharge</module>
         <module>recharge-bdd</module>
+        <module>notification</module>
     </modules>
 </project>

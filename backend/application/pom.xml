@@ -24,6 +24,12 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>raycharge-domain-recharge</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>raycharge-infra-security</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
