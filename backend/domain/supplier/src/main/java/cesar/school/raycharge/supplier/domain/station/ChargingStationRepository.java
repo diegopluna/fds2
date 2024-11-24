@@ -5,4 +5,5 @@ import java.util.List;
 public interface ChargingStationRepository {
     List<ChargingStation> fetchAll();
     ChargingStation save(ChargingStation station);
+    ChargingStation findById(StationId id);
 }

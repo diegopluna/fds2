@@ -10,12 +10,14 @@
     <file url="file://$PROJECT_DIR$/backend/domain/authentication-bdd/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/authentication/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/domain/driver/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/fornecedor/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/motorista/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/motorista/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/notificacao/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/recarga-bdd/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/recarga/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/domain/recharge/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/supplier-bdd/src/main/java" charset="UTF-8" />

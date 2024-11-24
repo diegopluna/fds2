@@ -18,5 +18,7 @@
         <module>authentication</module>
         <module>supplier</module>
         <module>supplier-bdd</module>
+        <module>driver</module>
+        <module>recharge</module>
     </modules>
 </project>

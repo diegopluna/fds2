@@ -67,4 +67,10 @@ public class Repository implements UserRepository, ChargingStationRepository {
     chargingStations.put(station.getId(), station);
     return station;
   }
+
+    @Override
+    public ChargingStation findById(StationId id) {
+        Objects.requireNonNull(id, "id must not be null");
+        return chargingStations.get(id);
+    }
 }

@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="raycharge-domain-recharge" />
         <module name="raycharge-domain-fornecedor" />
         <module name="raycharge-docker" />
         <module name="raycharge-infra-security" />
@@ -16,6 +17,7 @@
         <module name="motorista" />
         <module name="raycharge-domain-supplier-bdd" />
         <module name="raycharge-infra-event" />
+        <module name="raycharge-domain-driver" />
         <module name="raycharge-infra-persistence-jpa" />
         <module name="raycharge-domain-common" />
       </profile>
@@ -34,10 +36,12 @@
       <module name="raycharge-domain-authentication" options="-parameters" />
       <module name="raycharge-domain-authentication-bdd" options="-parameters" />
       <module name="raycharge-domain-common" options="-parameters" />
+      <module name="raycharge-domain-driver" options="-parameters" />
       <module name="raycharge-domain-fornecedor" options="-parameters" />
       <module name="raycharge-domain-notificacao" options="-parameters" />
       <module name="raycharge-domain-recarga" options="-parameters" />
       <module name="raycharge-domain-recarga-bdd" options="-parameters" />
+      <module name="raycharge-domain-recharge" options="-parameters" />
       <module name="raycharge-domain-supplier-bdd" options="-parameters" />
       <module name="raycharge-domain-visualizacao-bdd" options="-parameters" />
       <module name="raycharge-infra-event" options="-parameters" />
