@@ -29,7 +29,7 @@ const Card: React.FC<CardProps> = ({
         <img
           src={imageSrc}
           alt={title}
-          className="w-full h-48 object-cover rounded-t-lg"
+          className="w-full h-70 object-cover rounded-t-lg"
         />
       )}
       <div className="p-4">
