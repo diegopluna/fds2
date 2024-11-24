@@ -8,16 +8,19 @@
         <list>
           <option value="raycharge-infra-security" />
           <option value="raycharge-infra-event" />
+          <option value="raycharge-infra-security" />
         </list>
       </option>
       <option name="ignoredPackages">
         <list>
           <option value="org.springframework:spring-context:6.1.13" />
           <option value="org.springframework:spring-context:6.1.13" />
+          <option value="org.springframework.security:spring-security-web:6.3.3" />
         </list>
       </option>
       <option name="ignoredReasons">
         <list>
+          <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />
         </list>

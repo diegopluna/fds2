@@ -165,6 +165,5 @@ public class ChargingStation {
 
         double distance = Math.sqrt(Math.pow(X, 2) + Math.pow(Y, 2)) / 1000;
         return distance <= radiusKm;
-
     }
 }
