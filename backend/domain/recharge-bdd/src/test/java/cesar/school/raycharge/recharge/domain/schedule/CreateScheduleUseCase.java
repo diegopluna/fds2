@@ -24,6 +24,8 @@ public class CreateScheduleUseCase extends RechargeUseCase {
     ChargingStation chargingStation;
     Vehicle vehicle;
     Schedule schedule;
+    Schedule previousSchedule;
+    ScheduleNotFound scheduleNotFound;
 
     @Given("a driver with name {string}")
     public void a_driver_with_name(String driverName) {
@@ -66,7 +68,7 @@ public class CreateScheduleUseCase extends RechargeUseCase {
 
     @Given("a schedule already created")
     public void a_schedule_already_created() {
-        scheduleService.createSchedule(
+        previousSchedule = scheduleService.createSchedule(
                 driver.getId(),
                 chargingStation.getId(),
                 new AvailableDate(LocalDateTime.of(2021, 1, 1, 0, 0), LocalDateTime.of(2021, 1, 1, 23, 59)),
@@ -96,5 +98,29 @@ public class CreateScheduleUseCase extends RechargeUseCase {
     @Then("the schedule should not be created")
     public void the_schedule_should_not_be_created() {
         assert schedule == null;
+    }
+
+    @When("I cancel the schedule")
+    public void i_cancel_the_schedule() {
+        if (previousSchedule != null) {
+            schedule = scheduleService.cancelSchedule(previousSchedule.getId(), false);
+        } else {
+            ScheduleId scheduleId = new ScheduleId();
+            try {
+                schedule = scheduleService.cancelSchedule(scheduleId, false);
+            } catch (ScheduleNotFound e) {
+                scheduleNotFound = e;
+            }
+        }
+    }
+
+    @Then("the schedule should be cancelled")
+    public void the_schedule_should_be_cancelled() {
+        assert schedule.getScheduleStatus().equals(ScheduleStatus.CANCELLED);
+    }
+
+    @Then("the schedule should not be cancelled")
+    public void the_schedule_should_not_be_cancelled() {
+        assert scheduleNotFound != null;
     }
 }
