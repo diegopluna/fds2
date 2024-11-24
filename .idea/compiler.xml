@@ -19,6 +19,7 @@
         <module name="raycharge-infra-event" />
         <module name="raycharge-domain-driver" />
         <module name="raycharge-infra-persistence-jpa" />
+        <module name="raycharge-domain-recharge-bdd" />
         <module name="raycharge-domain-common" />
       </profile>
     </annotationProcessing>
@@ -42,6 +43,7 @@
       <module name="raycharge-domain-recarga" options="-parameters" />
       <module name="raycharge-domain-recarga-bdd" options="-parameters" />
       <module name="raycharge-domain-recharge" options="-parameters" />
+      <module name="raycharge-domain-recharge-bdd" options="-parameters" />
       <module name="raycharge-domain-supplier-bdd" options="-parameters" />
       <module name="raycharge-domain-visualizacao-bdd" options="-parameters" />
       <module name="raycharge-infra-event" options="-parameters" />

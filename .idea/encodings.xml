@@ -17,6 +17,7 @@
     <file url="file://$PROJECT_DIR$/backend/domain/notificacao/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/recarga-bdd/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/recarga/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/domain/recharge-bdd/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/recharge/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/domain/src/main/resources" charset="UTF-8" />

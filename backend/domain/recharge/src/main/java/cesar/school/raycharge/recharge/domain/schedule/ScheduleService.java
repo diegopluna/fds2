@@ -13,6 +13,7 @@ import org.jmolecules.ddd.annotation.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class ScheduleService {
@@ -60,9 +61,14 @@ public class ScheduleService {
     }
 
     private void ensureStationIsAvailableOnScheduleDate(ChargingStation station, AvailableDate scheduleDate) {
-        if (!station.getAvailableDates().contains(scheduleDate)) {
-            throw new StationNotAvailable();
-        }
+        List<AvailableDate> stationAvailableDate = station.getAvailableDates();
+        stationAvailableDate.stream()
+                .filter(availableDate ->
+                        (availableDate.getScheduleStart().isBefore(scheduleDate.getScheduleStart()) || availableDate.getScheduleStart().equals(scheduleDate.getScheduleStart())) &&
+                                (availableDate.getScheduleEnd().isAfter(scheduleDate.getScheduleEnd()) || availableDate.getScheduleEnd().equals(scheduleDate.getScheduleEnd()))
+                )
+                .findFirst()
+                .orElseThrow(StationNotAvailable::new);
     }
 
     private void ensureVehicleExists(Vehicle vehicle) {
@@ -83,6 +89,10 @@ public class ScheduleService {
         }
     }
 
+    private int generateChargerLiberationCode() {
+        return ThreadLocalRandom.current().nextInt(1000, 10000);
+    }
+
     //HISTÓRIA 2
     public Schedule createSchedule(DriverId driverId, StationId stationId, AvailableDate scheduleDate, VehicleId vehicleId) {
         Driver driver = driverRepository.findByDriverId(driverId); // Revisar essa parte, possivelmente vai depender de UserID
@@ -98,7 +108,7 @@ public class ScheduleService {
 
         Schedule newSchedule = new Schedule(
                 new ScheduleId(),
-                null,
+                generateChargerLiberationCode(),
                 scheduleDate,
                 ScheduleStatus.ACTIVE,
                 station.getMinimumPrice(),

@@ -20,5 +20,6 @@
         <module>supplier-bdd</module>
         <module>driver</module>
         <module>recharge</module>
+        <module>recharge-bdd</module>
     </modules>
 </project>
