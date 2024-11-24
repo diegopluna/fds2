@@ -21,8 +21,8 @@ const Agendamentos: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 relative">
-      <h1 className="text-[#2D3648] font-inter font-bold text-4xl mb-9 mt-4">Agendamentos</h1>
+    <div className="container mx-auto px-32 relative">
+      <h1 className="text-[#2D3648] font-inter font-bold text-center text-2xl mb-9 mt-4">Agendamentos</h1>
       <AgendamentoBox 
         estacao="Agendamento 01" 
         endereco="Estação X" 

@@ -73,7 +73,7 @@ function mapa() {
                   </div>
                   <button
                     className="text-center px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                    onClick={() => handleDetailsRedirect(station.stationId)} // Redireciona ao clicar
+                    onClick={() => handleDetailsRedirect(station.stationId)}
                   >
                     Saiba Mais
                   </button>
@@ -95,7 +95,7 @@ function mapa() {
             endereco={station.stationAddress}
             precoMininimo={station.minimumPrice}
             precoKwh={station.pricePerKwh}
-            onDetalhes={() => handleDetailsRedirect(station.stationId)} // Redireciona ao clicar
+            onDetalhes={() => handleDetailsRedirect(station.stationId)} 
           />
         ))}
       </div>
