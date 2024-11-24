@@ -3,21 +3,22 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { LatLngExpression } from 'leaflet'
 import L from 'leaflet'
 import EstacaoBox from '@/components/estacao-box'
-import { chargingStationsMock } from '@/mocks/chargingStationsMock'
-
+import { chargingStationsMock } from '@/mocks/chargingStationsMock' 
+import estacaoAtiva from '@/assets/estacao-ativa.png';
+import estacaoInativa from '@/assets/estacao-inativa.png';
 export const Route = createFileRoute('/mapa')({
   component: mapa,
 })
 
 const customMarker = L.icon({
   iconUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconSize: [25, 41],
+    estacaoAtiva,
+  iconSize: [24, 34.91],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowUrl:
     'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-  shadowSize: [41, 41],
+  shadowSize: [32, 32],
 })
 
 function mapa() {
