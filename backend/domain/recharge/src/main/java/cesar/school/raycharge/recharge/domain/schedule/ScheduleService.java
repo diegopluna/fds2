@@ -10,6 +10,7 @@ import cesar.school.raycharge.driver.domain.vehicle.VehicleRepository;
 import cesar.school.raycharge.supplier.domain.station.*;
 import org.jmolecules.ddd.annotation.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,6 +71,18 @@ public class ScheduleService {
         }
     }
 
+    private void ensureScheduleExists(Schedule schedule) {
+        if (schedule == null) {
+            throw new ScheduleNotFound();
+        }
+    }
+
+    private void ensureScheduleIsActive(Schedule schedule) {
+        if (!schedule.getScheduleStatus().equals(ScheduleStatus.ACTIVE)) {
+            throw new ScheduleNotActive();
+        }
+    }
+
     //HISTÓRIA 2
     public Schedule createSchedule(DriverId driverId, StationId stationId, AvailableDate scheduleDate, VehicleId vehicleId) {
         Driver driver = driverRepository.findByDriverId(driverId); // Revisar essa parte, possivelmente vai depender de UserID
@@ -96,5 +109,26 @@ public class ScheduleService {
         );
 
         return scheduleRepository.save(newSchedule);
+    }
+
+    //História 3
+    public Schedule cancelSchedule(ScheduleId scheduleId, boolean refund) {
+        Schedule schedule = scheduleRepository.findById(scheduleId);
+        ensureScheduleExists(schedule);
+        ensureScheduleIsActive(schedule);
+
+        schedule.setScheduleStatus(ScheduleStatus.CANCELLED);
+
+        AvailableDate scheduleDate = schedule.getScheduleDate();
+        LocalDateTime scheduleStart = scheduleDate.getScheduleStart();
+        LocalDateTime now = LocalDateTime.now();
+
+        boolean cancelledBefore24Hours = scheduleStart.isAfter(now.plusHours(24));
+
+        if (cancelledBefore24Hours || refund) {
+            schedule.setTotalRechargeValue(0);
+        }
+
+        return scheduleRepository.update(schedule);
     }
 }

@@ -21,6 +21,18 @@ public class Schedule implements Cloneable, AggregateRoot<Schedule, ScheduleId> 
         return scheduleStatus;
     }
 
+    public void setScheduleStatus(ScheduleStatus scheduleStatus) {
+        this.scheduleStatus = scheduleStatus;
+    }
+
+    public AvailableDate getScheduleDate() {
+        return scheduleDate;
+    }
+
+    public void setTotalRechargeValue(float totalRechargeValue) {
+        this.totalRechargeValue = totalRechargeValue;
+    }
+
     public Schedule(ScheduleId scheduleId, Integer chargerLiberationCode, AvailableDate scheduleDate, ScheduleStatus scheduleStatus, float totalRechargeValue, Review review, StationId chargingStation, DriverId driver, VehicleId vehicle) {
         this.scheduleId = scheduleId;
         this.chargerLiberationCode = chargerLiberationCode;
