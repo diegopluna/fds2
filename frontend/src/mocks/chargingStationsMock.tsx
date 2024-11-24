@@ -2,8 +2,8 @@ import { ChargingStation } from '../models/chargingStationsModel.tsx';
 
 export const chargingStationsMock: ChargingStation[] = [
   {
-    stationId: 'station-001',
-    supplierId: 'supplier-001',
+    stationId: '1',
+    supplierId: '1',
     name: 'Central Charging Station',
     numberOfChargers: 10,
     workingHours: {
@@ -40,8 +40,8 @@ export const chargingStationsMock: ChargingStation[] = [
     ],
   },
   {
-    stationId: 'station-002',
-    supplierId: 'supplier-002',
+    stationId: '2',
+    supplierId: '2',
     name: 'North Charging Station',
     numberOfChargers: 8,
     workingHours: {

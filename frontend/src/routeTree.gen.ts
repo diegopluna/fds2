@@ -68,6 +68,11 @@ const DashboardMapaRoute = DashboardMapaImport.update({
   getParentRoute: () => DashboardRoute,
 } as any)
 
+const DetalhesEstacaoStationIdRoute = DetalhesEstacaoStationIdImport.update({
+  path: '/detalhesEstacao/$stationId',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {

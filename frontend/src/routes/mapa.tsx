@@ -1,9 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { LatLngExpression } from 'leaflet'
 import L from 'leaflet'
 import EstacaoBox from '@/components/estacao-box'
-import { chargingStationsMock } from '@/mocks/chargingStationsMock' 
+import { chargingStationsMock } from '@/mocks/chargingStationsMock'
+
 export const Route = createFileRoute('/mapa')({
   component: mapa,
 })
@@ -21,10 +22,17 @@ const customMarker = L.icon({
 
 function mapa() {
   const position: LatLngExpression = [-8.0584371, -34.8725274]
+  const navigate = useNavigate()
+
+  const handleDetailsRedirect = (stationId: string) => {
+    console.log('station id enviado de mapa: ', stationId )
+    console.log('Station ID (typeof):', typeof stationId)
+    navigate({ to: `/detalhesEstacao/${stationId}` }) 
+  }
 
   return (
     <div className="px-16 py-4 w-full">
-      <h2 className="text-center text-2xl font-bold mb-4">
+      <h2 className="text-[#2D3648] text-center text-2xl font-bold mb-4">
         Escolha sua estação
       </h2>
       <div className="h-[500px] w-full rounded-lg overflow-hidden shadow-lg mb-6">
@@ -65,9 +73,7 @@ function mapa() {
                   </div>
                   <button
                     className="text-center px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                    onClick={() =>
-                      alert(`Mais informações sobre ${station.name}`)
-                    }
+                    onClick={() => handleDetailsRedirect(station.stationId)} // Redireciona ao clicar
                   >
                     Saiba Mais
                   </button>
@@ -79,9 +85,9 @@ function mapa() {
       </div>
 
       <div>
-      <h2 className="text-center text-2xl font-bold mb-4">
-        Confira a lista de estações
-      </h2>
+        <h2 className="text-center text-2xl font-bold mb-4">
+          Confira a lista de estações
+        </h2>
         {chargingStationsMock.map((station) => (
           <EstacaoBox
             key={station.stationId}
@@ -89,7 +95,7 @@ function mapa() {
             endereco={station.stationAddress}
             precoMininimo={station.minimumPrice}
             precoKwh={station.pricePerKwh}
-            onDetalhes={() => alert(`Mais detalhes sobre ${station.name}`)}
+            onDetalhes={() => handleDetailsRedirect(station.stationId)} // Redireciona ao clicar
           />
         ))}
       </div>
