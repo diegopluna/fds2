@@ -32,7 +32,7 @@ const DetalhesEstacao = ({ stationId }: DetalhesEstacaoProps) => {
   }
 
   return (
-    <div className="container px-32 mt-5">
+    <div className="container px-32 my-5">
       <div className="card row p-3 justify-content-center">
         <div className="card-body">
           < div className=' text-center'>
@@ -60,12 +60,12 @@ const DetalhesEstacao = ({ stationId }: DetalhesEstacaoProps) => {
               <p>Quantidade de Carregadores: {station.numberOfChargers}</p>
             </div>
             <div className="col d-flex flex-column">
-              <div className="col flex no-wrap justify-center items-center">
+              <div className="col flex ">
                 <DateTimePicker value={date} onChange={setDate} min={new Date()} />          
               </div>
               <div className=" d-flex flex-column align-items-end">
-              <Button variant="default" className="bg-[#4A5468] text-white px-4 py-2 rounded-md hover:bg-[#2D3648]">
-                  Agendar
+              <Button variant="default" className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+                 Agendar
                 </Button>
                 </div>
               </div>

@@ -16,22 +16,22 @@ const Navbar: React.FC = () => {
       </div>
       <ul className="flex gap-12 list-none mr-6">
         <li className='flex items-center'>
-            <a href="#"><img src={home} alt="Home Icon" title='Home'/></a>
+            <a href="/"><img src={home} alt="Home Icon" title='Home'/></a>
         </li>
         <li className='flex items-center'>
-            <a href="#"><img src={user} alt="User Icon" title='User'/></a>
+            <a href="#"><img src={user} alt="User Icon" title='Usuário'/></a>
         </li>
         <li className='flex items-center'>
-            <a href="#"><img src={car} alt="Cars Icon" title='Cars'/></a>
+            <a href="#"><img src={car} alt="Cars Icon" title='Veículos'/></a>
         </li>
         <li className='flex items-center'>
-            <a href="#"><img src={calendar} alt="Calendar Icon" title='Calendar'/></a>
+            <a href="/Agendamentos"><img src={calendar} alt="Calendar Icon" title='Agendamentos'/></a>
         </li>
         <li className='flex items-center'>
-            <a href="#"><img src={map} alt="Map Icon" title='Map'/></a>
+            <a href="/Mapa"><img src={map} alt="Map Icon" title='Mapa'/></a>
             </li>
         <li className='flex items-center'>
-            <a href="#"><img src={settings} alt="Settings Icon" title='Settings'/></a>
+            <a href="#"><img src={settings} alt="Settings Icon" title='Configurações'/></a>
             </li>
       </ul>
     </nav>

@@ -428,7 +428,7 @@ function MonthYearPicker({
                 <Button
                   disabled={year.disabled}
                   variant={getYear(value) === year.value ? 'default' : 'ghost'}
-                  className="rounded-full"
+                  className="rounded-full "
                   onClick={() => onYearChange(year)}
                 >
                   {year.label}
@@ -445,7 +445,7 @@ function MonthYearPicker({
                 size="lg"
                 disabled={month.disabled}
                 variant={getMonth(value) === month.value ? 'default' : 'ghost'}
-                className="rounded-full"
+                className="rounded-full  "
                 onClick={() => onChange(setMonthFns(value, month.value), 'month')}
               >
                 {month.label}
