@@ -89,6 +89,12 @@ public class ScheduleService {
         }
     }
 
+    public void ensureScheduleBelongsToDriver(Driver driver, ScheduleId scheduleId) {
+        if (scheduleRepository.findScheduleByDriverId(driver.getId()) == null) {
+            throw new ScheduleDoesNotBelongToDriver();
+        }
+    }
+
     private int generateChargerLiberationCode() {
         return ThreadLocalRandom.current().nextInt(1000, 10000);
     }

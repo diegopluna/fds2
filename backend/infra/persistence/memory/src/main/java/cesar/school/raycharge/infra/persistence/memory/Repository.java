@@ -96,6 +96,17 @@ public class Repository implements UserRepository, ChargingStationRepository, Sc
   }
 
   @Override
+  public Schedule findScheduleByDriverId(DriverId driverId) {
+    Objects.requireNonNull(driverId, "driverId must not be null");
+    for (Schedule schedule : schedules.values()) {
+      if (schedule.getDriver().equals(driverId)) {
+        return schedule;
+      }
+    }
+    return null;
+  }
+
+  @Override
   public Schedule save(Schedule schedule) {
     Objects.requireNonNull(schedule, "schedule must not be null");
     if (schedules.containsKey(schedule.getId())) {

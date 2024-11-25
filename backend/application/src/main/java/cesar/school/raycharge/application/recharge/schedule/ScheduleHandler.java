@@ -5,6 +5,7 @@ import cesar.school.raycharge.driver.domain.driver.DriverService;
 import cesar.school.raycharge.driver.domain.vehicle.VehicleId;
 import cesar.school.raycharge.recharge.domain.schedule.DriverNotFound;
 import cesar.school.raycharge.recharge.domain.schedule.Schedule;
+import cesar.school.raycharge.recharge.domain.schedule.ScheduleId;
 import cesar.school.raycharge.recharge.domain.schedule.ScheduleService;
 import cesar.school.raycharge.supplier.domain.station.StationId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +28,11 @@ public class ScheduleHandler {
                 new VehicleId(request.getVehicleId())
         );
     }
+
+    public Schedule cancelSchedule(final String scheduleId, final String login) {
+        Driver driver = driverService.getDriverFromUserLogin(login);
+        scheduleService.ensureScheduleBelongsToDriver(driver, new ScheduleId(scheduleId));
+        return scheduleService.cancelSchedule(new ScheduleId(scheduleId), false);
+    }
+
 }

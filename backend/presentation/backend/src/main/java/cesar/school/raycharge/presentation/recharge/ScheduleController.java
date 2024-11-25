@@ -4,8 +4,7 @@ import cesar.school.raycharge.application.common.ErrorResponse;
 import cesar.school.raycharge.application.recharge.schedule.CreateScheduleRequest;
 import cesar.school.raycharge.application.recharge.schedule.ScheduleHandler;
 import cesar.school.raycharge.driver.domain.vehicle.VehicleNotFound;
-import cesar.school.raycharge.recharge.domain.schedule.ActiveScheduleFound;
-import cesar.school.raycharge.recharge.domain.schedule.DriverNotFound;
+import cesar.school.raycharge.recharge.domain.schedule.*;
 import cesar.school.raycharge.supplier.domain.station.StationNotAvailable;
 import cesar.school.raycharge.supplier.domain.station.StationNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,33 @@ public class ScheduleController {
             );
             return ResponseEntity.status(httpStatus).body(errorResponse);
         } catch (ActiveScheduleFound | StationNotAvailable e) {
+            HttpStatus httpStatus = HttpStatus.CONFLICT;
+            ErrorResponse errorResponse = new ErrorResponse(
+                    httpStatus.value(), e.getMessage()
+            );
+            return ResponseEntity.status(httpStatus).body(errorResponse);
+        }
+    }
+
+    @PatchMapping("/{scheduleId}/cancel")
+    public ResponseEntity<?> cancelSchedule(@PathVariable("scheduleId") String scheduleId) {
+        String login = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        try {
+            scheduleHandler.cancelSchedule(scheduleId, login);
+            return ResponseEntity.ok().build();
+        } catch (ScheduleDoesNotBelongToDriver e) {
+            HttpStatus httpStatus = HttpStatus.FORBIDDEN;
+            ErrorResponse errorResponse = new ErrorResponse(
+                    httpStatus.value(), e.getMessage()
+            );
+            return ResponseEntity.status(httpStatus).body(errorResponse);
+        } catch (ScheduleNotFound e) {
+            HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+            ErrorResponse errorResponse = new ErrorResponse(
+                    httpStatus.value(), e.getMessage()
+            );
+            return ResponseEntity.status(httpStatus).body(errorResponse);
+        } catch (ScheduleNotActive e) {
             HttpStatus httpStatus = HttpStatus.CONFLICT;
             ErrorResponse errorResponse = new ErrorResponse(
                     httpStatus.value(), e.getMessage()

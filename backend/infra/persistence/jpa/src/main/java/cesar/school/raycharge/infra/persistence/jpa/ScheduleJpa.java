@@ -53,6 +53,7 @@ public class ScheduleJpa {
 
 interface ScheduleJpaRepository extends JpaRepository<ScheduleJpa, String> {
     List<ScheduleJpa> findAllByDriver_Id(String driverId);
+    Optional<ScheduleJpa> findByDriver_Id(String driverId);
     Optional<ScheduleJpa> findById(String id);
 
 }
@@ -75,6 +76,12 @@ class ScheduleRepositoryImpl implements ScheduleRepository {
             schedules.add(schedule);
         }
         return schedules;
+    }
+
+    @Override
+    public Schedule findScheduleByDriverId(DriverId driverId) {
+        Optional<ScheduleJpa> scheduleJpa = repository.findByDriver_Id(driverId.toString());
+        return scheduleJpa.map(jpa -> mapper.map(jpa, Schedule.class)).orElse(null);
     }
 
     @Override
