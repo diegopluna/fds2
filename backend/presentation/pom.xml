@@ -4,7 +4,7 @@
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cesar.school.fds2.raycharge</groupId>
+    <groupId>cesar.school.raycharge</groupId>
     <artifactId>raycharge-presentation</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -16,6 +16,5 @@
 
     <modules>
         <module>backend</module>
-<!--        <module>frontend</module>-->
     </modules>
 </project>

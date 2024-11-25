@@ -1,0 +1,48 @@
+Domain RayCharge {
+    Subdomain Authentication
+    Subdomain Supplier
+    Subdomain Drive
+    Subdomain Recharge
+    Subdomain Notificaton
+    Subdomain Report // Verificar se vai ser necessario
+}
+
+ContextMap {
+    contains Authentication
+}
+
+BoundedContext Authentication {
+    Aggregate User {
+        Entity User {
+            aggregateRoot
+
+            -UserId id
+            String login
+            String password
+            -UserRole role
+
+            Repository UserRepository {
+                @User save(@User user);
+                @User findByLogin(String login);
+            }
+        }
+        ValueObject UserId {
+            String id 
+        }
+        enum UserRole {
+            DRIVER,
+            SUPPLIER
+        }
+        Service AuthenticationService {
+            @User createUser(@User user);
+            boolean login(String login, String password);
+        }
+    }
+
+    Aggregate Security {
+        Service PasswordHasher {
+            String hashPassword(String password);
+            boolean verifyPassword(String plainPassword, String hashedPassword);
+        }
+    }
+}

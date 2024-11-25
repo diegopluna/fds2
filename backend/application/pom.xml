@@ -3,25 +3,37 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-      <groupId>com.cesar.school.fds2.raycharge</groupId>
-      <artifactId>raycharge-core</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <relativePath>../core</relativePath>
-  </parent>
+    <parent>
+        <groupId>cesar.school.raycharge</groupId>
+        <artifactId>raycharge-core</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../core/pom.xml</relativePath>
+    </parent>
 
-  <artifactId>raycharge-application</artifactId>
+    <artifactId>raycharge-application</artifactId>
 
-  <dependencies>
+    <dependencies>
 
-    <dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>raycharge-domain-autenticacao</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>raycharge-domain-authentication</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
-  </dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>raycharge-domain-recharge</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>raycharge-infra-security</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
 
 </project>

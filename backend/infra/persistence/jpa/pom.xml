@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.cesar.school.fds2.raycharge</groupId>
+        <groupId>cesar.school.raycharge</groupId>
         <artifactId>raycharge-core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../../core</relativePath>
+        <relativePath>../../../core/pom.xml</relativePath>
     </parent>
 
     <artifactId>raycharge-infra-persistence-jpa</artifactId>
@@ -31,20 +31,10 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>raycharge-domain-autenticacao</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>raycharge-domain-fornecedor</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>raycharge-application</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+
+
 </project>

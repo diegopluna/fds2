@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.cesar.school.fds2.raycharge</groupId>
+        <groupId>cesar.school.raycharge</groupId>
         <artifactId>raycharge-core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../core</relativePath>
+        <relativePath>../../core/pom.xml</relativePath>
     </parent>
 
     <artifactId>raycharge-presentation-backend</artifactId>
