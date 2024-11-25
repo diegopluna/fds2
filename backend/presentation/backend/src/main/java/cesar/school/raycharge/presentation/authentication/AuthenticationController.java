@@ -1,6 +1,6 @@
 package cesar.school.raycharge.presentation.authentication;
 
-import cesar.school.raycharge.application.authentication.common.ErrorResponse;
+import cesar.school.raycharge.application.common.ErrorResponse;
 import cesar.school.raycharge.application.authentication.user.UserAuthRequest;
 import cesar.school.raycharge.application.authentication.user.UserAuthenticator;
 import cesar.school.raycharge.application.authentication.user.UserRegister;

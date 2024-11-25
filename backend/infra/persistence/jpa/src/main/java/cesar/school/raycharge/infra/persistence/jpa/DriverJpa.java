@@ -1,5 +1,6 @@
 package cesar.school.raycharge.infra.persistence.jpa;
 
+import cesar.school.raycharge.authentication.domain.user.UserId;
 import cesar.school.raycharge.driver.domain.driver.Driver;
 import cesar.school.raycharge.driver.domain.driver.DriverId;
 import cesar.school.raycharge.driver.domain.driver.DriverRepository;
@@ -34,6 +35,8 @@ public class DriverJpa {
 
 interface DriverJpaRepository extends JpaRepository<DriverJpa, String> {
     Optional<DriverJpa> findById(String id);
+    Optional<DriverJpa> findByUser_Id(String userId);
+    Optional<DriverJpa> findByUser_Login(String userLogin);
 }
 
 @Repository
@@ -51,8 +54,20 @@ class DriverRepositoryImpl implements DriverRepository {
     }
 
     @Override
+    public Driver findByUserId(UserId userId) {
+        Optional<DriverJpa> driverJpa = repository.findByUser_Id(userId.getId());
+        return driverJpa.map(jpa -> mapper.map(jpa, Driver.class)).orElse(null);
+    }
+
+    @Override
     public Driver save(Driver driver) {
         var driverJpa = mapper.map(driver, DriverJpa.class);
         return mapper.map(repository.save(driverJpa), Driver.class);
+    }
+
+    @Override
+    public Driver findByUserLogin(String login) {
+        Optional<DriverJpa> driverJpa = repository.findByUser_Login(login);
+        return driverJpa.map(jpa -> mapper.map(jpa, Driver.class)).orElse(null);
     }
 }

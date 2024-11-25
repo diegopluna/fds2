@@ -18,6 +18,7 @@ public class ChargingStationService {
         return chargingStationRepository.fetchAll();
     }
 
+    // História 1
     public List<ChargingStation> fetchByDistance(double latitude, double longitude, int radiusKm) {
         List<ChargingStation> stations = chargingStationRepository.fetchAll();
         return stations.stream()

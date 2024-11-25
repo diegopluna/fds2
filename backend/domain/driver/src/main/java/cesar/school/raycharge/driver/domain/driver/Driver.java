@@ -27,6 +27,10 @@ public class Driver implements Cloneable, AggregateRoot<Driver, DriverId> {
         return this.driverId;
     }
 
+    public UserId getUserId() {
+        return userId;
+    }
+
     @Override
     public Driver clone() {
         try {

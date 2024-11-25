@@ -1,4 +1,4 @@
-package cesar.school.raycharge.application.authentication.common;
+package cesar.school.raycharge.application.common;
 
 public class ErrorResponse {
     Integer code;

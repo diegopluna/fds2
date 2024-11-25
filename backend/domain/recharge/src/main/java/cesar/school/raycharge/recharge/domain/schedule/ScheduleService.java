@@ -95,7 +95,7 @@ public class ScheduleService {
 
     //HISTÓRIA 2
     public Schedule createSchedule(DriverId driverId, StationId stationId, AvailableDate scheduleDate, VehicleId vehicleId) {
-        Driver driver = driverRepository.findByDriverId(driverId); // Revisar essa parte, possivelmente vai depender de UserID
+        Driver driver = driverRepository.findByDriverId(driverId);
         ensureDriverExists(driver);
         ensureDriverHasNoActiveSchedule(driver);
 

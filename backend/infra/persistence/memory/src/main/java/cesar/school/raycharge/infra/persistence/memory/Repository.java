@@ -140,6 +140,30 @@ public class Repository implements UserRepository, ChargingStationRepository, Sc
     return driver;
   }
 
+    @Override
+    public Driver findByUserId(UserId userId) {
+        Objects.requireNonNull(userId, "userId must not be null");
+        for (Driver driver : drivers.values()) {
+            if (driver.getUserId().equals(userId)) {
+                return driver;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Driver findByUserLogin(String login) {
+        Objects.requireNonNull(login, "login must not be null");
+        for (Driver driver: drivers.values()) {
+            for (User user: users.values()) {
+                if (user.getLogin().equals(login) && driver.getUserId().equals(user.getId())) {
+                    return driver;
+                }
+            }
+        }
+        return null;
+    }
+
   /*-----------------------------------------------------------------------*/
   /* VehicleRepository                                                     */
   private Map<VehicleId, Vehicle> vehicles = new HashMap<>();

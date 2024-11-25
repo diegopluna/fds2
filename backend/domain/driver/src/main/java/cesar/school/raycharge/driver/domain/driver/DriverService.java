@@ -14,4 +14,12 @@ public class DriverService {
         driverRepository.save(driver);
         return driver;
     }
+
+    public Driver getDriverFromUserId(UserId userId) {
+        return driverRepository.findByUserId(userId);
+    }
+
+    public Driver getDriverFromUserLogin(String login) {
+        return driverRepository.findByUserLogin(login);
+    }
 }
