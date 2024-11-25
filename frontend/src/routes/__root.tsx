@@ -1,20 +1,21 @@
-import Footer from '@/components/footer'
-import Navbar from '@/components/navbar'
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { Toaster } from '@/components/ui/sonner'
+import { QueryClient } from '@tanstack/react-query'
+import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
-export const Route = createRootRoute({
+
+interface RouterContext {
+  queryClient: QueryClient
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
       <div className="flex flex-col min-h-screen">
-
-      <Navbar/>
-      <main className='flex flex-grow'>
         <Outlet />
-      </main>
-      <Footer/>
-      <TanStackRouterDevtools />
+        <TanStackRouterDevtools />
       </div>
+      <Toaster />
     </>
   )
 })
