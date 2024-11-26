@@ -19,7 +19,7 @@ public class ScheduleHandler {
     private ScheduleService scheduleService;
 
     @Autowired
-    private DriverService driverService;
+    private DriverServiceProxy driverService;
 
     public Schedule scheduleRecharge(final CreateScheduleRequest request, final String login) {
         Driver driver = driverService.getDriverFromUserLogin(login);

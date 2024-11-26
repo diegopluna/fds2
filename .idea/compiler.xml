@@ -12,6 +12,7 @@
         <module name="raycharge-infra-security" />
         <module name="raycharge-infra-persistence-memory" />
         <module name="raycharge-application" />
+        <module name="raycharge-domain-supplier" />
         <module name="raycharge-domain-authentication" />
         <module name="raycharge-presentation-backend" />
         <module name="motorista" />
@@ -46,6 +47,7 @@
       <module name="raycharge-domain-recarga-bdd" options="-parameters" />
       <module name="raycharge-domain-recharge" options="-parameters" />
       <module name="raycharge-domain-recharge-bdd" options="-parameters" />
+      <module name="raycharge-domain-supplier" options="-parameters" />
       <module name="raycharge-domain-supplier-bdd" options="-parameters" />
       <module name="raycharge-domain-visualizacao-bdd" options="-parameters" />
       <module name="raycharge-infra-event" options="-parameters" />

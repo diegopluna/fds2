@@ -38,7 +38,7 @@ public class StationHandler {
                 usageHistory.add(new ScheduleIdResponse(scheduleId.toString()));
             }
 
-            stationResponses.add(new StationResponse(
+            stationResponses.add(StationResponseFactory.createStationResponse(
                     station.getId().toString(),
                     station.getSupplierId().toString(),
                     station.getName(),
