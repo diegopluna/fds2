@@ -107,7 +107,7 @@ function Mapa() {
         <h2 className="text-center text-2xl font-bold mb-4">
           Confira a lista de estações
         </h2>
-        {chargingStationsMock.map((station) => (
+        {data?.stations.map((station : Station) => (
           <EstacaoBox
             key={station.stationId}
             nome={station.name}
