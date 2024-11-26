@@ -12,25 +12,18 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SignUpImport } from './routes/sign-up'
-import { Route as MapaImport } from './routes/mapa'
 import { Route as LoginImport } from './routes/login'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardIndexImport } from './routes/dashboard.index'
-import { Route as DetalhesEstacaoStationIdImport } from './routes/detalhesEstacao.$stationId'
-import { Route as DashboardStationDetailsImport } from './routes/dashboard.station-details'
 import { Route as DashboardSchedulesImport } from './routes/dashboard.schedules'
 import { Route as DashboardMapaImport } from './routes/dashboard.mapa'
+import { Route as DashboardStationDetailsStationIdImport } from './routes/dashboard.station-details.$stationId'
 
 // Create/Update Routes
 
 const SignUpRoute = SignUpImport.update({
   path: '/sign-up',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const MapaRoute = MapaImport.update({
-  path: '/mapa',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -47,20 +40,10 @@ const DashboardRoute = DashboardImport.update({
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
 
 const DashboardIndexRoute = DashboardIndexImport.update({
   path: '/',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
-const DetalhesEstacaoStationIdRoute = DetalhesEstacaoStationIdImport.update({
-  path: '/detalhesEstacao/$stationId',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DashboardStationDetailsRoute = DashboardStationDetailsImport.update({
-  path: '/station-details',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -73,6 +56,12 @@ const DashboardMapaRoute = DashboardMapaImport.update({
   path: '/mapa',
   getParentRoute: () => DashboardRoute,
 } as any)
+
+const DashboardStationDetailsStationIdRoute =
+  DashboardStationDetailsStationIdImport.update({
+    path: '/station-details/$stationId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -99,13 +88,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/mapa': {
-      id: '/mapa'
-      path: '/mapa'
-      fullPath: '/mapa'
-      preLoaderRoute: typeof MapaImport
-      parentRoute: typeof rootRoute
-    }
     '/sign-up': {
       id: '/sign-up'
       path: '/sign-up'
@@ -127,25 +109,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSchedulesImport
       parentRoute: typeof DashboardImport
     }
-    '/dashboard/station-details': {
-      id: '/dashboard/station-details'
-      path: '/station-details'
-      fullPath: '/dashboard/station-details'
-      preLoaderRoute: typeof DashboardStationDetailsImport
-      parentRoute: typeof DashboardImport
-    }
-    '/detalhesEstacao/$stationId': {
-      id: '/detalhesEstacao/$stationId'
-      path: '/detalhesEstacao/$stationId'
-      fullPath: '/detalhesEstacao/$stationId'
-      preLoaderRoute: typeof DetalhesEstacaoStationIdImport
-      parentRoute: typeof rootRoute
-    }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/station-details/$stationId': {
+      id: '/dashboard/station-details/$stationId'
+      path: '/station-details/$stationId'
+      fullPath: '/dashboard/station-details/$stationId'
+      preLoaderRoute: typeof DashboardStationDetailsStationIdImport
       parentRoute: typeof DashboardImport
     }
   }
@@ -156,15 +131,15 @@ declare module '@tanstack/react-router' {
 interface DashboardRouteChildren {
   DashboardMapaRoute: typeof DashboardMapaRoute
   DashboardSchedulesRoute: typeof DashboardSchedulesRoute
-  DashboardStationDetailsRoute: typeof DashboardStationDetailsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardStationDetailsStationIdRoute: typeof DashboardStationDetailsStationIdRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardMapaRoute: DashboardMapaRoute,
   DashboardSchedulesRoute: DashboardSchedulesRoute,
-  DashboardStationDetailsRoute: DashboardStationDetailsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardStationDetailsStationIdRoute: DashboardStationDetailsStationIdRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
@@ -175,25 +150,21 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
-  '/mapa': typeof MapaRoute
   '/sign-up': typeof SignUpRoute
   '/dashboard/mapa': typeof DashboardMapaRoute
   '/dashboard/schedules': typeof DashboardSchedulesRoute
-  '/dashboard/station-details': typeof DashboardStationDetailsRoute
-  '/detalhesEstacao/$stationId': typeof DetalhesEstacaoStationIdRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/station-details/$stationId': typeof DashboardStationDetailsStationIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/mapa': typeof MapaRoute
   '/sign-up': typeof SignUpRoute
   '/dashboard/mapa': typeof DashboardMapaRoute
   '/dashboard/schedules': typeof DashboardSchedulesRoute
-  '/dashboard/station-details': typeof DashboardStationDetailsRoute
-  '/detalhesEstacao/$stationId': typeof DetalhesEstacaoStationIdRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/station-details/$stationId': typeof DashboardStationDetailsStationIdRoute
 }
 
 export interface FileRoutesById {
@@ -201,13 +172,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
-  '/mapa': typeof MapaRoute
   '/sign-up': typeof SignUpRoute
   '/dashboard/mapa': typeof DashboardMapaRoute
   '/dashboard/schedules': typeof DashboardSchedulesRoute
-  '/dashboard/station-details': typeof DashboardStationDetailsRoute
-  '/detalhesEstacao/$stationId': typeof DetalhesEstacaoStationIdRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/station-details/$stationId': typeof DashboardStationDetailsStationIdRoute
 }
 
 export interface FileRouteTypes {
@@ -216,36 +185,30 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/login'
-    | '/mapa'
     | '/sign-up'
     | '/dashboard/mapa'
     | '/dashboard/schedules'
-    | '/dashboard/station-details'
-    | '/detalhesEstacao/$stationId'
     | '/dashboard/'
+    | '/dashboard/station-details/$stationId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
-    | '/mapa'
     | '/sign-up'
     | '/dashboard/mapa'
     | '/dashboard/schedules'
-    | '/dashboard/station-details'
-    | '/detalhesEstacao/$stationId'
     | '/dashboard'
+    | '/dashboard/station-details/$stationId'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
     | '/login'
-    | '/mapa'
     | '/sign-up'
     | '/dashboard/mapa'
     | '/dashboard/schedules'
-    | '/dashboard/station-details'
-    | '/detalhesEstacao/$stationId'
     | '/dashboard/'
+    | '/dashboard/station-details/$stationId'
   fileRoutesById: FileRoutesById
 }
 
@@ -253,18 +216,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   LoginRoute: typeof LoginRoute
-  MapaRoute: typeof MapaRoute
   SignUpRoute: typeof SignUpRoute
-  DetalhesEstacaoStationIdRoute: typeof DetalhesEstacaoStationIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRouteWithChildren,
   LoginRoute: LoginRoute,
-  MapaRoute: MapaRoute,
   SignUpRoute: SignUpRoute,
-  DetalhesEstacaoStationIdRoute: DetalhesEstacaoStationIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -282,9 +241,7 @@ export const routeTree = rootRoute
         "/",
         "/dashboard",
         "/login",
-        "/mapa",
-        "/sign-up",
-        "/detalhesEstacao/$stationId"
+        "/sign-up"
       ]
     },
     "/": {
@@ -295,15 +252,12 @@ export const routeTree = rootRoute
       "children": [
         "/dashboard/mapa",
         "/dashboard/schedules",
-        "/dashboard/station-details",
-        "/dashboard/"
+        "/dashboard/",
+        "/dashboard/station-details/$stationId"
       ]
     },
     "/login": {
       "filePath": "login.tsx"
-    },
-    "/mapa": {
-      "filePath": "mapa.tsx"
     },
     "/sign-up": {
       "filePath": "sign-up.tsx"
@@ -316,15 +270,12 @@ export const routeTree = rootRoute
       "filePath": "dashboard.schedules.tsx",
       "parent": "/dashboard"
     },
-    "/dashboard/station-details": {
-      "filePath": "dashboard.station-details.tsx",
-      "parent": "/dashboard"
-    },
-    "/detalhesEstacao/$stationId": {
-      "filePath": "detalhesEstacao.$stationId.tsx"
-    },
     "/dashboard/": {
       "filePath": "dashboard.index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/station-details/$stationId": {
+      "filePath": "dashboard.station-details.$stationId.tsx",
       "parent": "/dashboard"
     }
   }

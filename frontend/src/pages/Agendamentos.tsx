@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AgendamentoBox from '@/components/agendamento-box';
 import ConfirmacaoCancelamentoMotoristaModal from '@/components/popup-confirmacao-cancelamento';
 import CancelamentoConcluidoMotoristaModal from '@/components/popup-cancelamento-concluido';
