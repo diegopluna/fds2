@@ -22,7 +22,7 @@ export interface Address {
   
   export type StationStatus = 'ACTIVE' | 'INACTIVE';
   
-  export interface ChargingStation {
+  export interface Station {
     stationId: string;
     supplierId: string;
     name: string;
@@ -37,5 +37,9 @@ export interface Address {
     timePerSchedule: number;
     availableDates: AvailableDate[];
     usageHistory: ScheduleId[];
+  }
+
+  export interface StationsResponse {
+    stations: Station[];
   }
   

@@ -7,6 +7,9 @@ import estacaoAtiva from '@/assets/estacao-ativa.png';
 import estacaoInativa from '@/assets/estacao-inativa.png';
 import EstacaoBox from '@/components/estacao-box'
 import { formatarHorario } from '@/utils/formatarHorario';
+import { useFetchStations } from '@/services/useFetchStations';
+import { Station } from  '@/models/chargingStationsModel';
+
 
 export const Route = createFileRoute('/dashboard/mapa')({
   component: Mapa,
@@ -27,10 +30,24 @@ function Mapa() {
   const position: LatLngExpression = [-8.0584371, -34.8725274]
   const navigate = useNavigate()
 
+  const { data, isLoading, error } = useFetchStations();
+
   const handleDetailsRedirect = (stationId: string) => {
     console.log('station id enviado de mapa: ', stationId )
     console.log('Station ID (typeof):', typeof stationId)
     navigate({ to: `/dashboard/station-details/${stationId}` }) 
+  }
+
+  if (isLoading) {
+    return <div>Carregando estações...</div>;
+  }
+
+  if (error) {
+    return <div>Erro ao carregar estações: {error.message}</div>;
+  }
+
+  if (!data?.stations) {
+    return <div>Nenhuma estação disponível</div>;
   }
 
   return (
@@ -44,7 +61,7 @@ function Mapa() {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {chargingStationsMock.map((station) => (
+          {data?.stations.map((station: Station) => (
             <Marker
               key={station.stationId}
               position={
@@ -82,7 +99,7 @@ function Mapa() {
                 </div>
               </Popup>
             </Marker>
-          ))}
+          )) }
         </MapContainer>
       </div>
 
