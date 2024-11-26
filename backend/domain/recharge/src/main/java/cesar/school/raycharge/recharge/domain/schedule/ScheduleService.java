@@ -147,4 +147,8 @@ public class ScheduleService {
 
         return scheduleRepository.update(schedule);
     }
+
+    public List<Schedule> getSchedulesByDriver(Driver driver) {
+        return scheduleRepository.findAllByDriverId(driver.getId());
+    }
 }

@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/recharge/schedule")
 public class ScheduleController {
@@ -40,6 +42,13 @@ public class ScheduleController {
         }
     }
 
+    @GetMapping("/")
+    public ResponseEntity<?> fetchSchedules() {
+        String login = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        List<Schedule> schedules = scheduleHandler.fetchSchedules(login);
+        return ResponseEntity.ok(schedules);
+    }
+
     @PatchMapping("/{scheduleId}/cancel")
     public ResponseEntity<?> cancelSchedule(@PathVariable("scheduleId") String scheduleId) {
         String login = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
@@ -65,12 +74,5 @@ public class ScheduleController {
             );
             return ResponseEntity.status(httpStatus).body(errorResponse);
         }
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<?> Hello() {
-        String login = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        System.out.println(login);
-        return ResponseEntity.ok("Hello");
     }
 }
