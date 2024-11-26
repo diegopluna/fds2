@@ -56,8 +56,6 @@ Este projeto foi desenvolvido como parte da disciplina de **Requisitos, Projeto 
         </sub>
       </a>
     </td>
-      </a>
-    </td>
     <td align="center">
       <a href="https://github.com/virnaamaral">
         <img src="https://avatars.githubusercontent.com/u/116957619?v=4" width="200px;" alt="Foto Virna"/><br>
@@ -79,6 +77,80 @@ O RayCharge foi desenhado para oferecer uma solução completa de gestão de rec
 - **Gestão de estações de recarga:** Os fornecedores podem cadastrar estações, monitorar o fluxo de uso e analisar o desempenho das suas unidades.
 - **Cadastro e gerenciamento de veículos elétricos:** Os clientes podem registrar seus veículos no sistema, associando-os aos agendamentos de recarga.
 - **Autenticação e autorização:** O sistema distingue entre os níveis de acesso de clientes e fornecedores, garantindo a segurança nas operações.
+
+## Requisitos da 2ª entrega
+
+### Ajuste dos requisitos da 1ª entrega
+
+Os ajustes e refatorações pertinentes foram realizados para atender aos requisitos da 2ª entrega, garantindo a evolução do projeto, contemplando a adoção de dois padrões de projeto para aprimorar a organização e reutilização de código e o ajuste na camada de persistência, agora com mapeamento objeto-relacional (substituindo a abordagem em memória da 1ª entrega). Ainda, tivemos a adição da camada de apresentação web, oferecendo uma interface acessível e funcional para interação com o sistema, de forma que as modificações assegurassem que os requisitos fossem atendidos de forma eficiente, refletindo o progresso no desenvolvimento do sistema.
+
+### Adotar 2 ou mais padrões de projeto
+
+Na 2ª entrega, implementamos e adotamos dois padrões de projeto para melhorar a organização e a reutilização de código, sendo eles:
+
+1. **Proxy**  
+  O padrão Proxy foi implementado na classe `DriverServiceProxy`, que age como intermediário no acesso ao serviço principal `DriverService`. O objetivo é garantir o controle de acesso com base no papel do usuário, permitindo que apenas usuários com a função de "driver" realizem operações específicas.  
+    > Exemplo no Arquivo: `DriverServiceProxy.class`
+
+2. **Factory**  
+  O padrão Factory foi aplicado na classe `StationResponseFactory` para centralizar a criação de objetos do tipo `StationResponse`. Essa abordagem facilita a manutenção e encapsula a lógica de construção de objetos complexos, garantindo consistência na criação.  
+    > Exemplo no Arquivo: `StationResponseFactory.java`
+
+Esses padrões foram exemplificados nos arquivos citados e integrados ao sistema, contribuindo para a modularidade e o alinhamento com as boas práticas de desenvolvimento.
+
+### Implementar a camada de persistência com mapeamento objeto-relacional
+
+Na 2ª entrega, implementamos a camada de persistência utilizando mapeamento objeto-relacional (ORM), garantindo a integração entre o modelo de domínio e o banco de dados relacional e, para isso, utilizamos o Spring Data JPA, que facilita o gerenciamento das operações de persistência.
+
+1. Modelagem das Entidades
+  
+  As classes do domínio foram anotadas com as anotações do JPA, como @Entity, @Id, e @Column, para definir as entidades e seus respectivos mapeamentos com as tabelas do banco de dados.
+  > Exemplo: A classe Driver foi mapeada como uma entidade, com seus atributos correspondendo às colunas da tabela no banco.
+
+2. Repositórios
+  
+  Criamos interfaces que estendem o JpaRepository, permitindo a execução de operações CRUD e consultas personalizadas sem a necessidade de escrever SQL manualmente.
+  > Exemplo: UserRepository e DriverRepository.
+
+3. Relacionamentos entre Entidades
+  
+  Os relacionamentos (como one-to-many e many-to-one) foram definidos utilizando as anotações @OneToMany, @ManyToOne e @JoinColumn, garantindo a integridade e a navegação entre entidades.
+  >  Exemplo: Um Driver está relacionado a um User por meio de um relacionamento @ManyToOne.
+
+4. Persistência de Dados
+  
+  A camada foi configurada para persistir os dados em um banco de dados relacional, com a abstração do Spring Data JPA, permitindo uma integração robusta e simplificada entre o domínio e o armazenamento.
+
+Essa abordagem possibilitou a substituição da persistência em memória utilizada na 1ª entrega, trazendo maior confiabilidade e escalabilidade ao sistema.
+
+### Implementar a camada de apresentação web
+
+Na 2ª entrega, implementamos a **camada de apresentação web** para permitir que os usuários interajam com o sistema de forma intuitiva e funcional, utilizando do **Spring Boot** para construir uma API RESTful, integrando os dados da aplicação à interface web.
+
+#### Principais aspectos da implementação:
+
+1. **Controladores REST**  
+   Os controladores foram responsáveis por gerenciar as requisições HTTP, expondo os serviços do sistema por meio de endpoints.  
+   > **Exemplo**: O controlador `DriverController` permite que motoristas realizem operações como criar, visualizar ou gerenciar suas informações por meio de rotas HTTP (`/drivers`).
+
+2. **Rotas e Métodos HTTP**  
+   Definimos rotas claras e intuitivas para cada funcionalidade do sistema, utilizando métodos HTTP apropriados (`GET`, `POST`, `PUT`, `DELETE`).  
+   > **Exemplo**:
+    >- `GET /stations/nearest`: Retorna as estações de recarga mais próximas.
+    >- `POST /schedules`: Permite criar um novo agendamento.
+
+3. **DTOs e Factories**  
+   Utilizamos **Data Transfer Objects (DTOs)** para encapsular e formatar os dados enviados e recebidos pela camada de apresentação, garantindo uma separação entre a lógica do domínio e as respostas expostas aos usuários.  
+   > **Exemplo**: O `StationResponseFactory` foi utilizado para criar os DTOs enviados ao cliente.
+
+4. **Validação e Tratamento de Erros**  
+   Implementamos validações para garantir a integridade dos dados enviados pelos usuários, além de um mecanismo de tratamento de erros para fornecer respostas claras e detalhadas em caso de falhas.  
+   > **Exemplo**: Respostas padrão para erros como `400 Bad Request` (dados inválidos) ou `404 Not Found` (entidade inexistente).
+
+5. **Integração com o Frontend**  
+   A camada foi projetada para ser consumida por uma interface web ou aplicativos móveis, com as respostas no formato **JSON**, facilitando a integração com qualquer cliente.
+
+Essa implementação da camada de apresentação web garante uma experiência robusta e acessível para os usuários, integrando-se com a camada de persistência e o núcleo do sistema de forma fluida e eficiente.
 
 ## Requisitos da 1ª entrega
 
