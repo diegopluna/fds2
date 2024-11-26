@@ -3,6 +3,8 @@ package cesar.school.raycharge.presentation.supplier;
 import cesar.school.raycharge.application.supplier.station.StationHandler;
 import cesar.school.raycharge.application.supplier.station.StationsByDistanceRequest;
 import cesar.school.raycharge.application.supplier.station.StationsResponse;
+import cesar.school.raycharge.supplier.domain.station.ChargingStation;
+import cesar.school.raycharge.supplier.domain.station.ChargingStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

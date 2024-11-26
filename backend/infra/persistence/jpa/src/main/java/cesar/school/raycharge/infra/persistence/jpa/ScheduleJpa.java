@@ -13,13 +13,14 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @Table(name = "schedules")
 public class ScheduleJpa {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    UUID id;
 
     int chargerLiberationTime;
 
@@ -51,10 +52,10 @@ public class ScheduleJpa {
     SupplierJpa supplier;
 }
 
-interface ScheduleJpaRepository extends JpaRepository<ScheduleJpa, String> {
-    List<ScheduleJpa> findAllByDriver_Id(String driverId);
-    Optional<ScheduleJpa> findByDriver_Id(String driverId);
-    Optional<ScheduleJpa> findById(String id);
+interface ScheduleJpaRepository extends JpaRepository<ScheduleJpa, UUID> {
+    List<ScheduleJpa> findAllByDriver_Id(UUID driverId);
+    Optional<ScheduleJpa> findByDriver_Id(UUID driverId);
+    Optional<ScheduleJpa> findById(UUID id);
 
 }
 
@@ -69,7 +70,7 @@ class ScheduleRepositoryImpl implements ScheduleRepository {
 
     @Override
     public List<Schedule> findAllByDriverId(DriverId driverId) {
-        var schedulesJpa = repository.findAllByDriver_Id(driverId.toString());
+        var schedulesJpa = repository.findAllByDriver_Id(UUID.fromString(driverId.toString()));
         var schedules = new ArrayList<Schedule>();
         for (var scheduleJpa : schedulesJpa) {
             var schedule = mapper.map(scheduleJpa, Schedule.class);
@@ -80,7 +81,7 @@ class ScheduleRepositoryImpl implements ScheduleRepository {
 
     @Override
     public Schedule findScheduleByDriverId(DriverId driverId) {
-        Optional<ScheduleJpa> scheduleJpa = repository.findByDriver_Id(driverId.toString());
+        Optional<ScheduleJpa> scheduleJpa = repository.findByDriver_Id(UUID.fromString(driverId.toString()));
         return scheduleJpa.map(jpa -> mapper.map(jpa, Schedule.class)).orElse(null);
     }
 
@@ -93,13 +94,13 @@ class ScheduleRepositoryImpl implements ScheduleRepository {
 
     @Override
     public Schedule findById(ScheduleId scheduleId) {
-        Optional<ScheduleJpa> scheduleJpa = repository.findById(scheduleId.toString());
+        Optional<ScheduleJpa> scheduleJpa = repository.findById(UUID.fromString(scheduleId.toString()));
         return scheduleJpa.map(jpa -> mapper.map(jpa, Schedule.class)).orElse(null);
     }
 
     @Override
     public Schedule update(Schedule schedule) {
-        if (repository.existsById(schedule.getId().toString())) {
+        if (repository.existsById(UUID.fromString(schedule.getId().toString()))) {
             var scheduleJpa = mapper.map(schedule, ScheduleJpa.class);
             repository.save(scheduleJpa);
             return schedule;

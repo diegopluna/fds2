@@ -11,13 +11,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @Table(name = "drivers")
 public class DriverJpa {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    UUID id;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
@@ -33,9 +34,9 @@ public class DriverJpa {
     List<ScheduleJpa> scheduleHistory;
 }
 
-interface DriverJpaRepository extends JpaRepository<DriverJpa, String> {
-    Optional<DriverJpa> findById(String id);
-    Optional<DriverJpa> findByUser_Id(String userId);
+interface DriverJpaRepository extends JpaRepository<DriverJpa, UUID> {
+    Optional<DriverJpa> findById(UUID id);
+    Optional<DriverJpa> findByUser_Id(UUID userId);
     Optional<DriverJpa> findByUser_Login(String userLogin);
 }
 
@@ -49,13 +50,13 @@ class DriverRepositoryImpl implements DriverRepository {
 
     @Override
     public Driver findByDriverId(DriverId driverId) {
-        Optional<DriverJpa> driverJpa = repository.findById(driverId.getId());
+        Optional<DriverJpa> driverJpa = repository.findById(UUID.fromString(driverId.toString()));
         return driverJpa.map(jpa -> mapper.map(jpa, Driver.class)).orElse(null);
     }
 
     @Override
     public Driver findByUserId(UserId userId) {
-        Optional<DriverJpa> driverJpa = repository.findByUser_Id(userId.getId());
+        Optional<DriverJpa> driverJpa = repository.findByUser_Id(UUID.fromString(userId.toString()));
         return driverJpa.map(jpa -> mapper.map(jpa, Driver.class)).orElse(null);
     }
 

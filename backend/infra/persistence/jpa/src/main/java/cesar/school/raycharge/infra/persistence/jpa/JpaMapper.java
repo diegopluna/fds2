@@ -2,6 +2,7 @@ package cesar.school.raycharge.infra.persistence.jpa;
 
 import cesar.school.raycharge.authentication.domain.user.User;
 import cesar.school.raycharge.authentication.domain.user.UserId;
+import cesar.school.raycharge.authentication.domain.user.UserRepository;
 import cesar.school.raycharge.authentication.domain.user.UserRole;
 import cesar.school.raycharge.driver.domain.driver.Driver;
 import cesar.school.raycharge.driver.domain.driver.DriverId;
@@ -9,17 +10,21 @@ import cesar.school.raycharge.driver.domain.vehicle.Vehicle;
 import cesar.school.raycharge.driver.domain.vehicle.VehicleId;
 import cesar.school.raycharge.recharge.domain.schedule.*;
 import cesar.school.raycharge.supplier.domain.station.*;
+import cesar.school.raycharge.supplier.domain.supplier.Supplier;
 import cesar.school.raycharge.supplier.domain.supplier.SupplierId;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class JpaMapper extends ModelMapper {
+
     JpaMapper() {
         var config = getConfiguration();
         config.setFieldMatchingEnabled(true);
@@ -171,5 +176,27 @@ public class JpaMapper extends ModelMapper {
             }
         });
 
+        addConverter(new AbstractConverter<SupplierJpa, Supplier>() {
+            @Override
+            protected Supplier convert(SupplierJpa source) {
+                var id = map(source.id, SupplierId.class);
+                var userId = map(source.user.id, UserId.class);
+                List<StationId> chargingStations = new ArrayList<>();
+                for (var chargingStation : source.chargingStations) {
+                    chargingStations.add(map(chargingStation.id, StationId.class));
+                }
+                List<ScheduleId> usageHistory = new ArrayList<>();
+                for (var schedule : source.usageHistory) {
+                    usageHistory.add(map(schedule.id, ScheduleId.class));
+                }
+                return new Supplier(
+                        userId,
+                        id,
+                        source.name,
+                        chargingStations,
+                        usageHistory
+                );
+            }
+        });
     }
 }

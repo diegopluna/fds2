@@ -10,13 +10,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @Table(name = "vehicles")
 public class VehicleJpa {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    UUID id;
 
     String name;
 
@@ -30,8 +31,8 @@ public class VehicleJpa {
     List<ScheduleJpa> scheduleHistory;
 }
 
-interface VehicleJpaRepository extends JpaRepository<VehicleJpa, String> {
-    Optional<VehicleJpa> findVehicleJpaById(String id);
+interface VehicleJpaRepository extends JpaRepository<VehicleJpa, UUID> {
+    Optional<VehicleJpa> findVehicleJpaById(UUID id);
 }
 
 @Repository
@@ -44,7 +45,7 @@ class VehicleRepositoryImpl implements VehicleRepository {
 
     @Override
     public Vehicle findById(VehicleId id) {
-        Optional<VehicleJpa> vehicleJpa = repository.findVehicleJpaById(id.toString());
+        Optional<VehicleJpa> vehicleJpa = repository.findVehicleJpaById(UUID.fromString(id.toString()));
         return vehicleJpa.map(jpa -> mapper.map(jpa, Vehicle.class)).orElse(null);
     }
 

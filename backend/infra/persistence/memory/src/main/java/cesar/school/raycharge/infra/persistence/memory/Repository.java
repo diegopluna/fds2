@@ -15,13 +15,16 @@ import cesar.school.raycharge.recharge.domain.schedule.ScheduleRepository;
 import cesar.school.raycharge.supplier.domain.station.ChargingStation;
 import cesar.school.raycharge.supplier.domain.station.ChargingStationRepository;
 import cesar.school.raycharge.supplier.domain.station.StationId;
+import cesar.school.raycharge.supplier.domain.supplier.Supplier;
+import cesar.school.raycharge.supplier.domain.supplier.SupplierId;
+import cesar.school.raycharge.supplier.domain.supplier.SupplierRepository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Repository implements UserRepository, ChargingStationRepository, ScheduleRepository, DriverRepository, VehicleRepository {
+public class Repository implements UserRepository, ChargingStationRepository, ScheduleRepository, DriverRepository, VehicleRepository, SupplierRepository {
   /*-----------------------------------------------------------------------*/
   /* UserRepository                                                        */
   private Map<UserId, User> users = new HashMap<>();
@@ -50,6 +53,12 @@ public class Repository implements UserRepository, ChargingStationRepository, Sc
       }
     }
     return null;
+  }
+
+  @Override
+  public User findById(UserId userId) {
+      Objects.requireNonNull(userId, "userId must not be null");
+      return users.get(userId);
   }
 
   /*-----------------------------------------------------------------------*/
@@ -193,5 +202,19 @@ public class Repository implements UserRepository, ChargingStationRepository, Sc
       }
       vehicles.put(vehicle.getId(), vehicle);
       return vehicle;
+  }
+
+  /*-----------------------------------------------------------------------*/
+  /* SupplierRepository                                                    */
+  private Map<SupplierId, Supplier> suppliers = new HashMap<>();
+
+  @Override
+  public Supplier save(Supplier supplier) {
+      Objects.requireNonNull(supplier, "supplier must not be null");
+      if (suppliers.containsKey(supplier.getId())) {
+          return null;
+      }
+      suppliers.put(supplier.getId(), supplier);
+      return supplier;
   }
 }
