@@ -343,7 +343,7 @@ export function DateTimePicker({
           )}
           <div className="flex flex-row-reverse items-center justify-between">
             <Button className="ms-2 h-7 px-2" onClick={onSumbit}>
-              Done
+              Selecionar
             </Button>
             {timezone && (
               <div className="text-sm">
@@ -428,7 +428,7 @@ function MonthYearPicker({
                 <Button
                   disabled={year.disabled}
                   variant={getYear(value) === year.value ? 'default' : 'ghost'}
-                  className="rounded-full"
+                  className="rounded-full "
                   onClick={() => onYearChange(year)}
                 >
                   {year.label}
@@ -445,7 +445,7 @@ function MonthYearPicker({
                 size="lg"
                 disabled={month.disabled}
                 variant={getMonth(value) === month.value ? 'default' : 'ghost'}
-                className="rounded-full"
+                className="rounded-full  "
                 onClick={() => onChange(setMonthFns(value, month.value), 'month')}
               >
                 {month.label}

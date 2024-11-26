@@ -16,9 +16,9 @@ import { Route as LoginImport } from './routes/login'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardIndexImport } from './routes/dashboard.index'
-import { Route as DashboardStationDetailsImport } from './routes/dashboard.station-details'
 import { Route as DashboardSchedulesImport } from './routes/dashboard.schedules'
 import { Route as DashboardMapaImport } from './routes/dashboard.mapa'
+import { Route as DashboardStationDetailsStationIdImport } from './routes/dashboard.station-details.$stationId'
 
 // Create/Update Routes
 
@@ -47,11 +47,6 @@ const DashboardIndexRoute = DashboardIndexImport.update({
   getParentRoute: () => DashboardRoute,
 } as any)
 
-const DashboardStationDetailsRoute = DashboardStationDetailsImport.update({
-  path: '/station-details',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
 const DashboardSchedulesRoute = DashboardSchedulesImport.update({
   path: '/schedules',
   getParentRoute: () => DashboardRoute,
@@ -61,6 +56,12 @@ const DashboardMapaRoute = DashboardMapaImport.update({
   path: '/mapa',
   getParentRoute: () => DashboardRoute,
 } as any)
+
+const DashboardStationDetailsStationIdRoute =
+  DashboardStationDetailsStationIdImport.update({
+    path: '/station-details/$stationId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -108,18 +109,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSchedulesImport
       parentRoute: typeof DashboardImport
     }
-    '/dashboard/station-details': {
-      id: '/dashboard/station-details'
-      path: '/station-details'
-      fullPath: '/dashboard/station-details'
-      preLoaderRoute: typeof DashboardStationDetailsImport
-      parentRoute: typeof DashboardImport
-    }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/station-details/$stationId': {
+      id: '/dashboard/station-details/$stationId'
+      path: '/station-details/$stationId'
+      fullPath: '/dashboard/station-details/$stationId'
+      preLoaderRoute: typeof DashboardStationDetailsStationIdImport
       parentRoute: typeof DashboardImport
     }
   }
@@ -130,15 +131,15 @@ declare module '@tanstack/react-router' {
 interface DashboardRouteChildren {
   DashboardMapaRoute: typeof DashboardMapaRoute
   DashboardSchedulesRoute: typeof DashboardSchedulesRoute
-  DashboardStationDetailsRoute: typeof DashboardStationDetailsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardStationDetailsStationIdRoute: typeof DashboardStationDetailsStationIdRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardMapaRoute: DashboardMapaRoute,
   DashboardSchedulesRoute: DashboardSchedulesRoute,
-  DashboardStationDetailsRoute: DashboardStationDetailsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardStationDetailsStationIdRoute: DashboardStationDetailsStationIdRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
@@ -152,8 +153,8 @@ export interface FileRoutesByFullPath {
   '/sign-up': typeof SignUpRoute
   '/dashboard/mapa': typeof DashboardMapaRoute
   '/dashboard/schedules': typeof DashboardSchedulesRoute
-  '/dashboard/station-details': typeof DashboardStationDetailsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/station-details/$stationId': typeof DashboardStationDetailsStationIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -162,8 +163,8 @@ export interface FileRoutesByTo {
   '/sign-up': typeof SignUpRoute
   '/dashboard/mapa': typeof DashboardMapaRoute
   '/dashboard/schedules': typeof DashboardSchedulesRoute
-  '/dashboard/station-details': typeof DashboardStationDetailsRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/station-details/$stationId': typeof DashboardStationDetailsStationIdRoute
 }
 
 export interface FileRoutesById {
@@ -174,8 +175,8 @@ export interface FileRoutesById {
   '/sign-up': typeof SignUpRoute
   '/dashboard/mapa': typeof DashboardMapaRoute
   '/dashboard/schedules': typeof DashboardSchedulesRoute
-  '/dashboard/station-details': typeof DashboardStationDetailsRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/station-details/$stationId': typeof DashboardStationDetailsStationIdRoute
 }
 
 export interface FileRouteTypes {
@@ -187,8 +188,8 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/dashboard/mapa'
     | '/dashboard/schedules'
-    | '/dashboard/station-details'
     | '/dashboard/'
+    | '/dashboard/station-details/$stationId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -196,8 +197,8 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/dashboard/mapa'
     | '/dashboard/schedules'
-    | '/dashboard/station-details'
     | '/dashboard'
+    | '/dashboard/station-details/$stationId'
   id:
     | '__root__'
     | '/'
@@ -206,8 +207,8 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/dashboard/mapa'
     | '/dashboard/schedules'
-    | '/dashboard/station-details'
     | '/dashboard/'
+    | '/dashboard/station-details/$stationId'
   fileRoutesById: FileRoutesById
 }
 
@@ -251,8 +252,8 @@ export const routeTree = rootRoute
       "children": [
         "/dashboard/mapa",
         "/dashboard/schedules",
-        "/dashboard/station-details",
-        "/dashboard/"
+        "/dashboard/",
+        "/dashboard/station-details/$stationId"
       ]
     },
     "/login": {
@@ -269,12 +270,12 @@ export const routeTree = rootRoute
       "filePath": "dashboard.schedules.tsx",
       "parent": "/dashboard"
     },
-    "/dashboard/station-details": {
-      "filePath": "dashboard.station-details.tsx",
-      "parent": "/dashboard"
-    },
     "/dashboard/": {
       "filePath": "dashboard.index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/station-details/$stationId": {
+      "filePath": "dashboard.station-details.$stationId.tsx",
       "parent": "/dashboard"
     }
   }

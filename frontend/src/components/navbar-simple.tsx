@@ -1,11 +1,5 @@
 import React from 'react';
 import logo from '/RayCharge.png';
-import calendar from '/icon-calendar.png';
-import car from '/icon-car.png';
-import home from '/icon-home.png';
-import map from '/icon-map.png';
-import settings from '/icon-settings.png';
-import user from '/icon-users.png';
 
 // Componente da Navbar
 const Navbar: React.FC = () => {
@@ -14,26 +8,6 @@ const Navbar: React.FC = () => {
       <div className="flex items-center ml-6">
         <a href="/"><img src={logo} alt="RayCharge Logo" /></a>
       </div>
-      <ul className="flex gap-12 list-none mr-6">
-        <li className='flex items-center'>
-            <a href="/"><img src={home} alt="Home Icon" title='Home'/></a>
-        </li>
-        <li className='flex items-center'>
-            <a href="#"><img src={user} alt="User Icon" title='Usuário'/></a>
-        </li>
-        <li className='flex items-center'>
-            <a href="#"><img src={car} alt="Cars Icon" title='Veículos'/></a>
-        </li>
-        <li className='flex items-center'>
-            <a href="/dashboard/schedules"><img src={calendar} alt="Calendar Icon" title='Agendamentos'/></a>
-        </li>
-        <li className='flex items-center'>
-            <a href="/dashboard/mapa"><img src={map} alt="Map Icon" title='Mapa'/></a>
-            </li>
-        <li className='flex items-center'>
-            <a href="#"><img src={settings} alt="Settings Icon" title='Configurações'/></a>
-            </li>
-      </ul>
     </nav>
   );
 };
