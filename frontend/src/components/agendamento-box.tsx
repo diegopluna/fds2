@@ -6,7 +6,7 @@ interface AgendamentoProps {
   numero: string;
   data: string;
   hora: string;
-  status: 'Ativo' | 'Concluído' | 'Cancelado';
+  status: 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
   onCancel?: () => void; // Tornando onCancel opcional
 }
 
@@ -19,7 +19,7 @@ const AgendamentoBox: React.FC<AgendamentoProps> = ({ estacao, endereco, numero,
           <p className="text-sm text-gray-600">{endereco}, Nº {numero}</p>
           <p className="text-sm text-gray-600">Data: {data}</p>
           <p className="text-sm text-gray-600">Hora: {hora}</p>
-          <p className={`text-sm font-semibold mt-2 ${status === 'Ativo' ? 'text-[#00BC12]' : status === 'Concluído' ? 'text-blue-500' : 'text-red-500'}`}>
+          <p className={`text-sm font-semibold mt-2 ${status === 'ACTIVE' ? 'text-[#00BC12]' : status === 'COMPLETED' ? 'text-blue-500' : 'text-red-500'}`}>
             Status: {status}
           </p>
         </div>
@@ -27,7 +27,7 @@ const AgendamentoBox: React.FC<AgendamentoProps> = ({ estacao, endereco, numero,
           <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
             Detalhes
           </button>
-          {status === 'Ativo' && onCancel && (
+          {status === 'ACTIVE' && onCancel && (
             <button onClick={onCancel} className="bg-[#FF6A6A] text-white px-4 py-2 rounded-md hover:bg-[#EF4444]">
               Cancelar
             </button>
