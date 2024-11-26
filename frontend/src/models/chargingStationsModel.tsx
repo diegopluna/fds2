@@ -40,6 +40,6 @@ export interface Address {
   }
 
   export interface StationsResponse {
-    stations: Station[];
+    chargingStations: Station[];
   }
   
