@@ -34,7 +34,8 @@ function Mapa() {
   const handleDetailsRedirect = (stationId: string) => {
     console.log('station id enviado de mapa: ', stationId )
     console.log('Station ID (typeof):', typeof stationId)
-    navigate({ to: `/dashboard/station-details/${stationId}` }) 
+    navigate({ to: `/dashboard/station-details/${stationId}`, params: { stationId }  }) 
+    
   }
 
   if (isLoading) {
