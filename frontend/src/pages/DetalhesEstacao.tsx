@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { DateTimePicker } from '@/components/datetime-picker';
 import { Button } from '@/components/ui/button';
 import { chargingStationsMock } from '@/mocks/chargingStationsMock';
-import { ChargingStation } from '@/models/chargingStationsModel';
+import { Station } from '@/models/chargingStationsModel';
 import { formatarHorario } from '@/utils/formatarHorario';
 
 interface DetalhesEstacaoProps {
@@ -11,7 +11,7 @@ interface DetalhesEstacaoProps {
 }
 
 const DetalhesEstacao = ({ stationId }: DetalhesEstacaoProps) => {
-  const [station, setStation] = useState<ChargingStation | null>(null);
+  const [station, setStation] = useState<Station | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [date, setDate] = useState<Date | undefined>(undefined);
 

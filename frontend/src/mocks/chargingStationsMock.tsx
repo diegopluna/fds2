@@ -1,6 +1,6 @@
-import { ChargingStation } from '../models/chargingStationsModel.tsx';
+import { Station } from '../models/chargingStationsModel.tsx';
 
-export const chargingStationsMock: ChargingStation[] = [
+export const chargingStationsMock: Station[] = [
   {
     stationId: '1',
     supplierId: '1',
